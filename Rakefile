@@ -13,7 +13,7 @@ def destinations(platform: 'iphonesimulator')
       # 'name=iPad 2,OS=9.3',
       # 'name=iPad Air 2,OS=10.2',
       # 'name=iPad Pro (9.7 inch),OS=10.2',
-      'name=iPad Pro (12.9ーーinch),OS=10.2',
+      'name=iPad Pro (12.9-inch),OS=10.2',
     ]
   else
     []
