@@ -153,14 +153,17 @@ func mergedCells(in spreadsheetView: SpreadsheetView) -> [CellRange] {
 ### Circular Scrolling
 Your table acquires infinite scroll just set `circularScrolling` property.
 
+#### Enable horizontal circular scrolling
 ```swift
 spreadsheetView.circularScrolling = CircularScrolling.Configuration.horizontally
 ```
 
+#### Enable vertical circular scrolling
 ```swift
 spreadsheetView.circularScrolling = CircularScrolling.Configuration.vertically
 ```
 
+#### Both
 ```swift
 spreadsheetView.circularScrolling = CircularScrolling.Configuration.both
 ```
