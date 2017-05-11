@@ -1,0 +1,19 @@
+language: objective-c
+osx_image: xcode8
+cache:
+  directories:
+    - Lib/vendor/bundle
+before_install:
+  - brew update
+  - brew outdated carthage || brew upgrade carthage
+install:
+  - "(cd Lib && bundle install --path=vendor/bundle --binstubs=vendor/bin)"
+script:
+  - "bundle exec rake test:iphonesimulator coverage:coveralls"
+branches:
+  only:
+    - master
+env:
+  global:
+    - LANG=en_US.UTF-8
+    - LC_ALL=en_US.UTF-8
