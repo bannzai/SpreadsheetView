@@ -15,16 +15,16 @@ branches:
     - master
 env:
   matrix:
-    - ACTION='test:iphonesimulator[Debug,"iPhone 4s",9.3] coverage:coveralls'
-    - ACTION='test:iphonesimulator[Debug,"iPhone 5",9.3] coverage:coveralls'
-    # - ACTION='test:iphonesimulator[Debug,"iPhone 5"s,10.2] coverage:coveralls'
-    - ACTION='test:iphonesimulator[Debug,"iPhone 6s",10.2] coverage:coveralls'
-    - ACTION='test:iphonesimulator[Debug,"iPhone 6s Plus",10.2] coverage:coveralls'
-    # - ACTION='test:iphonesimulator[Debug,"iPhone SE",10.2] coverage:coveralls'
-    # - ACTION='test:iphonesimulator[Debug,"iPad Pro2",9.3] coverage:coveralls'
-    # - ACTION='test:iphonesimulator[Debug,"iPad Air 2",10.2] coverage:coveralls'
-    # - ACTION='test:iphonesimulator[Debug,"iPad Pro (9.7 inch)",10.2] coverage:coveralls'
-    - ACTION='test:iphonesimulator[Debug,"iPad Pro (12.9 inch)",10.2] coverage:coveralls'
+    - ACTION='test:iphonesimulator[Debug,"iPhone 4s",9.3]' coverage:coveralls
+    - ACTION='test:iphonesimulator[Debug,"iPhone 5",9.3]' coverage:coveralls
+    # - ACTION='test:iphonesimulator[Debug,"iPhone 5"s,10.2]' coverage:coveralls
+    - ACTION='test:iphonesimulator[Debug,"iPhone 6s",10.2]' coverage:coveralls
+    - ACTION='test:iphonesimulator[Debug,"iPhone 6s Plus",10.2]' coverage:coveralls
+    # - ACTION='test:iphonesimulator[Debug,"iPhone SE",10.2]' coverage:coveralls
+    # - ACTION='test:iphonesimulator[Debug,"iPad Pro2",9.3]' coverage:coveralls
+    # - ACTION='test:iphonesimulator[Debug,"iPad Air 2",10.2]' coverage:coveralls
+    # - ACTION='test:iphonesimulator[Debug,"iPad Pro (9.7 inch)",10.2]' coverage:coveralls
+    - ACTION='test:iphonesimulator[Debug,"iPad Pro (12.9 inch)",10.2]' coverage:coveralls
   global:
     - LANG=en_US.UTF-8
     - LC_ALL=en_US.UTF-8
