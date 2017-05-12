@@ -12,6 +12,15 @@ public struct Location: Hashable {
     public let row: Int
     public let column: Int
 
+    init(row: Int, column: Int) {
+        self.row = row
+        self.column = column
+    }
+    
+    init(indexPath: IndexPath) {
+        self.init(row: indexPath.row, column: indexPath.column)
+    }
+
     public var hashValue: Int {
         return 32768 * row + column
     }
