@@ -7,18 +7,16 @@ namespace :test do
     XCJobs::Test.new("simulator") do |t|
       configuration = ENV['CONFIGURATION']
       destination = ENV['DESTINATION']
-      test_suites = ENV['TEST_SUITES']
+      testcase = ENV['TESTCASE']
       configuration = 'Debug' if configuration.empty?
-    
+      
       t.workspace = 'SpreadsheetView'
       t.scheme = 'SpreadsheetView'
       t.sdk = 'iphonesimulator'
       t.configuration = configuration 
       t.add_build_setting('ENABLE_TESTABILITY', 'YES') if configuration == 'Release'
       t.add_destination(destination) unless destination.empty?
-      test_suites.split(',').each do |test_suite|
-        t.add_only_testing("SpreadsheetViewTests/#{test_suite}")
-      end
+      t.add_only_testing("SpreadsheetViewTests/#{testcase}") unless testcase.empty?
       t.coverage = true
       t.build_dir = 'build'
     end
