@@ -9,7 +9,7 @@ before_install:
 install:
 - bundle install --path=vendor/bundle --binstubs=vendor/bin
 script:
-- bundle exec rake "$ACTION" CONFIGURATION="Debug" DESTINATION="$DESTINATION" TESTCASE="$TESTCASE"
+- bundle exec rake "$ACTION" CONFIGURATION="Debug" DESTINATION="$DESTINATION" TESTCASE="$TESTCASE" coverage:coveralls
   coverage:coveralls
 branches:
   only:
