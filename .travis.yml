@@ -9,7 +9,7 @@ before_install:
 install:
   - bundle install --path=vendor/bundle --binstubs=vendor/bin
 script:
-  - bundle exec rake "$ACTION" coverage:coveralls
+  - travis_wait 30 bundle exec rake "$ACTION" coverage:coveralls
 branches:
   only:
     - master
