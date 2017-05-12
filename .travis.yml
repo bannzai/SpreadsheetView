@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode8.3
+osx_image: xcode8
 cache:
   directories:
     - Lib/vendor/bundle
@@ -7,13 +7,24 @@ before_install:
   - brew update
   - brew outdated carthage || brew upgrade carthage
 install:
-  - "(cd Lib && bundle install --path=vendor/bundle --binstubs=vendor/bin)"
+  - "bundle install --path=vendor/bundle --binstubs=vendor/bin"
 script:
-  - "bundle exec rake test:iphonesimulator coverage:coveralls"
+  - "bundle exec rake $ACTION"
 branches:
   only:
     - master
 env:
+  matrix:
+    - ACTION='test:iphonesimulator[Debug,"iPhone 4s",9.3] coverage:coveralls'
+    - ACTION='test:iphonesimulator[Debug,"iPhone 5",9.3] coverage:coveralls'
+    # - ACTION='test:iphonesimulator[Debug,"iPhone 5"s,10.2] coverage:coveralls'
+    - ACTION='test:iphonesimulator[Debug,"iPhone 6s",10.2] coverage:coveralls'
+    - ACTION='test:iphonesimulator[Debug,"iPhone 6s Plus",10.2] coverage:coveralls'
+    # - ACTION='test:iphonesimulator[Debug,"iPhone SE",10.2] coverage:coveralls'
+    # - ACTION='test:iphonesimulator[Debug,"iPad Pro2",9.3] coverage:coveralls'
+    # - ACTION='test:iphonesimulator[Debug,"iPad Air 2",10.2] coverage:coveralls'
+    # - ACTION='test:iphonesimulator[Debug,"iPad Pro (9.7 inch)",10.2] coverage:coveralls'
+    - ACTION='test:iphonesimulator[Debug,"iPad Pro (12.9 inch)",10.2] coverage:coveralls'
   global:
     - LANG=en_US.UTF-8
     - LC_ALL=en_US.UTF-8
