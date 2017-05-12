@@ -12,6 +12,7 @@ import XCTest
 class SelectionTests: XCTestCase {
     override func setUp() {
         super.setUp()
+        continueAfterFailure = false
     }
     
     override func tearDown() {

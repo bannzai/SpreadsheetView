@@ -12,6 +12,7 @@ import XCTest
 class ScrollTests: XCTestCase {
     override func setUp() {
         super.setUp()
+        continueAfterFailure = false
     }
 
     override func tearDown() {
