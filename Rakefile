@@ -16,7 +16,6 @@ namespace :test do
       t.add_destination("name=#{args['name']},OS=#{args['os']}")
       t.coverage = true
       t.build_dir = 'build'
-      t.formatter = 'xcpretty'
     end
     Rake::Task['simulator'].execute
   end
@@ -35,7 +34,6 @@ namespace :test do
       end
       t.coverage = true
       t.build_dir = 'build'
-      t.formatter = 'xcpretty'
     end
     Rake::Task['device'].execute
   end
