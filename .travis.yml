@@ -18,13 +18,16 @@ env:
     - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPhone 4s,OS=9.3'
     - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPhone 5,OS=9.3'
     # - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPhone 5s,OS=10.2'
-    - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPhone 6s,OS=10.2' TEST_SUITES='ScrollTests,SelectionTests'
-    - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPhone 6s Plus,OS=10.2' TEST_SUITES='ScrollTests,SelectionTests'
-    # - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPhone SE,OS=9.3'
+    - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPhone 6s,OS=10.2' TEST_SUITES='ScrollTests'
+    - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPhone 6s,OS=10.2' TEST_SUITES='SelectionTests'
+    - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPhone 6s Plus,OS=10.2' TEST_SUITES='ScrollTests'
+    - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPhone 6s Plus,OS=10.2' TEST_SUITES='SelectionTests'
+    # - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPhone SE,OS=10.2'
     # - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPad 2,OS=9.3' TEST_SUITES='ScrollTests,SelectionTests'
     # - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPad Air 2,OS=10.2' TEST_SUITES='ScrollTests,SelectionTests'
     # - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPad Pro (9.7-inch),OS=10.2' TEST_SUITES='ScrollTests,SelectionTests'
-    - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPad Pro (12.9-inch),OS=10.2' TEST_SUITES='ScrollTests,SelectionTests'
+    - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPad Pro (12.9-inch),OS=10.2' TEST_SUITES='ScrollTests'
+    - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPad Pro (12.9-inch),OS=10.2' TEST_SUITES='SelectionTests'
   global:
     - LANG=en_US.UTF-8
     - LC_ALL=en_US.UTF-8
