@@ -13,6 +13,7 @@ class MergedCellTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
+        continueAfterFailure = false
     }
     
     override func tearDown() {
@@ -52,48 +53,48 @@ class MergedCellTests: XCTestCase {
                            rows: (0, parameters.numberOfRows),
                            scrollPosition: [.left, .top],
                            parameters: parameters)
-//        verifyScrollToItem(spreadsheetView: spreadsheetView,
-//                           columns: (0, parameters.numberOfColumns),
-//                           rows: (0, parameters.numberOfRows),
-//                           scrollPosition: [.left, .centeredVertically],
-//                           parameters: parameters)
-//        verifyScrollToItem(spreadsheetView: spreadsheetView,
-//                           columns: (0, parameters.numberOfColumns),
-//                           rows: (0, parameters.numberOfRows),
-//                           scrollPosition: [.left, .bottom],
-//                           parameters: parameters)
-//
-//        verifyScrollToItem(spreadsheetView: spreadsheetView,
-//                           columns: (0, parameters.numberOfColumns),
-//                           rows: (0, parameters.numberOfRows),
-//                           scrollPosition: [.centeredHorizontally, .top],
-//                           parameters: parameters)
-//        verifyScrollToItem(spreadsheetView: spreadsheetView,
-//                           columns: (0, parameters.numberOfColumns),
-//                           rows: (0, parameters.numberOfRows),
-//                           scrollPosition: [.centeredHorizontally, .centeredVertically],
-//                           parameters: parameters)
-//        verifyScrollToItem(spreadsheetView: spreadsheetView,
-//                           columns: (0, parameters.numberOfColumns),
-//                           rows: (0, parameters.numberOfRows),
-//                           scrollPosition: [.centeredHorizontally, .bottom],
-//                           parameters: parameters)
-//
-//        verifyScrollToItem(spreadsheetView: spreadsheetView,
-//                           columns: (0, parameters.numberOfColumns),
-//                           rows: (0, parameters.numberOfRows),
-//                           scrollPosition: [.right, .top],
-//                           parameters: parameters)
-//        verifyScrollToItem(spreadsheetView: spreadsheetView,
-//                           columns: (0, parameters.numberOfColumns),
-//                           rows: (0, parameters.numberOfRows),
-//                           scrollPosition: [.right, .centeredVertically],
-//                           parameters: parameters)
-//        verifyScrollToItem(spreadsheetView: spreadsheetView,
-//                           columns: (0, parameters.numberOfColumns),
-//                           rows: (0, parameters.numberOfRows),
-//                           scrollPosition: [.right, .bottom],
-//                           parameters: parameters)
+        verifyScrollToItem(spreadsheetView: spreadsheetView,
+                           columns: (0, parameters.numberOfColumns),
+                           rows: (0, parameters.numberOfRows),
+                           scrollPosition: [.left, .centeredVertically],
+                           parameters: parameters)
+        verifyScrollToItem(spreadsheetView: spreadsheetView,
+                           columns: (0, parameters.numberOfColumns),
+                           rows: (0, parameters.numberOfRows),
+                           scrollPosition: [.left, .bottom],
+                           parameters: parameters)
+
+        verifyScrollToItem(spreadsheetView: spreadsheetView,
+                           columns: (0, parameters.numberOfColumns),
+                           rows: (0, parameters.numberOfRows),
+                           scrollPosition: [.centeredHorizontally, .top],
+                           parameters: parameters)
+        verifyScrollToItem(spreadsheetView: spreadsheetView,
+                           columns: (0, parameters.numberOfColumns),
+                           rows: (0, parameters.numberOfRows),
+                           scrollPosition: [.centeredHorizontally, .centeredVertically],
+                           parameters: parameters)
+        verifyScrollToItem(spreadsheetView: spreadsheetView,
+                           columns: (0, parameters.numberOfColumns),
+                           rows: (0, parameters.numberOfRows),
+                           scrollPosition: [.centeredHorizontally, .bottom],
+                           parameters: parameters)
+
+        verifyScrollToItem(spreadsheetView: spreadsheetView,
+                           columns: (0, parameters.numberOfColumns),
+                           rows: (0, parameters.numberOfRows),
+                           scrollPosition: [.right, .top],
+                           parameters: parameters)
+        verifyScrollToItem(spreadsheetView: spreadsheetView,
+                           columns: (0, parameters.numberOfColumns),
+                           rows: (0, parameters.numberOfRows),
+                           scrollPosition: [.right, .centeredVertically],
+                           parameters: parameters)
+        verifyScrollToItem(spreadsheetView: spreadsheetView,
+                           columns: (0, parameters.numberOfColumns),
+                           rows: (0, parameters.numberOfRows),
+                           scrollPosition: [.right, .bottom],
+                           parameters: parameters)
     }
 
     func testColumnHeaderView() {
@@ -242,21 +243,21 @@ class MergedCellTests: XCTestCase {
                             expected.x = width + parameters.intercellSpacing.width
                         } else {
                             actual.x = cell.convert(cell.bounds, to: spreadsheetView).origin.x
-                            expected.x = (spreadsheetView.frame.width + frozenWidth - parameters.columns[column]) / 2
+                            expected.x = (spreadsheetView.frame.width + frozenWidth - (parameters.columns[column] + parameters.columns[column + 1] + parameters.intercellSpacing.width)) / 2
                         }
                     } else {
                         if width < frozenWidth {
                             actual.x = rect.origin.x
                             expected.x = width + parameters.intercellSpacing.width
-                        } else if width + parameters.intercellSpacing.width + parameters.columns[column] / 2 - frozenWidth <= (spreadsheetView.frame.width - frozenWidth) / 2 {
+                        } else if width + parameters.intercellSpacing.width + (parameters.columns[column] + parameters.columns[column + 1] + parameters.intercellSpacing.width) / 2 - frozenWidth <= (spreadsheetView.frame.width - frozenWidth) / 2 {
                             actual.x = rect.origin.x
                             expected.x = width + parameters.intercellSpacing.width
-                        } else if width + parameters.intercellSpacing.width + parameters.columns[column] / 2 >= parameters.columnWidth - (spreadsheetView.frame.width - frozenWidth) / 2 {
+                        } else if width + parameters.intercellSpacing.width + (parameters.columns[column] + parameters.columns[column + 1] + parameters.intercellSpacing.width) / 2 >= parameters.columnWidth - (spreadsheetView.frame.width - frozenWidth) / 2 {
                             actual.x = rect.origin.x
                             expected.x = spreadsheetView.frame.width - (parameters.columnWidth - width) + parameters.intercellSpacing.width
                         } else {
                             actual.x = cell.convert(cell.bounds, to: spreadsheetView).origin.x
-                            expected.x = (spreadsheetView.frame.width + frozenWidth - parameters.columns[column]) / 2
+                            expected.x = (spreadsheetView.frame.width + frozenWidth - (parameters.columns[column] + parameters.columns[column + 1] + parameters.intercellSpacing.width)) / 2
                         }
                     }
                 }
@@ -265,7 +266,7 @@ class MergedCellTests: XCTestCase {
                         actual.x = rect.maxX + parameters.intercellSpacing.width
                         expected.x = spreadsheetView.frame.width
                     } else {
-                        if width - frozenWidth + parameters.columns[column] + parameters.intercellSpacing.width * 2 <= spreadsheetView.frame.width - frozenWidth {
+                        if width - frozenWidth + (parameters.columns[column] + parameters.columns[column + 1] + parameters.intercellSpacing.width) + parameters.intercellSpacing.width * 2 <= spreadsheetView.frame.width - frozenWidth {
                             actual.x = rect.origin.x
                             expected.x = width + parameters.intercellSpacing.width
                         } else {
@@ -300,21 +301,21 @@ class MergedCellTests: XCTestCase {
                             expected.y = height + parameters.intercellSpacing.height
                         } else {
                             actual.y = cell.convert(cell.bounds, to: spreadsheetView).origin.y
-                            expected.y = (spreadsheetView.frame.height + frozenHeight - parameters.rows[row]) / 2
+                            expected.y = (spreadsheetView.frame.height + frozenHeight - (parameters.rows[row] + parameters.rows[row + 1] + parameters.intercellSpacing.height)) / 2
                         }
                     } else {
                         if height < frozenHeight {
                             actual.y = rect.origin.y
                             expected.y = height + parameters.intercellSpacing.height
-                        } else if height + parameters.intercellSpacing.height + parameters.rows[row] / 2 - frozenHeight <= (spreadsheetView.frame.height - frozenHeight) / 2 {
+                        } else if height + parameters.intercellSpacing.height + (parameters.rows[row] + parameters.rows[row + 1] + parameters.intercellSpacing.height) / 2 - frozenHeight <= (spreadsheetView.frame.height - frozenHeight) / 2 {
                             actual.y = rect.origin.y
                             expected.y = height + parameters.intercellSpacing.height
-                        } else if height + parameters.intercellSpacing.height + parameters.rows[row] / 2 >= parameters.rowHeight - (spreadsheetView.frame.height - frozenHeight) / 2 {
+                        } else if height + parameters.intercellSpacing.height + (parameters.rows[row] + parameters.rows[row + 1] + parameters.intercellSpacing.height) / 2 >= parameters.rowHeight - (spreadsheetView.frame.height - frozenHeight) / 2 {
                             actual.y = cell.convert(cell.bounds, to: spreadsheetView).origin.y
                             expected.y = spreadsheetView.frame.height - (parameters.rowHeight - height) + parameters.intercellSpacing.height
                         } else {
                             actual.y = cell.convert(cell.bounds, to: spreadsheetView).origin.y
-                            expected.y = (spreadsheetView.frame.height + frozenHeight - parameters.rows[row]) / 2
+                            expected.y = (spreadsheetView.frame.height + frozenHeight - (parameters.rows[row] + parameters.rows[row + 1] + parameters.intercellSpacing.height)) / 2
                         }
                     }
                 }
@@ -323,7 +324,7 @@ class MergedCellTests: XCTestCase {
                         actual.y = rect.maxY + parameters.intercellSpacing.height
                         expected.y = spreadsheetView.frame.height
                     } else {
-                        if height - frozenHeight + parameters.rows[row] + parameters.intercellSpacing.height * 2 <= spreadsheetView.frame.height - frozenHeight {
+                        if height - frozenHeight + (parameters.rows[row] + parameters.rows[row + 1] + parameters.intercellSpacing.height) + parameters.intercellSpacing.height * 2 <= spreadsheetView.frame.height - frozenHeight {
                             actual.y = rect.origin.y
                             expected.y = height + parameters.intercellSpacing.height
                         } else {
