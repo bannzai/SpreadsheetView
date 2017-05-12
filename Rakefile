@@ -3,7 +3,6 @@ require 'xcjobs'
 namespace :test do
   desc 'test on simulator'
   task :iphonesimulator do |t, args|
-    args.with_defaults 'configuration' => 'Debug', 'testsuites' => ''
     XCJobs::Test.new("simulator") do |t|
       configuration = ENV['CONFIGURATION']
       destination = ENV['DESTINATION']
