@@ -9,7 +9,7 @@ before_install:
 install:
   - bundle install --path=vendor/bundle --binstubs=vendor/bin
 script:
-  - travis_wait 50 ruby scripts/travis_ci.rb
+  - bundle exec rake "$ACTION"
 branches:
   only:
     - master

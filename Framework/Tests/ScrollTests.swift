@@ -343,6 +343,7 @@ class ScrollTests: XCTestCase {
         var width = calculateWidth(range: 0..<columns.from, parameters: parameters)
 
         for column in columns.from..<columns.to {
+            print("Still running \(#function)")
             var height = calculateHeight(range: 0..<rows.from, parameters: parameters)
 
             for row in rows.from..<rows.to {
