@@ -476,7 +476,7 @@ public class SpreadsheetView: UIView {
             if !scrollPosition.isEmpty {
                 scrollToItem(at: indexPath, at: scrollPosition, animated: animated)
                 if animated {
-                    pendingSelectionIndexPath?.append(indexPath)
+                    pendingSelectionIndexPath = indexPath
                     return
                 }
             }
