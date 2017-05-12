@@ -225,7 +225,7 @@ class SelectionTests: XCTestCase {
         var offsetHeight: CGFloat = 0
         var leftEdgeColumn = 0
         for column in columns.from..<columns.to {
-            if width + parameters.columns[column] + parameters.intercellSpacing.width > spreadsheetView.frame.width {
+            if width + parameters.columns[column] + parameters.intercellSpacing.width >= spreadsheetView.frame.width {
                 offsetWidth = calculateWidth(range: 0..<column, parameters: parameters)
                 if parameters.columnWidth - offsetWidth < spreadsheetView.frame.width {
                     offsetWidth -= spreadsheetView.frame.width - (parameters.columnWidth - offsetWidth)
@@ -240,7 +240,7 @@ class SelectionTests: XCTestCase {
             offsetHeight = 0
 
             for row in rows.from..<rows.to {
-                if height + parameters.rows[row] + parameters.intercellSpacing.height > spreadsheetView.frame.height {
+                if height + parameters.rows[row] + parameters.intercellSpacing.height >= spreadsheetView.frame.height {
                     offsetHeight = calculateHeight(range: 0..<(row), parameters: parameters)
                     if parameters.rowHeight - offsetHeight < spreadsheetView.frame.height {
                         offsetHeight -= spreadsheetView.frame.height - (parameters.rowHeight - offsetHeight)
