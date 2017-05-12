@@ -2,18 +2,23 @@ require 'xcjobs'
 
 namespace :test do
   desc 'test on simulator'
-  task 'iphonesimulator', 'configuration', 'name', 'os'
-  task 'iphonesimulator' do |t, args|
+  task :iphonesimulator do |t, args|
+    args.with_defaults 'configuration' => 'Debug', 'testsuites' => ''
     XCJobs::Test.new("simulator") do |t|
+      configuration = ENV['CONFIGURATION']
+      destination = ENV['DESTINATION']
+      test_suites = ENV['TEST_SUITES']
+      configuration = 'Debug' if configuration.empty?
+    
       t.workspace = 'SpreadsheetView'
       t.scheme = 'SpreadsheetView'
       t.sdk = 'iphonesimulator'
-      configuration = args['configuration'] || 'Debug'
-      t.configuration = configuration
-      if configuration == 'Release'
-        t.add_build_setting('ENABLE_TESTABILITY', 'YES')
+      t.configuration = configuration 
+      t.add_build_setting('ENABLE_TESTABILITY', 'YES') if configuration == 'Release'
+      t.add_destination(destination) unless destination.empty?
+      test_suites.split(',').each do |test_suite|
+        t.add_only_testing("SpreadsheetViewTests/#{test_suite}")
       end
-      t.add_destination("name=#{args['name']},OS=#{args['os']}")
       t.coverage = true
       t.build_dir = 'build'
     end
@@ -21,8 +26,7 @@ namespace :test do
   end
 
   desc 'test on device'
-  task 'iphoneos', 'configuration'
-  task 'iphoneos' do |t, args|
+  task :iphoneos do |t, args|
     XCJobs::Test.new("device") do |t|
       t.workspace = 'SpreadsheetView'
       t.scheme = 'SpreadsheetView'

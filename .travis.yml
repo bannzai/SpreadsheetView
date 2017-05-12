@@ -9,22 +9,22 @@ before_install:
 install:
   - bundle install --path=vendor/bundle --binstubs=vendor/bin
 script:
-  - bundle exec rake "$ACTION"
+  - bundle exec rake "$ACTION" CONFIGURATION="$CONFIGURATION" DESTINATION="$DESTINATION" TEST_SUITES="$TEST_SUITES"
 branches:
   only:
     - master
 env:
   matrix:
-    - ACTION='test:iphonesimulator[Debug,iPhone 4s,9.3]'
-    - ACTION='test:iphonesimulator[Debug,iPhone 5,9.3]'
-    # - ACTION='test:iphonesimulator[Debug,iPhone 5s,10.2]'
-    - ACTION='test:iphonesimulator[Debug,iPhone 6s,10.2]'
-    # - ACTION='test:iphonesimulator[Debug,iPhone 6s Plus,10.2]'
-    # - ACTION='test:iphonesimulator[Debug,iPhone SE,10.2]'
-    # - ACTION='test:iphonesimulator[Debug,iPad Pro2,9.3]'
-    # - ACTION='test:iphonesimulator[Debug,iPad Air 2,10.2]'
-    # - ACTION='test:iphonesimulator[Debug,iPad Pro (9.7-inch),10.2]'
-    # - ACTION='test:iphonesimulator[Debug,iPad Pro (12.9-inch),10.2]'
+    - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPhone 4s,OS=9.3'
+    - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPhone 5,OS=9.3'
+    # - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPhone 5s,OS=10.2'
+    - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPhone 6s,OS=10.2' TEST_SUITES='ScrollTests,SelectionTests'
+    - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPhone 6s Plus,OS=10.2' TEST_SUITES='ScrollTests,SelectionTests'
+    # - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPhone SE,OS=9.3'
+    # - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPad 2,OS=9.3' TEST_SUITES='ScrollTests,SelectionTests'
+    # - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPad Air 2,OS=10.2' TEST_SUITES='ScrollTests,SelectionTests'
+    # - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPad Pro (9.7-inch),OS=10.2' TEST_SUITES='ScrollTests,SelectionTests'
+    - ACTION=test:iphonesimulator CONFIGURATION=Debug DESTINATION='name=iPad Pro (12.9-inch),OS=10.2' TEST_SUITES='ScrollTests,SelectionTests'
   global:
     - LANG=en_US.UTF-8
     - LC_ALL=en_US.UTF-8
