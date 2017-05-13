@@ -183,7 +183,10 @@ spreadsheetView.circularScrolling =
     CircularScrolling.Configuration.both.columnHeaderStartsFirstRow
 ```
 
-### Grids, Borders and cell spacing 
+### Customize gridlines, borders and cell spacing
+You can customize the appearance of grid lines and borders of the cell. You can specify whether a cell has a grid line or border. Grid lines and borders can be displayed on the left, right, top, or bottom, or around all four sides of the cell.
+
+The difference between gridlines and borders is that the gridlines are drawn at the center of the inter-cell spacing, but the borders are drawn to fit around the cell.
 
 #### Cell spacing
 
@@ -193,7 +196,8 @@ spreadsheetView.circularScrolling =
 spreadsheetView.intercellSpacing = CGSize(width: 1, height: 1)
 ```
 
-#### Grid
+#### Gridlines
+
 <img src="Resources/Grid.png" style="width: 200px; border: 1px 1px 0 0 #888995 solid;" width="200"></img>
 
 `SpreadsheetView`'s `gridStyle` property is applied to the entire table.
