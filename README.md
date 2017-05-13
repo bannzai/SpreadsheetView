@@ -106,7 +106,7 @@ Freezing a column or row behaves as a fixed column/row header.
 #### Column Header
 ```swift
 func frozenColumns(in spreadsheetView: SpreadsheetView) -> Int {
-    return 1
+    return 2
 }
 ```
 
