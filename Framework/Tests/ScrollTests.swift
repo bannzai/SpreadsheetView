@@ -12,6 +12,7 @@ import XCTest
 class ScrollTests: XCTestCase {
     override func setUp() {
         super.setUp()
+        continueAfterFailure = false
     }
 
     override func tearDown() {
@@ -343,6 +344,9 @@ class ScrollTests: XCTestCase {
         var width = calculateWidth(range: 0..<columns.from, parameters: parameters)
 
         for column in columns.from..<columns.to {
+            if column % 10 == 0 {
+                print("still running") // Work around for Travis CI timeout
+            }
             var height = calculateHeight(range: 0..<rows.from, parameters: parameters)
 
             for row in rows.from..<rows.to {

@@ -388,8 +388,15 @@ public class SpreadsheetView: UIView {
         }
 
         var contentOffset =  CGPoint(x: columnRecords[indexPath.column], y: rowRecords[indexPath.row])
-        let width = layoutProperties.columnWidthCache[indexPath.column]
-        let height = layoutProperties.rowHeightCache[indexPath.row]
+        let width: CGFloat
+        let height: CGFloat
+        if let mergedCell = layoutProperties.mergedCellLayouts[Location(indexPath: indexPath)] {
+            width = (mergedCell.from.column...mergedCell.to.column).reduce(0) { $0 + layoutProperties.columnWidthCache[$1] } + intercellSpacing.width
+            height = (mergedCell.from.row...mergedCell.to.row).reduce(0) { $0 + layoutProperties.rowHeightCache[$1] } + intercellSpacing.height
+        } else {
+            width = layoutProperties.columnWidthCache[indexPath.column]
+            height = layoutProperties.rowHeightCache[indexPath.row]
+        }
 
         if circularScrollingOptions.direction.contains(.horizontally) {
             if contentOffset.x > centerOffset.x {
@@ -469,7 +476,7 @@ public class SpreadsheetView: UIView {
             if !scrollPosition.isEmpty {
                 scrollToItem(at: indexPath, at: scrollPosition, animated: animated)
                 if animated {
-                    pendingSelectionIndexPath?.append(indexPath)
+                    pendingSelectionIndexPath = indexPath
                     return
                 }
             }

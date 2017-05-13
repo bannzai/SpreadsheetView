@@ -2,29 +2,69 @@ language: objective-c
 osx_image: xcode8.3
 cache:
   directories:
-    - Lib/vendor/bundle
+  - vendor
 before_install:
-  - brew update
-  - brew outdated carthage || brew upgrade carthage
+- brew update
+- brew outdated carthage || brew upgrade carthage
 install:
-  - bundle install --path=vendor/bundle --binstubs=vendor/bin
+- bundle install --path=vendor/bundle --binstubs=vendor/bin
 script:
-  - travis_wait 40 ruby cmd.rb bundle exec rake "$ACTION"
+- bundle exec rake "$ACTION" CONFIGURATION="Debug" DESTINATION="$DESTINATION" TESTCASE="$TESTCASE" coverage:coveralls
+  coverage:coveralls
 branches:
   only:
-    - master
+  - master
 env:
   matrix:
-    - ACTION='test:iphonesimulator[Debug,iPhone-4s,9.3] coverage:coveralls'
-    - ACTION='test:iphonesimulator[Debug,iPhone 5,9.3] coverage:coveralls'
-    # - ACTION='test:iphonesimulator[Debug,iPhone 5s,10.2] coverage:coveralls'
-    - ACTION='test:iphonesimulator[Debug,iPhone 6s,10.2] coverage:coveralls'
-    - ACTION='test:iphonesimulator[Debug,iPhone 6s Plus,10.2] coverage:coveralls'
-    # - ACTION='test:iphonesimulator[Debug,iPhone SE,10.2] coverage:coveralls'
-    # - ACTION='test:iphonesimulator[Debug,iPad Pro2,9.3] coverage:coveralls'
-    # - ACTION='test:iphonesimulator[Debug,iPad Air 2,10.2] coverage:coveralls'
-    # - ACTION='test:iphonesimulator[Debug,iPad Pro (9.7-inch),10.2] coverage:coveralls'
-    - ACTION='test:iphonesimulator[Debug,iPad Pro (12.9-inch),10.2] coverage:coveralls'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPhone 4s,OS=9.3'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPhone 5,OS=9.3'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPhone 6s,OS=10.3' TESTCASE='MergedCellTests'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPhone 6s,OS=10.3' TESTCASE='ScrollTests'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPhone 6s,OS=10.3' TESTCASE='SelectionTests'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPhone 7 Plus,OS=10.3' TESTCASE='MergedCellTests'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPhone 7 Plus,OS=10.3' TESTCASE='ScrollTests'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPhone 7 Plus,OS=10.3' TESTCASE='SelectionTests'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad 2,OS=9.3' TESTCASE='MergedCellTests'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad 2,OS=9.3' TESTCASE='ScrollTests/testTableViewScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad 2,OS=9.3' TESTCASE='ScrollTests/testColumnHeaderViewScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad 2,OS=9.3' TESTCASE='ScrollTests/testRowHeaderViewScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad 2,OS=9.3' TESTCASE='ScrollTests/testColumnAndRowHeaderViewScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad 2,OS=9.3' TESTCASE='ScrollTests/testCircularScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad 2,OS=9.3' TESTCASE='SelectionTests'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Air 2,OS=10.3' TESTCASE='MergedCellTests'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Air 2,OS=10.3' TESTCASE='ScrollTests/testTableViewScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Air 2,OS=10.3' TESTCASE='ScrollTests/testColumnHeaderViewScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Air 2,OS=10.3' TESTCASE='ScrollTests/testRowHeaderViewScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Air 2,OS=10.3' TESTCASE='ScrollTests/testColumnAndRowHeaderViewScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Air 2,OS=10.3' TESTCASE='ScrollTests/testCircularScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Air 2,OS=10.3' TESTCASE='SelectionTests'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Pro (9.7-inch),OS=10.3' TESTCASE='MergedCellTests'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Pro (9.7-inch),OS=10.3' TESTCASE='ScrollTests/testTableViewScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Pro (9.7-inch),OS=10.3' TESTCASE='ScrollTests/testColumnHeaderViewScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Pro (9.7-inch),OS=10.3' TESTCASE='ScrollTests/testRowHeaderViewScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Pro (9.7-inch),OS=10.3' TESTCASE='ScrollTests/testColumnAndRowHeaderViewScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Pro (9.7-inch),OS=10.3' TESTCASE='ScrollTests/testCircularScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Pro (9.7-inch),OS=10.3' TESTCASE='SelectionTests'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Pro (12.9-inch),OS=10.3' TESTCASE='MergedCellTests'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Pro (12.9-inch),OS=10.3' TESTCASE='ScrollTests/testTableViewScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Pro (12.9-inch),OS=10.3' TESTCASE='ScrollTests/testColumnHeaderViewScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Pro (12.9-inch),OS=10.3' TESTCASE='ScrollTests/testRowHeaderViewScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Pro (12.9-inch),OS=10.3' TESTCASE='ScrollTests/testColumnAndRowHeaderViewScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Pro (12.9-inch),OS=10.3' TESTCASE='ScrollTests/testCircularScrolling'
+  - ACTION=test:iphonesimulator DESTINATION='name=iPad Pro (12.9-inch),OS=10.3' TESTCASE='SelectionTests'
   global:
-    - LANG=en_US.UTF-8
-    - LC_ALL=en_US.UTF-8
+  - LANG=en_US.UTF-8
+  - LC_ALL=en_US.UTF-8
+  - FRAMEWORK_NAME=SpreadsheetView
+before_deploy:
+- carthage build --no-skip-current
+- carthage archive $FRAMEWORK_NAME
+deploy:
+  provider: releases
+  api_key:
+    secure: ahHhvdknIX8RMoEp5SbjHPelCtkFhEfSOZHc9Ty9FeuA6iFrJNqls17vip3f1R5UgR7AAjzfFaIxrY+xa7/tasje1HZE7az1df6jEzCqoM6U7Ot50uoDcZcfk/MsbtJ6ufj8/C7aUNtO3ELrqAvLSQEelKx1epKlFGD8qph8Hm8xtazIp92YtK/T7snCoqLf7zTMfV/rbueDP29JY4S0hdRh6kbZyB7o83E1FO0qAlL5/BeRlSNVDtdB7b0Fn1XuQ7KCbsQulboomkTCTFLNKGkIqmSXelLFeaUJLr02zt/LT+jIyHNeGS7Cduc0z17LYhtfbIkVMs2VV9/hsvAmcwfbJtZK7eAupkCl+1YiUmbna/x9rS9MuL0+gUNtajA5vXey/jeuy17gDpIetX+Me6VNW5o2AcVnw6GXhdNPBTadfSai1C0Jb7Cru8cWdAniKH1jDfPjT3R5PEonfoX13dZrzuQfEh9wvO2UAufI1O7BCEfjx49k9NeM6nqpbTAap5pR1djAnuYFIJrN96vSdoZ/bbRVD+tM+xgt0WSJdD6Tbt0+J/45JvZJ1w6f9ytvA8KQJGJN/OsWBYKi80Rq6VmcRhUh0OyH9/hrb44AySYiTPGf6ol/pjE4O4EjZ/MboabIe8RandG/Ty4wZZbvzGT9fRuDLByr2jfNb3/X4F8=
+  file: "$FRAMEWORK_NAME.framework.zip"
+  skip_cleanup: true
+  on:
+    repo: kishikawakatsumi/SpreadsheetView
+    tags: true

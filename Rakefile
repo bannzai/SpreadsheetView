@@ -2,28 +2,28 @@ require 'xcjobs'
 
 namespace :test do
   desc 'test on simulator'
-  task 'iphonesimulator', 'configuration', 'name', 'os'
-  task 'iphonesimulator' do |t, args|
+  task :iphonesimulator do |t, args|
     XCJobs::Test.new("simulator") do |t|
+      configuration = ENV['CONFIGURATION']
+      destination = ENV['DESTINATION']
+      testcase = ENV['TESTCASE']
+      configuration = 'Debug' if configuration.empty?
+      
       t.workspace = 'SpreadsheetView'
       t.scheme = 'SpreadsheetView'
       t.sdk = 'iphonesimulator'
-      configuration = args['configuration'] || 'Debug'
-      t.configuration = configuration
-      if configuration == 'Release'
-        t.add_build_setting('ENABLE_TESTABILITY', 'YES')
-      end
-      t.add_destination("name=#{args['name']},OS=#{args['os']}")
+      t.configuration = configuration 
+      t.add_build_setting('ENABLE_TESTABILITY', 'YES') if configuration == 'Release'
+      t.add_destination(destination) unless destination.empty?
+      t.add_only_testing("SpreadsheetViewTests/#{testcase}") unless testcase.empty?
       t.coverage = true
       t.build_dir = 'build'
-      t.formatter = 'xcpretty'
     end
     Rake::Task['simulator'].execute
   end
 
   desc 'test on device'
-  task 'iphoneos', 'configuration'
-  task 'iphoneos' do |t, args|
+  task :iphoneos do |t, args|
     XCJobs::Test.new("device") do |t|
       t.workspace = 'SpreadsheetView'
       t.scheme = 'SpreadsheetView'
@@ -35,7 +35,6 @@ namespace :test do
       end
       t.coverage = true
       t.build_dir = 'build'
-      t.formatter = 'xcpretty'
     end
     Rake::Task['device'].execute
   end
