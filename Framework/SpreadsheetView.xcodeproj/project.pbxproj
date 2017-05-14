@@ -42,6 +42,7 @@
 		14AE25761EBF1F8C0003D1F8 /* MergedCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AE25751EBF1F8C0003D1F8 /* MergedCellTests.swift */; };
 		14B2F2501EC031950014C199 /* Borders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2F24F1EC031950014C199 /* Borders.swift */; };
 		14B36C4F1EBF664600730F29 /* Grids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B36C4E1EBF664600730F29 /* Grids.swift */; };
+		14CBB7F01EC8AF22005BEEB3 /* CellRangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CBB7EF1EC8AF22005BEEB3 /* CellRangeTests.swift */; };
 		14EA70931EC198D600AB24EC /* SpreadsheetView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 149E6A691EADE047000D851D /* SpreadsheetView.framework */; };
 		14EA70941EC198D600AB24EC /* SpreadsheetView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 149E6A691EADE047000D851D /* SpreadsheetView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -125,6 +126,7 @@
 		14AE25751EBF1F8C0003D1F8 /* MergedCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergedCellTests.swift; sourceTree = "<group>"; };
 		14B2F24F1EC031950014C199 /* Borders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Borders.swift; sourceTree = "<group>"; };
 		14B36C4E1EBF664600730F29 /* Grids.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grids.swift; sourceTree = "<group>"; };
+		14CBB7EF1EC8AF22005BEEB3 /* CellRangeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellRangeTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,6 +246,7 @@
 				143664C21EB61FE900321E5E /* SelectionTests.swift */,
 				14AE25751EBF1F8C0003D1F8 /* MergedCellTests.swift */,
 				149E24011EBECDFB0049E172 /* DataSourceTests.swift */,
+				14CBB7EF1EC8AF22005BEEB3 /* CellRangeTests.swift */,
 				1478491E1EC38F8B0020C938 /* ConfigurationTests.swift */,
 				143664C41EB6201800321E5E /* PerformanceTests.swift */,
 				143664C01EB5A07300321E5E /* HelperObjects.swift */,
@@ -447,6 +450,7 @@
 				1478491F1EC38F8D0020C938 /* ConfigurationTests.swift in Sources */,
 				143664C51EB6201800321E5E /* PerformanceTests.swift in Sources */,
 				143664C11EB5A07300321E5E /* HelperObjects.swift in Sources */,
+				14CBB7F01EC8AF22005BEEB3 /* CellRangeTests.swift in Sources */,
 				143664BF1EB5A01600321E5E /* HelperFunctions.swift in Sources */,
 				143664C31EB61FE900321E5E /* SelectionTests.swift in Sources */,
 				149E24021EBECDFB0049E172 /* DataSourceTests.swift in Sources */,

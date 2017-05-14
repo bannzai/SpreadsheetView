@@ -161,4 +161,34 @@ class ConfigurationTests: XCTestCase {
             XCTAssertEqual(configuration.options.tableStyle, [.columnHeaderNotRepeated, .rowHeaderNotRepeated])
         }
     }
+
+    func testDescription() {
+        XCTAssertEqual(CircularScrolling.Configuration.none.description,
+                       "(direction: [], tableStyle: [], headerStyle: .none)")
+
+        XCTAssertEqual(CircularScrolling.Configuration.horizontally.description,
+                       "(direction: [\".horizontally\"], tableStyle: [], headerStyle: .none)")
+        XCTAssertEqual(CircularScrolling.Configuration.horizontally.columnHeaderNotRepeated.description,
+                       "(direction: [\".horizontally\"], tableStyle: [\".columnHeaderNotRepeated\"], headerStyle: .none)")
+        XCTAssertEqual(CircularScrolling.Configuration.horizontally.columnHeaderNotRepeated.rowHeaderStartsFirstColumn.description,
+                       "(direction: [\".horizontally\"], tableStyle: [\".columnHeaderNotRepeated\"], headerStyle: .rowHeaderStartsFirstColumn)")
+
+        XCTAssertEqual(CircularScrolling.Configuration.vertically.description,
+                       "(direction: [\".vertically\"], tableStyle: [], headerStyle: .none)")
+        XCTAssertEqual(CircularScrolling.Configuration.vertically.rowHeaderNotRepeated.description,
+                       "(direction: [\".vertically\"], tableStyle: [\".rowHeaderNotRepeated\"], headerStyle: .none)")
+        XCTAssertEqual(CircularScrolling.Configuration.vertically.rowHeaderNotRepeated.columnHeaderStartsFirstRow.description,
+                       "(direction: [\".vertically\"], tableStyle: [\".rowHeaderNotRepeated\"], headerStyle: .columnHeaderStartsFirstRow)")
+
+        XCTAssertEqual(CircularScrolling.Configuration.both.description,
+                       "(direction: [\".vertically\", \".horizontally\"], tableStyle: [], headerStyle: .none)")
+        XCTAssertEqual(CircularScrolling.Configuration.both.columnHeaderNotRepeated.description,
+                       "(direction: [\".vertically\", \".horizontally\"], tableStyle: [\".columnHeaderNotRepeated\"], headerStyle: .none)")
+        XCTAssertEqual(CircularScrolling.Configuration.both.columnHeaderNotRepeated.rowHeaderNotRepeated.description,
+                       "(direction: [\".vertically\", \".horizontally\"], tableStyle: [\".columnHeaderNotRepeated\", \".rowHeaderNotRepeated\"], headerStyle: .none)")
+        XCTAssertEqual(CircularScrolling.Configuration.both.columnHeaderNotRepeated.rowHeaderNotRepeated.columnHeaderStartsFirstRow.description,
+                       "(direction: [\".vertically\", \".horizontally\"], tableStyle: [\".columnHeaderNotRepeated\", \".rowHeaderNotRepeated\"], headerStyle: .columnHeaderStartsFirstRow)")
+        XCTAssertEqual(CircularScrolling.Configuration.both.columnHeaderNotRepeated.rowHeaderNotRepeated.rowHeaderStartsFirstColumn.description,
+                       "(direction: [\".vertically\", \".horizontally\"], tableStyle: [\".columnHeaderNotRepeated\", \".rowHeaderNotRepeated\"], headerStyle: .rowHeaderStartsFirstColumn)")
+    }
 }
