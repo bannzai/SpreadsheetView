@@ -312,7 +312,7 @@ class SelectionTests: XCTestCase {
                 clearSelection()
 
                 verifyTouches(at: CGPoint(x: maxX + 0.01, y: minY), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: false)
-                waitRunLoop()
+                clearSelection()
 
                 verifyTouches(at: CGPoint(x: maxX, y: minY - 0.01), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: false)
                 clearSelection()
