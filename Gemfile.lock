@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/kishikawakatsumi/xcjobs.git
+  revision: a9f574d9492d6606dfe27187cb1f4f6a8ff271b7
+  branch: custom_build_options
+  specs:
+    xcjobs (0.7.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -57,7 +64,6 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
-    xcjobs (0.7.0)
     xcodeproj (1.4.4)
       CFPropertyList (~> 2.3.3)
       claide (>= 1.0.1, < 2.0)
@@ -72,7 +78,7 @@ PLATFORMS
 DEPENDENCIES
   cocoapods (= 1.1.1)
   rake
-  xcjobs
+  xcjobs!
   xcpretty
 
 BUNDLED WITH
