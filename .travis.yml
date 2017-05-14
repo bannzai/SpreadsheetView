@@ -10,9 +10,8 @@ install:
 - bundle install --path=vendor/bundle --binstubs=vendor/bin
 script:
 - bundle exec rake "$ACTION" CONFIGURATION="Debug" DESTINATION="$DESTINATION" TESTCASE="$TESTCASE"
-  coverage:coveralls
 after_success:
-- bash <(curl -s https://codecov.io/bash)
+- bash <(curl -s https://codecov.io/bash) -D ./build
 env:
   matrix:
   - ACTION=test:iphonesimulator DESTINATION='name=iPhone 4s,OS=9.3'
