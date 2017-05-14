@@ -281,7 +281,7 @@ class SelectionTests: XCTestCase {
 
                 func clearSelection() {
                     spreadsheetView.selectItem(at: nil, animated: false, scrollPosition: [])
-                    waitRunLoop()
+                    waitRunLoop(secs: 0.0001)
                 }
 
                 verifyTouches(at: CGPoint(x: minX, y: minY), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: true)
@@ -312,7 +312,6 @@ class SelectionTests: XCTestCase {
                 clearSelection()
 
                 verifyTouches(at: CGPoint(x: maxX + 0.01, y: minY), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: false)
-                spreadsheetView.selectItem(at: nil, animated: false, scrollPosition: [])
                 waitRunLoop()
 
                 verifyTouches(at: CGPoint(x: maxX, y: minY - 0.01), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: false)
