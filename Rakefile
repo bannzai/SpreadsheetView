@@ -12,11 +12,11 @@ namespace :test do
       t.workspace = 'SpreadsheetView'
       t.scheme = 'SpreadsheetView'
       t.sdk = 'iphonesimulator'
-      t.configuration = configuration 
+      t.configuration = configuration
       t.add_build_setting('ENABLE_TESTABILITY', 'YES') if configuration == 'Release'
-      t.add_destination(destination) unless destination.empty?
       t.add_only_testing("SpreadsheetViewTests/#{testcase}") unless testcase.empty?
-      t.coverage = true
+      t.add_destination(destination) unless destination.empty?
+      t.add_build_option('-enableCodeCoverage', 'YES')
       t.build_dir = 'build'
     end
     Rake::Task['simulator'].execute
@@ -33,7 +33,6 @@ namespace :test do
       if configuration == 'Release'
         t.add_build_setting('ENABLE_TESTABILITY', 'YES')
       end
-      t.coverage = true
       t.build_dir = 'build'
     end
     Rake::Task['device'].execute

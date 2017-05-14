@@ -9,11 +9,9 @@ before_install:
 install:
 - bundle install --path=vendor/bundle --binstubs=vendor/bin
 script:
-- bundle exec rake "$ACTION" CONFIGURATION="Debug" DESTINATION="$DESTINATION" TESTCASE="$TESTCASE" coverage:coveralls
-  coverage:coveralls
-branches:
-  only:
-  - master
+- bundle exec rake "$ACTION" CONFIGURATION="Debug" DESTINATION="$DESTINATION" TESTCASE="$TESTCASE"
+after_success:
+- bash <(curl -s https://codecov.io/bash) -D './build' -J 'SpreadsheetView'
 env:
   matrix:
   - ACTION=test:iphonesimulator DESTINATION='name=iPhone 4s,OS=9.3'
@@ -68,3 +66,6 @@ deploy:
   on:
     repo: kishikawakatsumi/SpreadsheetView
     tags: true
+branches:
+  only:
+  - master
