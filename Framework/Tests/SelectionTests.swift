@@ -254,13 +254,13 @@ class SelectionTests: XCTestCase {
                 let indexPath = IndexPath(row: row, column: column)
                 let rect = spreadsheetView.rectForItem(at: indexPath)
 
-                func verifyTouches(at location: CGPoint, on view: ScrollView, in spreadsheetView: SpreadsheetView, shouldSucceed: Bool) {
+                func verifyTouches(at location: CGPoint, on spreadsheetView: SpreadsheetView, shouldSucceed: Bool) {
                     let touch = Touch(location: location)
 
-                    view.touchesBegan(Set<UITouch>([touch]), with: nil)
+                    spreadsheetView.touchesBegan(Set<UITouch>([touch]), nil)
                     waitRunLoop()
 
-                    view.touchesEnded(Set<UITouch>([touch]), with: nil)
+                    spreadsheetView.touchesEnded(Set<UITouch>([touch]), nil)
                     waitRunLoop()
 
                     if shouldSucceed {
@@ -284,43 +284,43 @@ class SelectionTests: XCTestCase {
                     waitRunLoop(secs: 0.0001)
                 }
 
-                verifyTouches(at: CGPoint(x: minX, y: minY), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: true)
+                verifyTouches(at: CGPoint(x: minX, y: minY), on: spreadsheetView, shouldSucceed: true)
                 clearSelection()
 
-                verifyTouches(at: CGPoint(x: minX, y: maxY), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: true)
+                verifyTouches(at: CGPoint(x: minX, y: maxY), on: spreadsheetView, shouldSucceed: true)
                 clearSelection()
 
-                verifyTouches(at: CGPoint(x: maxX, y: minY), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: true)
+                verifyTouches(at: CGPoint(x: maxX, y: minY), on: spreadsheetView, shouldSucceed: true)
                 clearSelection()
 
-                verifyTouches(at: CGPoint(x: maxX, y: maxY), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: true)
+                verifyTouches(at: CGPoint(x: maxX, y: maxY), on: spreadsheetView, shouldSucceed: true)
                 clearSelection()
 
-                verifyTouches(at: CGPoint(x: midX, y: midY), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: true)
+                verifyTouches(at: CGPoint(x: midX, y: midY), on: spreadsheetView, shouldSucceed: true)
                 clearSelection()
 
-                verifyTouches(at: CGPoint(x: minX - 0.01, y: minY), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: false)
+                verifyTouches(at: CGPoint(x: minX - 0.01, y: minY), on: spreadsheetView, shouldSucceed: false)
                 clearSelection()
 
-                verifyTouches(at: CGPoint(x: minX, y: minY - 0.01), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: false)
+                verifyTouches(at: CGPoint(x: minX, y: minY - 0.01), on: spreadsheetView, shouldSucceed: false)
                 clearSelection()
 
-                verifyTouches(at: CGPoint(x: minX - 0.01, y: maxY), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: false)
+                verifyTouches(at: CGPoint(x: minX - 0.01, y: maxY), on: spreadsheetView, shouldSucceed: false)
                 clearSelection()
 
-                verifyTouches(at: CGPoint(x: minX, y: maxY + 0.01), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: false)
+                verifyTouches(at: CGPoint(x: minX, y: maxY + 0.01), on: spreadsheetView, shouldSucceed: false)
                 clearSelection()
 
-                verifyTouches(at: CGPoint(x: maxX + 0.01, y: minY), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: false)
+                verifyTouches(at: CGPoint(x: maxX + 0.01, y: minY), on: spreadsheetView, shouldSucceed: false)
                 clearSelection()
 
-                verifyTouches(at: CGPoint(x: maxX, y: minY - 0.01), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: false)
+                verifyTouches(at: CGPoint(x: maxX, y: minY - 0.01), on: spreadsheetView, shouldSucceed: false)
                 clearSelection()
 
-                verifyTouches(at: CGPoint(x: maxX + 0.01, y: maxY), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: false)
+                verifyTouches(at: CGPoint(x: maxX + 0.01, y: maxY), on: spreadsheetView, shouldSucceed: false)
                 clearSelection()
 
-                verifyTouches(at: CGPoint(x: maxX, y: maxY + 0.01), on: spreadsheetView.tableView, in: spreadsheetView, shouldSucceed: false)
+                verifyTouches(at: CGPoint(x: maxX, y: maxY + 0.01), on: spreadsheetView, shouldSucceed: false)
                 clearSelection()
             }
             spreadsheetView.scrollToItem(at: IndexPath(row: 0, column: leftEdgeColumn), at: [.left, .top], animated: false)

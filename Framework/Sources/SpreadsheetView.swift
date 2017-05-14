@@ -380,14 +380,15 @@ public class SpreadsheetView: UIView {
     }
     
     private func contentOffsetForScrollingToItem(at indexPath: IndexPath, at scrollPosition: ScrollPosition) -> CGPoint {
-        let columnRecords = columnHeaderView.columnRecords + tableView.columnRecords
-        let rowRecords = rowHeaderView.rowRecords + tableView.rowRecords
-
-        guard indexPath.column < numberOfColumns && indexPath.row < numberOfRows else {
-            fatalError("attempt to scroll to invalid index path: {column = \(indexPath.column), row = \(indexPath.row)}")
+        let (column, row) = (indexPath.column, indexPath.row)
+        guard column < numberOfColumns && row < numberOfRows else {
+            fatalError("attempt to scroll to invalid index path: {column = \(column), row = \(row)}")
         }
 
-        var contentOffset =  CGPoint(x: columnRecords[indexPath.column], y: rowRecords[indexPath.row])
+        let columnRecords = columnHeaderView.columnRecords + tableView.columnRecords
+        let rowRecords = rowHeaderView.rowRecords + tableView.rowRecords
+        var contentOffset = CGPoint(x: columnRecords[column], y: rowRecords[row])
+
         let width: CGFloat
         let height: CGFloat
         if let mergedCell = layoutProperties.mergedCellLayouts[Location(indexPath: indexPath)] {
@@ -619,14 +620,28 @@ public class SpreadsheetView: UIView {
     }
 
     public func rectForItem(at indexPath: IndexPath) -> CGRect {
-        if let cell = cellForItem(at: indexPath) {
-            return cell.frame
+        let (column, row) = (indexPath.column, indexPath.row)
+        guard column >= 0 && column < numberOfColumns && row >= 0 && row < numberOfRows else {
+            return .zero
         }
-        return CGRect.zero
-    }
 
-    public func rectsForItem(at indexPath: IndexPath) -> [CGRect] {
-        return cellsForItem(at: indexPath).map { $0.frame }
+        let columnRecords = columnHeaderView.columnRecords + tableView.columnRecords
+        let rowRecords = rowHeaderView.rowRecords + tableView.rowRecords
+        
+        let x = columnRecords[column] + (column >= layoutProperties.frozenColumns ? tableView.frame.origin.x : 0) + intercellSpacing.width
+        let y = rowRecords[row] + (row >= layoutProperties.frozenRows ? tableView.frame.origin.y : 0) + intercellSpacing.height
+        let origin = CGPoint(x: x, y: y)
+
+        let size: CGSize
+        if let mergedCell = layoutProperties.mergedCellLayouts[Location(row: row, column: column)] {
+            let width = (mergedCell.from.column...mergedCell.to.column).reduce(0) { $0 + layoutProperties.columnWidthCache[$1] }
+            let height = (mergedCell.from.row...mergedCell.to.row).reduce(0) { $0 + layoutProperties.rowHeightCache[$1] }
+            size = CGSize(width: width, height: height)
+        } else {
+            size = CGSize(width: layoutProperties.columnWidthCache[column], height: layoutProperties.rowHeightCache[row])
+        }
+        
+        return CGRect(origin: origin, size: size)
     }
 
     func mergedCell(for indexPath: Location) -> CellRange? {
