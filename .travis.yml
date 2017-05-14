@@ -3,6 +3,7 @@ osx_image: xcode8.3
 cache:
   directories:
   - vendor
+  - build
 before_install:
 - brew update
 - brew outdated carthage || brew upgrade carthage
