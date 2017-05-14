@@ -7,10 +7,6 @@
         <img src="https://travis-ci.org/kishikawakatsumi/SpreadsheetView.svg?branch=master&style=flat"
              alt="Build Status">
     </a>
-    <a href="https://coveralls.io/github/kishikawakatsumi/SpreadsheetView?branch=master">
-      <img src="https://coveralls.io/repos/github/kishikawakatsumi/SpreadsheetView/badge.svg?branch=master"
-           alt="Coverage Status" />
-    </a>
     <a href="https://cocoapods.org/pods/SpreadsheetView">
         <img src="https://img.shields.io/cocoapods/v/SpreadsheetView.svg?style=flat"
              alt="Pods Version">
