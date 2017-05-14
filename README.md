@@ -7,6 +7,9 @@
         <img src="https://travis-ci.org/kishikawakatsumi/SpreadsheetView.svg?branch=master&style=flat"
              alt="Build Status">
     </a>
+    <a href="https://codecov.io/gh/kishikawakatsumi/SpreadsheetView">
+        <img src="https://codecov.io/gh/kishikawakatsumi/SpreadsheetView/branch/master/graph/badge.svg" alt="Codecov" />
+    </a>
     <a href="https://cocoapods.org/pods/SpreadsheetView">
         <img src="https://img.shields.io/cocoapods/v/SpreadsheetView.svg?style=flat"
              alt="Pods Version">
