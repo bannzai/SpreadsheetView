@@ -7,17 +7,17 @@
 //
 
 import XCTest
+@testable import SpreadsheetView
 
 class DataSourceTests: XCTestCase {
-    
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         super.tearDown()
     }
-    
+
     func testDataSourceProperties() {
         let parameters = Parameters()
         let viewController = defaultViewController(parameters: parameters)

@@ -166,7 +166,7 @@ public class CircularScrollingConfigurationBuilder<T: CircularScrollingConfigura
 }
 
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Horizontally {
-    public var rowHeaderStartsFirstColumn: CircularScrollingConfiguration {
+    public var rowHeaderStartsFirstColumn: CircularScrollingConfigurationBuilder<CircularScrolling.Horizontally.RowHeaderStartsFirstColumn> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Horizontally.RowHeaderStartsFirstColumn>()
     }
     public var columnHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Horizontally.ColumnHeaderNotRepeated> {
@@ -182,7 +182,7 @@ public extension CircularScrollingConfigurationBuilder where T: CircularScrollin
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Horizontally.ColumnHeaderNotRepeated.RowHeaderStartsFirstColumn {}
 
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Vertically {
-    public var columnHeaderStartsFirstRow: CircularScrollingConfiguration {
+    public var columnHeaderStartsFirstRow: CircularScrollingConfigurationBuilder<CircularScrolling.Vertically.ColumnHeaderStartsFirstRow> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Vertically.ColumnHeaderStartsFirstRow>()
     }
     public var rowHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Vertically.RowHeaderNotRepeated> {
@@ -198,10 +198,10 @@ public extension CircularScrollingConfigurationBuilder where T: CircularScrollin
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Vertically.RowHeaderNotRepeated.ColumnHeaderStartsFirstRow {}
 
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Both {
-    public var rowHeaderStartsFirstColumn: CircularScrollingConfiguration {
+    public var rowHeaderStartsFirstColumn: CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderStartsFirstColumn> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderStartsFirstColumn>()
     }
-    public var columnHeaderStartsFirstRow: CircularScrollingConfiguration {
+    public var columnHeaderStartsFirstRow: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderStartsFirstRow> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderStartsFirstRow>()
     }
     public var columnHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated> {
@@ -266,21 +266,63 @@ public extension CircularScrollingConfigurationBuilder where T: CircularScrollin
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Both.RowHeaderNotRepeated.ColumnHeaderNotRepeated.RowHeaderStartsFirstColumn {}
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Both.RowHeaderNotRepeated.ColumnHeaderNotRepeated.ColumnHeaderStartsFirstRow {}
 
-extension CircularScrolling.Direction: CustomStringConvertible, CustomDebugStringConvertible {
+extension CircularScrollingConfigurationBuilder: CustomStringConvertible, CustomDebugStringConvertible {
     public var description: String {
-        switch self {
-        case [.vertically]:
-            return ".vertically"
-        case [.horizontally]:
-            return ".horizontally"
-        case [.both]:
-            return ".both"
-        default:
-            return ".none"
-        }
+        return "(direction: \(options.direction), tableStyle: \(options.tableStyle), headerStyle: \(options.headerStyle))"
     }
 
     public var debugDescription: String {
+        return description
+    }
+}
+
+extension CircularScrolling.Direction: CustomStringConvertible, CustomDebugStringConvertible {
+    var description: String {
+        var options = [String]()
+        if contains(.vertically) {
+            options.append(".vertically")
+        }
+        if contains(.horizontally) {
+            options.append(".horizontally")
+        }
+        return options.description
+    }
+
+    var debugDescription: String {
+        return description
+    }
+}
+
+extension CircularScrolling.TableStyle: CustomStringConvertible, CustomDebugStringConvertible {
+    var description: String {
+        var options = [String]()
+        if contains(.columnHeaderNotRepeated) {
+            options.append(".columnHeaderNotRepeated")
+        }
+        if contains(.rowHeaderNotRepeated) {
+            options.append(".rowHeaderNotRepeated")
+        }
+        return options.description
+    }
+
+    var debugDescription: String {
+        return description
+    }
+}
+
+extension CircularScrolling.HeaderStyle: CustomStringConvertible, CustomDebugStringConvertible {
+    var description: String {
+        switch self {
+        case .none:
+            return ".none"
+        case .columnHeaderStartsFirstRow:
+            return ".columnHeaderStartsFirstRow"
+        case .rowHeaderStartsFirstColumn:
+            return ".rowHeaderStartsFirstColumn"
+        }
+    }
+
+    var debugDescription: String {
         return description
     }
 }
