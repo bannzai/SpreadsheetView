@@ -1,45 +1,32 @@
-x.x.x Release notes (yyyy-MM-dd)
-=============================================================
+## Master
 
-### API Breaking Changes
-
-* None.
-
-### Enhancements
+##### Breaking
 
 * None.
 
-### Bugfixes
+##### Enhancements
+
+* None.
+
+##### Bug Fixes
 
 * Fix not working `flashScrollIndicators()` method.
 
-v0.6.1 Release notes (2017-05-14)
-=============================================================
+## 0.6.1 Release notes (2017-05-14)
 
-### API Breaking Changes
-
-* None.
-
-### Enhancements
+##### Breaking
 
 * None.
 
-### Bugfixes
+##### Enhancements
+
+* None.
+
+##### Bug Fixes
 
 * Fix `scrollToItem(indexPath:scrollPosition:animated:)` generates incorrect results 
   when specified index path for merged cells.
+  
+## 0.6.0 Release notes (2017-05-11)
 
-v0.6.0 Release notes (2017-05-11)
-=============================================================
-
-### API Breaking Changes
-
-* None.
-
-### Enhancements
-
-* None.
-
-### Bugfixes
-
-* None.
+First Version!
