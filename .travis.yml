@@ -12,7 +12,7 @@ install:
 script:
 - bundle exec rake "$ACTION" CONFIGURATION="Release" DESTINATION="$DESTINATION" TESTCASE="$TESTCASE"
 after_success:
-- bash <(curl -s https://codecov.io/bash) -D './build' -J 'SpreadsheetView'
+- bash <(curl -s https://codecov.io/bash) -D './build' -J '^SpreadsheetView$'
 env:
   matrix:
   - ACTION=test:iphonesimulator DESTINATION='name=iPhone 4s,OS=9.3'
