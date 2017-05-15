@@ -50,8 +50,13 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         twelveHourFormatter.locale = Locale(identifier: "en_US_POSIX")
         twelveHourFormatter.dateFormat = "H"
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        spreadsheetView.flashScrollIndicators()
+    }
 
-    /// DataSource
+    // MARK: DataSource
 
     func numberOfColumns(in spreadsheetView: SpreadsheetView) -> Int {
         return channels.count + 1

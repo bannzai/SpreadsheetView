@@ -104,6 +104,13 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         spreadsheetView.register(TaskCell.self, forCellWithReuseIdentifier: String(describing: TaskCell.self))
         spreadsheetView.register(ChartBarCell.self, forCellWithReuseIdentifier: String(describing: ChartBarCell.self))
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        spreadsheetView.flashScrollIndicators()
+    }
+
+    // MARK: DataSource
 
     func numberOfColumns(in spreadsheetView: SpreadsheetView) -> Int {
         return 3 + 7 * weeks.count

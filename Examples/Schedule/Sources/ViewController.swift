@@ -53,6 +53,13 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         spreadsheetView.register(ScheduleCell.self, forCellWithReuseIdentifier: String(describing: ScheduleCell.self))
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        spreadsheetView.flashScrollIndicators()
+    }
+
+    // MARK: DataSource
+
     func numberOfColumns(in spreadsheetView: SpreadsheetView) -> Int {
         return 1 + days.count
     }

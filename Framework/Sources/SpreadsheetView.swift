@@ -363,7 +363,7 @@ public class SpreadsheetView: UIView {
     }
 
     public func flashScrollIndicators() {
-        tableView.flashScrollIndicators()
+        overlayView.flashScrollIndicators()
     }
 
     public func setContentOffset(_ contentOffset: CGPoint, animated: Bool) {
