@@ -133,7 +133,7 @@ extension SpreadsheetView {
                         let location = Location(row: row, column: column)
                         if let existingMergedCell = layouts[location] {
                             if existingMergedCell.contains(mergedCell) {
-                                continue;
+                                continue
                             }
                             if mergedCell.contains(existingMergedCell) {
                                 layouts[location] = nil
@@ -293,7 +293,7 @@ extension SpreadsheetView {
             rootView.addSubview(cornerView)
         }
     }
-    
+
     func findIndex(in records: [CGFloat], for offset: CGFloat) -> Int {
         let index = records.insertionIndex(of: offset)
         return index == 0 ? 0 : index - 1

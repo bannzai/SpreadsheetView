@@ -50,7 +50,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         twelveHourFormatter.locale = Locale(identifier: "en_US_POSIX")
         twelveHourFormatter.dateFormat = "H"
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         spreadsheetView.flashScrollIndicators()
@@ -95,7 +95,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
             mergedCells.append(CellRange(from: (60 * row + 1, 0), to: (60 * (row + 1), 0)))
         }
 
-        let seeds = [5, 10, 20, 20, 30, 30, 30 ,30, 40, 40, 50, 50, 60, 60, 60, 60, 90, 90, 90, 90, 120, 120, 120]
+        let seeds = [5, 10, 20, 20, 30, 30, 30, 30, 40, 40, 50, 50, 60, 60, 60, 60, 90, 90, 90, 90, 120, 120, 120]
         for (index, _) in channels.enumerated() {
             var minutes = 0
             while minutes < 24 * 60 {
@@ -141,9 +141,9 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         }
         return spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: BlankCell.self), for: indexPath)
     }
-    
+
     /// Delegate
-    
+
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, didSelectItemAt indexPath: IndexPath) {
         if let cell = spreadsheetView.cellForItem(at: indexPath) as? SlotCell {
             print(cell)

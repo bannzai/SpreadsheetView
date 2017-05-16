@@ -103,7 +103,6 @@ class LayoutEngine {
             cellOrigin.y += rowHeightCache[row] + intercellSpacing.height
         }
 
-
         renderMergedCells()
         renderVerticalGrids()
         renderHorizontalGrids()
@@ -228,7 +227,7 @@ class LayoutEngine {
                 cellOrigin.x += cellWidth
                 continue
             }
-            
+
             let rowHeight = rowHeightCache[row]
 
             guard cellOrigin.x + columnWidth > visibleRect.minX else {
@@ -353,12 +352,12 @@ class LayoutEngine {
         for (address, gridLayout) in horizontalGridLayouts {
             var frame = CGRect.zero
             frame.origin = gridLayout.origin
-            if case let .top(leftWidth, rightWidth) = gridLayout.edge  {
+            if case let .top(leftWidth, rightWidth) = gridLayout.edge {
                 frame.origin.x -= leftWidth + (intercellSpacing.width - leftWidth) / 2
                 frame.origin.y -= intercellSpacing.height - (intercellSpacing.height - gridLayout.gridWidth) / 2
                 frame.size.width = gridLayout.length + leftWidth + (intercellSpacing.width - leftWidth) / 2 + rightWidth + (intercellSpacing.width - rightWidth) / 2
             }
-            if case let .bottom(leftWidth, rightWidth) = gridLayout.edge  {
+            if case let .bottom(leftWidth, rightWidth) = gridLayout.edge {
                 frame.origin.x -= leftWidth + (intercellSpacing.width - leftWidth) / 2
                 frame.origin.y -= (gridLayout.gridWidth - intercellSpacing.height) / 2
                 frame.size.width = gridLayout.length + leftWidth + (intercellSpacing.width - leftWidth) / 2 + rightWidth + (intercellSpacing.width - rightWidth) / 2
@@ -388,12 +387,12 @@ class LayoutEngine {
         for (address, gridLayout) in verticalGridLayouts {
             var frame = CGRect.zero
             frame.origin = gridLayout.origin
-            if case let .left(topWidth, bottomWidth) = gridLayout.edge  {
+            if case let .left(topWidth, bottomWidth) = gridLayout.edge {
                 frame.origin.x -= intercellSpacing.width - (intercellSpacing.width - gridLayout.gridWidth) / 2
                 frame.origin.y -= topWidth + (intercellSpacing.height - topWidth) / 2
                 frame.size.height = gridLayout.length + topWidth + (intercellSpacing.height - topWidth) / 2 + bottomWidth + (intercellSpacing.height - bottomWidth) / 2
             }
-            if case let .right(topWidth, bottomWidth) = gridLayout.edge  {
+            if case let .right(topWidth, bottomWidth) = gridLayout.edge {
                 frame.origin.x -= (gridLayout.gridWidth - intercellSpacing.width) / 2
                 frame.origin.y -= topWidth + (intercellSpacing.height - topWidth) / 2
                 frame.size.height = gridLayout.length + topWidth + (intercellSpacing.height - topWidth) / 2 + bottomWidth + (intercellSpacing.height - bottomWidth) / 2

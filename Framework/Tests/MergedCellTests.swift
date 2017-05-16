@@ -10,12 +10,12 @@ import XCTest
 @testable import SpreadsheetView
 
 class MergedCellTests: XCTestCase {
-    
+
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
     }
-    
+
     override func tearDown() {
         super.tearDown()
     }
@@ -220,7 +220,7 @@ class MergedCellTests: XCTestCase {
                 var expected = CGPoint.zero
                 if scrollPosition.contains(.left) {
                     actual.x = rect.origin.x
-                    if parameters.circularScrolling.options.direction.contains(CircularScrolling.Direction.horizontally)  {
+                    if parameters.circularScrolling.options.direction.contains(CircularScrolling.Direction.horizontally) {
                         if width < frozenWidth {
                             expected.x = width + parameters.intercellSpacing.width
                         } else {
@@ -237,7 +237,7 @@ class MergedCellTests: XCTestCase {
                     }
                 }
                 if scrollPosition.contains(.centeredHorizontally) {
-                    if parameters.circularScrolling.options.direction.contains(CircularScrolling.Direction.horizontally)  {
+                    if parameters.circularScrolling.options.direction.contains(CircularScrolling.Direction.horizontally) {
                         if width < frozenWidth {
                             actual.x = rect.origin.x
                             expected.x = width + parameters.intercellSpacing.width
@@ -262,7 +262,7 @@ class MergedCellTests: XCTestCase {
                     }
                 }
                 if scrollPosition.contains(.right) {
-                    if parameters.circularScrolling.options.direction.contains(CircularScrolling.Direction.horizontally)  {
+                    if parameters.circularScrolling.options.direction.contains(CircularScrolling.Direction.horizontally) {
                         actual.x = rect.maxX + parameters.intercellSpacing.width
                         expected.x = spreadsheetView.frame.width
                     } else {
@@ -278,7 +278,7 @@ class MergedCellTests: XCTestCase {
 
                 if scrollPosition.contains(.top) {
                     actual.y = rect.origin.y
-                    if parameters.circularScrolling.options.direction.contains(CircularScrolling.Direction.vertically)  {
+                    if parameters.circularScrolling.options.direction.contains(CircularScrolling.Direction.vertically) {
                         if height < frozenHeight {
                             expected.y = height + parameters.intercellSpacing.height
                         } else {
@@ -295,7 +295,7 @@ class MergedCellTests: XCTestCase {
                     }
                 }
                 if scrollPosition.contains(.centeredVertically) {
-                    if parameters.circularScrolling.options.direction.contains(CircularScrolling.Direction.vertically)  {
+                    if parameters.circularScrolling.options.direction.contains(CircularScrolling.Direction.vertically) {
                         if height < frozenHeight {
                             actual.y = rect.origin.y
                             expected.y = height + parameters.intercellSpacing.height
@@ -320,7 +320,7 @@ class MergedCellTests: XCTestCase {
                     }
                 }
                 if scrollPosition.contains(.bottom) {
-                    if parameters.circularScrolling.options.direction.contains(CircularScrolling.Direction.vertically)  {
+                    if parameters.circularScrolling.options.direction.contains(CircularScrolling.Direction.vertically) {
                         actual.y = rect.maxY + parameters.intercellSpacing.height
                         expected.y = spreadsheetView.frame.height
                     } else {
