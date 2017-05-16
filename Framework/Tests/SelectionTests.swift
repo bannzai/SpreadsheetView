@@ -14,7 +14,7 @@ class SelectionTests: XCTestCase {
         super.setUp()
         continueAfterFailure = false
     }
-    
+
     override func tearDown() {
         super.tearDown()
     }
@@ -271,7 +271,7 @@ class SelectionTests: XCTestCase {
                         XCTAssertEqual(spreadsheetView.indexPathsForSelectedItems.count, 0)
                     }
                 }
-                
+
                 let minX = rect.origin.x - offsetWidth
                 let minY = rect.origin.y - offsetHeight
                 let maxX = minX + rect.width

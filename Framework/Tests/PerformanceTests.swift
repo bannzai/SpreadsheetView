@@ -13,11 +13,11 @@ class PerformanceTests: XCTestCase {
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         super.tearDown()
     }
-    
+
     func testHashPerformance1() {
         var set = Set<Location>()
         measure {

@@ -85,7 +85,7 @@ class TimeCell: Cell {
             label.frame = bounds.insetBy(dx: 6, dy: 0)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -104,7 +104,7 @@ class ScheduleCell: Cell {
             label.frame = bounds.insetBy(dx: 4, dy: 0)
         }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 

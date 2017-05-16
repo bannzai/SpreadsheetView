@@ -104,7 +104,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         spreadsheetView.register(TaskCell.self, forCellWithReuseIdentifier: String(describing: TaskCell.self))
         spreadsheetView.register(ChartBarCell.self, forCellWithReuseIdentifier: String(describing: ChartBarCell.self))
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         spreadsheetView.flashScrollIndicators()
@@ -150,7 +150,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         let titleHeader = [CellRange(from: (0, 0), to: (1, 0)),
                            CellRange(from: (0, 1), to: (1, 1)),
                            CellRange(from: (0, 2), to: (1, 2))]
-        let weakHeader = weeks.enumerated().map { (index, week) -> CellRange in
+        let weakHeader = weeks.enumerated().map { (index, _) -> CellRange in
             return CellRange(from: (0, index * 7 + 3), to: (0, index * 7 + 9))
         }
         let charts = tasks.enumerated().map { (index, task) -> CellRange in
@@ -229,4 +229,3 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         }
     }
 }
-

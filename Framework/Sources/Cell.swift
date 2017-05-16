@@ -77,7 +77,7 @@ open class Cell: UIView {
         }
     }
     var hasBorders = false
-    
+
     public internal(set) var reuseIdentifier: String?
 
     var indexPath: IndexPath!

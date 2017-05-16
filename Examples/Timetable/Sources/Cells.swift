@@ -15,7 +15,7 @@ class HourCell: Cell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         label.frame = bounds
-        
+
         label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         label.backgroundColor = UIColor(red: 0.220, green: 0.471, blue: 0.871, alpha: 1)
         label.font = UIFont.systemFont(ofSize: 12)

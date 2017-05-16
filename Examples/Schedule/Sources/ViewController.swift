@@ -12,8 +12,8 @@ import SpreadsheetView
 class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetViewDelegate {
     @IBOutlet weak var spreadsheetView: SpreadsheetView!
 
-    let dates = ["7/10/2017", "7/11/2017", "7/12/2017", "7/13/2017", "7/14/2017", "7/15/2017","7/16/2017"]
-    let days = ["MONDAY", "TUESDAY", "WEDNSDAY", "THURSDAY", "FRIDAY", "SATURDAY","SUNDAY"]
+    let dates = ["7/10/2017", "7/11/2017", "7/12/2017", "7/13/2017", "7/14/2017", "7/15/2017", "7/16/2017"]
+    let days = ["MONDAY", "TUESDAY", "WEDNSDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
     let dayColors = [UIColor(red: 0.918, green: 0.224, blue: 0.153, alpha: 1),
                      UIColor(red: 0.106, green: 0.541, blue: 0.827, alpha: 1),
                      UIColor(red: 0.200, green: 0.620, blue: 0.565, alpha: 1),
@@ -41,7 +41,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         spreadsheetView.dataSource = self
         spreadsheetView.delegate = self
 
-        spreadsheetView.contentInset = UIEdgeInsetsMake(4, 0, 4, 0)
+        spreadsheetView.contentInset = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
 
         spreadsheetView.intercellSpacing = CGSize(width: 4, height: 1)
         spreadsheetView.gridStyle = .none

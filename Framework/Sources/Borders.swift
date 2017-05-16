@@ -39,7 +39,7 @@ class Border: UIView {
     }
 
     override func draw(_ rect: CGRect) {
-        guard let context = UIGraphicsGetCurrentContext() else  {
+        guard let context = UIGraphicsGetCurrentContext() else {
             return
         }
         context.setFillColor(UIColor.clear.cgColor)

@@ -378,7 +378,7 @@ public class SpreadsheetView: UIView {
         let contentOffset = contentOffsetForScrollingToItem(at: indexPath, at: scrollPosition)
         tableView.setContentOffset(contentOffset, animated: animated)
     }
-    
+
     private func contentOffsetForScrollingToItem(at indexPath: IndexPath, at scrollPosition: ScrollPosition) -> CGPoint {
         let (column, row) = (indexPath.column, indexPath.row)
         guard column < numberOfColumns && row < numberOfRows else {
@@ -442,11 +442,11 @@ public class SpreadsheetView: UIView {
         }
 
         let distanceFromRightEdge = tableView.contentSize.width - contentOffset.x
-        if distanceFromRightEdge < tableView.frame.width  {
+        if distanceFromRightEdge < tableView.frame.width {
             contentOffset.x -= tableView.frame.width - distanceFromRightEdge
         }
         let distanceFromBottomEdge = tableView.contentSize.height - contentOffset.y
-        if distanceFromBottomEdge < tableView.frame.height  {
+        if distanceFromBottomEdge < tableView.frame.height {
             contentOffset.y -= tableView.frame.height - distanceFromBottomEdge
         }
 
@@ -456,7 +456,7 @@ public class SpreadsheetView: UIView {
         if verticalGroupCount > 1 {
             fatalError("attempt to use a scroll position with multiple vertical positioning styles")
         }
-        
+
         return contentOffset
     }
 
@@ -468,7 +468,7 @@ public class SpreadsheetView: UIView {
         guard allowsSelection else {
             return
         }
-        
+
         if !allowsMultipleSelection {
             selectedIndexPaths.remove(indexPath)
             deselectAllItems(animated: animated)
@@ -627,7 +627,7 @@ public class SpreadsheetView: UIView {
 
         let columnRecords = columnHeaderView.columnRecords + tableView.columnRecords
         let rowRecords = rowHeaderView.rowRecords + tableView.rowRecords
-        
+
         let x = columnRecords[column] + (column >= layoutProperties.frozenColumns ? tableView.frame.origin.x : 0) + intercellSpacing.width
         let y = rowRecords[row] + (row >= layoutProperties.frozenRows ? tableView.frame.origin.y : 0) + intercellSpacing.height
         let origin = CGPoint(x: x, y: y)
@@ -640,7 +640,7 @@ public class SpreadsheetView: UIView {
         } else {
             size = CGSize(width: layoutProperties.columnWidthCache[column], height: layoutProperties.rowHeightCache[row])
         }
-        
+
         return CGRect(origin: origin, size: size)
     }
 

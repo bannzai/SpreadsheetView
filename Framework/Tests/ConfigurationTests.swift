@@ -10,15 +10,15 @@ import XCTest
 @testable import SpreadsheetView
 
 class ConfigurationTests: XCTestCase {
-    
+
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         super.tearDown()
     }
-    
+
     func testConfiguration() {
         do {
             let configuration = CircularScrolling.Configuration.none
