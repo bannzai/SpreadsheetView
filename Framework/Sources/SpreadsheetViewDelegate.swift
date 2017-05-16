@@ -17,6 +17,8 @@ public protocol SpreadsheetViewDelegate: class {
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, shouldDeselectItemAt indexPath: IndexPath) -> Bool
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, didSelectItemAt indexPath: IndexPath)
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, didDeselectItemAt indexPath: IndexPath)
+	
+	func spreadsheetViewDidScroll(_ spreadsheetView: SpreadsheetView)
 }
 
 extension SpreadsheetViewDelegate {
