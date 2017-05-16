@@ -10,6 +10,20 @@
 
 ##### Bug Fixes
 
+* None.
+
+## 0.6.2 Release notes (2017-05-16)
+
+##### Breaking
+
+* None.
+
+##### Enhancements
+
+* None.
+
+##### Bug Fixes
+
 * Fix returning incorrect rect from `rectForItem(at:)`  
   [#13](https://github.com/kishikawakatsumi/SpreadsheetView/pull/13)
 * Fix not working `flashScrollIndicators()` method.  
