@@ -3,6 +3,7 @@ osx_image: xcode8.3
 cache:
   directories:
   - vendor
+  - $HOME/Library/Caches/Homebrew
   - build
 before_install:
 - brew update
