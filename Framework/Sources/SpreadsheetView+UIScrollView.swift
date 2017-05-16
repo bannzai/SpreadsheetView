@@ -18,7 +18,7 @@ extension SpreadsheetView {
         }
     }
 
-    var scrollIndicatorInsets: UIEdgeInsets {
+    public var scrollIndicatorInsets: UIEdgeInsets {
         get {
             return rootView.scrollIndicatorInsets
         }
