@@ -20,16 +20,16 @@ extension SpreadsheetView {
             cell.center.x += centerOffset.x
         }
 
-        for grid in rowHeaderView.visibleHorizontalGrids.values {
+        for grid in rowHeaderView.visibleHorizontalGridlines.values {
             grid.position.x += centerOffset.x
         }
-        for grid in rowHeaderView.visibleVerticalGrids.values {
+        for grid in rowHeaderView.visibleVerticalGridlines.values {
             grid.position.x += centerOffset.x
         }
-        for grid in tableView.visibleHorizontalGrids.values {
+        for grid in tableView.visibleHorizontalGridlines.values {
             grid.position.x += centerOffset.x
         }
-        for grid in tableView.visibleVerticalGrids.values {
+        for grid in tableView.visibleVerticalGridlines.values {
             grid.position.x += centerOffset.x
         }
     }
@@ -45,16 +45,16 @@ extension SpreadsheetView {
             cell.center.y += centerOffset.y
         }
 
-        for grid in columnHeaderView.visibleHorizontalGrids.values {
+        for grid in columnHeaderView.visibleHorizontalGridlines.values {
             grid.position.y += centerOffset.y
         }
-        for grid in columnHeaderView.visibleVerticalGrids.values {
+        for grid in columnHeaderView.visibleVerticalGridlines.values {
             grid.position.y += centerOffset.y
         }
-        for grid in tableView.visibleHorizontalGrids.values {
+        for grid in tableView.visibleHorizontalGridlines.values {
             grid.position.y += centerOffset.y
         }
-        for grid in tableView.visibleVerticalGrids.values {
+        for grid in tableView.visibleVerticalGridlines.values {
             grid.position.y += centerOffset.y
         }
     }
@@ -79,16 +79,16 @@ extension SpreadsheetView {
                 cell.center.x += cellOffset
             }
 
-            for grid in rowHeaderView.visibleHorizontalGrids.values {
+            for grid in rowHeaderView.visibleHorizontalGridlines.values {
                 grid.position.x += cellOffset
             }
-            for grid in rowHeaderView.visibleVerticalGrids.values {
+            for grid in rowHeaderView.visibleVerticalGridlines.values {
                 grid.position.x += cellOffset
             }
-            for grid in tableView.visibleHorizontalGrids.values {
+            for grid in tableView.visibleHorizontalGridlines.values {
                 grid.position.x += cellOffset
             }
-            for grid in tableView.visibleVerticalGrids.values {
+            for grid in tableView.visibleVerticalGridlines.values {
                 grid.position.x += cellOffset
             }
         }
@@ -114,16 +114,16 @@ extension SpreadsheetView {
                 cell.center.y += cellOffset
             }
 
-            for grid in columnHeaderView.visibleHorizontalGrids.values {
+            for grid in columnHeaderView.visibleHorizontalGridlines.values {
                 grid.position.y += cellOffset
             }
-            for grid in columnHeaderView.visibleVerticalGrids.values {
+            for grid in columnHeaderView.visibleVerticalGridlines.values {
                 grid.position.y += cellOffset
             }
-            for grid in tableView.visibleHorizontalGrids.values {
+            for grid in tableView.visibleHorizontalGridlines.values {
                 grid.position.y += cellOffset
             }
-            for grid in tableView.visibleVerticalGrids.values {
+            for grid in tableView.visibleVerticalGridlines.values {
                 grid.position.y += cellOffset
             }
         }

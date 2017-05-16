@@ -54,7 +54,16 @@ open class Cell: UIView {
         }
     }
 
-    public var grids = Grids(top: .default, bottom: .default, left: .default, right: .default)
+    public var gridlines = Gridlines(top: .default, bottom: .default, left: .default, right: .default)
+    @available(*, deprecated: 0.6.3, renamed: "gridlines")
+    public var grids: Grids {
+        get {
+            return gridlines
+        }
+        set {
+            gridlines = grids
+        }
+    }
     public var borders = Borders(top: .none, bottom: .none, left: .none, right: .none) {
         didSet {
             if case .none = borders.top {} else {
