@@ -67,25 +67,25 @@ open class Cell: UIView {
     public var borders = Borders(top: .none, bottom: .none, left: .none, right: .none) {
         didSet {
             if case .none = borders.top {} else {
-                hasBorders = true
+                hasBorder = true
                 return
             }
             if case .none = borders.bottom {} else {
-                hasBorders = true
+                hasBorder = true
                 return
             }
             if case .none = borders.left {} else {
-                hasBorders = true
+                hasBorder = true
                 return
             }
             if case .none = borders.right {} else {
-                hasBorders = true
+                hasBorder = true
                 return
             }
-            hasBorders = false
+            hasBorder = false
         }
     }
-    var hasBorders = false
+    var hasBorder = false
 
     public internal(set) var reuseIdentifier: String?
 

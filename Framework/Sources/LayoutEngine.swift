@@ -294,7 +294,7 @@ class LayoutEngine {
             }
         }
 
-        if border.hasBorders {
+        if border.hasBorder {
             visibleBorderAddresses.insert(address)
         }
         if let gridlines = gridlines {
