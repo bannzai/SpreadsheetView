@@ -279,7 +279,7 @@ class LayoutEngine {
             cell.isSelected = selectedIndexPaths.contains(indexPath)
 
             gridlines = cell.gridlines
-            border = (cell.borders, cell.hasBorders)
+            border = (cell.borders, cell.hasBorder)
 
             scrollView.insertSubview(cell, at: 0)
             scrollView.visibleCells[address] = cell
@@ -287,14 +287,14 @@ class LayoutEngine {
             if let cell = scrollView.visibleCells[address] {
                 cell.frame = frame
                 gridlines = cell.gridlines
-                border = (cell.borders, cell.hasBorders)
+                border = (cell.borders, cell.hasBorder)
             } else {
                 gridlines = nil
                 border = (nil, false)
             }
         }
 
-        if border.hasBorder {
+        if border.hasBorders {
             visibleBorderAddresses.insert(address)
         }
         if let gridlines = gridlines {
