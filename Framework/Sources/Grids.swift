@@ -8,16 +8,19 @@
 
 import UIKit
 
-public struct Grids {
+public struct Gridlines {
     public var top: GridStyle
     public var bottom: GridStyle
     public var left: GridStyle
     public var right: GridStyle
 
-    public static func all(_ style: GridStyle) -> Grids {
-        return Grids(top: style, bottom: style, left: style, right: style)
+    public static func all(_ style: GridStyle) -> Gridlines {
+        return Gridlines(top: style, bottom: style, left: style, right: style)
     }
 }
+
+@available(*, deprecated: 0.6.3, renamed: "Gridlines")
+public typealias Grids = Gridlines
 
 public enum GridStyle {
     case `default`
@@ -25,7 +28,20 @@ public enum GridStyle {
     case solid(width: CGFloat, color: UIColor)
 }
 
-final class Grid: CALayer {
+extension GridStyle: Equatable {
+    public static func ==(lhs: GridStyle, rhs: GridStyle) -> Bool {
+        switch (lhs, rhs) {
+        case (.none, .none):
+            return true
+        case let (.solid(lhs), .solid(rhs)):
+            return lhs.width == rhs.width && lhs.color == rhs.color
+        default:
+            return false
+        }
+    }
+}
+
+final class Gridline: CALayer {
     var color: UIColor = .clear {
         didSet {
             backgroundColor = color.cgColor

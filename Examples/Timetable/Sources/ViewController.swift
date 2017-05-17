@@ -121,14 +121,14 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         if indexPath.column == 0 && indexPath.row > 0 {
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: HourCell.self), for: indexPath) as! HourCell
             cell.label.text = hourFormatter.string(from: twelveHourFormatter.date(from: "\((indexPath.row - 1) / 60 % 24)")!)
-            cell.grids.top = .solid(width: 1, color: .white)
-            cell.grids.bottom = .solid(width: 1, color: .white)
+            cell.gridlines.top = .solid(width: 1, color: .white)
+            cell.gridlines.bottom = .solid(width: 1, color: .white)
             return cell
         }
         if indexPath.column > 0 && indexPath.row == 0 {
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: ChannelCell.self), for: indexPath) as! ChannelCell
             cell.label.text = channels[indexPath.column - 1]
-            cell.grids = .all(.solid(width: 1, color: .black))
+            cell.gridlines = .all(.solid(width: 1, color: .black))
             return cell
         }
 
