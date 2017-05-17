@@ -15,13 +15,13 @@ public final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
     var visibleCells = [Address: Cell]()
     var visibleCellAddresses = Set<Address>()
 
-    var visibleVerticalGrids = [Address: Grid]()
+    var visibleVerticalGridlines = [Address: Gridline]()
     var visibleVerticalGridAddresses = Set<Address>()
-    var reusableVerticalGrids = Set<Grid>()
+    var reusableVerticalGridlines = Set<Gridline>()
 
-    var visibleHorizontalGrids = [Address: Grid]()
+    var visibleHorizontalGridlines = [Address: Gridline]()
     var visibleHorizontalGridAddresses = Set<Address>()
-    var reusableHorizontalGrids = Set<Grid>()
+    var reusableHorizontalGridlines = Set<Gridline>()
 
     var visibleBorders = [Address: Border]()
     var visibleBorderAddresses = Set<Address>()
@@ -38,20 +38,20 @@ public final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
         return columnRecords.count > 0 || rowRecords.count > 0
     }
 
-    func dequeueReusableVerticalGrid() -> Grid {
-        if let grid = reusableVerticalGrids.first {
-            reusableVerticalGrids.remove(grid)
+    func dequeueReusableVerticalGrid() -> Gridline {
+        if let grid = reusableVerticalGridlines.first {
+            reusableVerticalGridlines.remove(grid)
             return grid
         }
-        return Grid()
+        return Gridline()
     }
 
-    func dequeueReusableHorizontalGrid() -> Grid {
-        if let grid = reusableHorizontalGrids.first {
-            reusableHorizontalGrids.remove(grid)
+    func dequeueReusableHorizontalGrid() -> Gridline {
+        if let grid = reusableHorizontalGridlines.first {
+            reusableHorizontalGridlines.remove(grid)
             return grid
         }
-        return Grid()
+        return Gridline()
     }
 
     func dequeueReusableBorder() -> Border {

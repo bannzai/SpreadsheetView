@@ -149,28 +149,32 @@ extension SpreadsheetView {
         }()
 
         var columnWidthCache = [CGFloat]()
-        let frozenColumnWidth: CGFloat = (0..<frozenColumns).reduce(0) { (width, column) in
-            let length = dataSource.spreadsheetView(self, widthForColumn: column)
-            columnWidthCache.append(length)
-            return width + length
+        var frozenColumnWidth: CGFloat = 0
+        for column in 0..<frozenColumns {
+            let width = dataSource.spreadsheetView(self, widthForColumn: column)
+            columnWidthCache.append(width)
+            frozenColumnWidth += width
         }
-        let tableWidth: CGFloat = (frozenColumns..<numberOfColumns).reduce(0) { (width, column) in
-            let length = dataSource.spreadsheetView(self, widthForColumn: column)
-            columnWidthCache.append(length)
-            return width + length
+        var tableWidth: CGFloat = 0
+        for column in frozenColumns..<numberOfColumns {
+            let width = dataSource.spreadsheetView(self, widthForColumn: column)
+            columnWidthCache.append(width)
+            tableWidth += width
         }
         let columnWidth = frozenColumnWidth + tableWidth
 
         var rowHeightCache = [CGFloat]()
-        let frozenRowHeight: CGFloat = (0..<frozenRows).reduce(0) { (height, row) in
-            let length = dataSource.spreadsheetView(self, heightForRow: row)
-            rowHeightCache.append(length)
-            return height + length
+        var frozenRowHeight: CGFloat = 0
+        for row in 0..<frozenRows {
+            let height = dataSource.spreadsheetView(self, heightForRow: row)
+            rowHeightCache.append(height)
+            frozenRowHeight += height
         }
-        let tableHeight: CGFloat = (frozenRows..<numberOfRows).reduce(0) { (height, row) in
-            let length = dataSource.spreadsheetView(self, heightForRow: row)
-            rowHeightCache.append(length)
-            return height + length
+        var tableHeight: CGFloat = 0
+        for row in frozenRows..<numberOfRows {
+            let height = dataSource.spreadsheetView(self, heightForRow: row)
+            rowHeightCache.append(height)
+            tableHeight += height
         }
         let rowHeight = frozenRowHeight + tableHeight
 

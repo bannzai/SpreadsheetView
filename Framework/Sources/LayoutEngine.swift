@@ -104,8 +104,8 @@ class LayoutEngine {
         }
 
         renderMergedCells()
-        renderVerticalGrids()
-        renderHorizontalGrids()
+        renderVerticalGridlines()
+        renderHorizontalGridlines()
         renderBorders()
         returnReusableResouces()
     }
@@ -263,7 +263,7 @@ class LayoutEngine {
             return
         }
 
-        let grids: Grids?
+        let gridlines: Gridlines?
         let border: (borders: Borders?, hasBorders: Bool)
 
         if !scrollView.visibleCellAddresses.contains(address) {
@@ -278,7 +278,7 @@ class LayoutEngine {
             cell.isHighlighted = highlightedIndexPaths.contains(indexPath)
             cell.isSelected = selectedIndexPaths.contains(indexPath)
 
-            grids = cell.grids
+            gridlines = cell.gridlines
             border = (cell.borders, cell.hasBorders)
 
             scrollView.insertSubview(cell, at: 0)
@@ -286,10 +286,10 @@ class LayoutEngine {
         } else {
             if let cell = scrollView.visibleCells[address] {
                 cell.frame = frame
-                grids = cell.grids
+                gridlines = cell.gridlines
                 border = (cell.borders, cell.hasBorders)
             } else {
-                grids = nil
+                gridlines = nil
                 border = (nil, false)
             }
         }
@@ -297,16 +297,16 @@ class LayoutEngine {
         if border.hasBorders {
             visibleBorderAddresses.insert(address)
         }
-        if let grids = grids {
-            layoutGrids(address: address, frame: frame, grids: grids)
+        if let gridlines = gridlines {
+            layoutGridlines(address: address, frame: frame, gridlines: gridlines)
         }
     }
 
-    private func layoutGrids(address: Address, frame: CGRect, grids: Grids) {
-        let (topWidth, topColor, topPriority) = extractGridStyle(style: grids.top)
-        let (bottomWidth, bottomColor, bottomPriority) = extractGridStyle(style: grids.bottom)
-        let (leftWidth, leftColor, leftPriority) = extractGridStyle(style: grids.left)
-        let (rightWidth, rightColor, rightPriority) = extractGridStyle(style: grids.right)
+    private func layoutGridlines(address: Address, frame: CGRect, gridlines: Gridlines) {
+        let (topWidth, topColor, topPriority) = extractGridStyle(style: gridlines.top)
+        let (bottomWidth, bottomColor, bottomPriority) = extractGridStyle(style: gridlines.bottom)
+        let (leftWidth, leftColor, leftPriority) = extractGridStyle(style: gridlines.left)
+        let (rightWidth, rightColor, rightPriority) = extractGridStyle(style: gridlines.right)
 
         if let gridLayout = horizontalGridLayouts[address] {
             if topPriority > gridLayout.priority {
@@ -348,7 +348,7 @@ class LayoutEngine {
         }
     }
 
-    private func renderHorizontalGrids() {
+    private func renderHorizontalGridlines() {
         for (address, gridLayout) in horizontalGridLayouts {
             var frame = CGRect.zero
             frame.origin = gridLayout.origin
@@ -371,9 +371,9 @@ class LayoutEngine {
                 grid.zPosition = gridLayout.priority
 
                 scrollView.layer.addSublayer(grid)
-                scrollView.visibleHorizontalGrids[address] = grid
+                scrollView.visibleHorizontalGridlines[address] = grid
             } else {
-                if let grid = scrollView.visibleHorizontalGrids[address] {
+                if let grid = scrollView.visibleHorizontalGridlines[address] {
                     grid.frame = frame
                     grid.color = gridLayout.gridColor
                     grid.zPosition = gridLayout.priority
@@ -383,7 +383,7 @@ class LayoutEngine {
         }
     }
 
-    private func renderVerticalGrids() {
+    private func renderVerticalGridlines() {
         for (address, gridLayout) in verticalGridLayouts {
             var frame = CGRect.zero
             frame.origin = gridLayout.origin
@@ -406,9 +406,9 @@ class LayoutEngine {
                 grid.zPosition = gridLayout.priority
 
                 scrollView.layer.addSublayer(grid)
-                scrollView.visibleVerticalGrids[address] = grid
+                scrollView.visibleVerticalGridlines[address] = grid
             } else {
-                if let grid = scrollView.visibleVerticalGrids[address] {
+                if let grid = scrollView.visibleVerticalGridlines[address] {
                     grid.frame = frame
                     grid.color = gridLayout.gridColor
                     grid.zPosition = gridLayout.priority
@@ -481,20 +481,20 @@ class LayoutEngine {
 
         scrollView.visibleVerticalGridAddresses.subtract(visibleVerticalGridAddresses)
         for address in scrollView.visibleVerticalGridAddresses {
-            if let grid = scrollView.visibleVerticalGrids[address] {
+            if let grid = scrollView.visibleVerticalGridlines[address] {
                 grid.removeFromSuperlayer()
-                scrollView.reusableVerticalGrids.insert(grid)
-                scrollView.visibleVerticalGrids[address] = nil
+                scrollView.reusableVerticalGridlines.insert(grid)
+                scrollView.visibleVerticalGridlines[address] = nil
             }
         }
         scrollView.visibleVerticalGridAddresses = visibleVerticalGridAddresses
 
         scrollView.visibleHorizontalGridAddresses.subtract(visibleHorizontalGridAddresses)
         for address in scrollView.visibleHorizontalGridAddresses {
-            if let grid = scrollView.visibleHorizontalGrids[address] {
+            if let grid = scrollView.visibleHorizontalGridlines[address] {
                 grid.removeFromSuperlayer()
-                scrollView.reusableHorizontalGrids.insert(grid)
-                scrollView.visibleHorizontalGrids[address] = nil
+                scrollView.reusableHorizontalGridlines.insert(grid)
+                scrollView.visibleHorizontalGridlines[address] = nil
             }
         }
         scrollView.visibleHorizontalGridAddresses = visibleHorizontalGridAddresses

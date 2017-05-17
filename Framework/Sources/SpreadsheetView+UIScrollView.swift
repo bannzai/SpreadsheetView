@@ -2,7 +2,7 @@
 //  SpreadsheetView+UIScrollView.swift
 //  SpreadsheetView
 //
-//  Created by kishikawakatsumi on 5/1/17.
+//  Created by Kishikawa Katsumi on 5/1/17.
 //  Copyright © 2017 Kishikawa Katsumi. All rights reserved.
 //
 

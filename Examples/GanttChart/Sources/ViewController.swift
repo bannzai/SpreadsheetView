@@ -166,51 +166,51 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         case (0, 0):
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: HeaderCell.self), for: indexPath) as! HeaderCell
             cell.label.text = "Task"
-            cell.grids.left = .none
-            cell.grids.right = .none
+            cell.gridlines.left = .none
+            cell.gridlines.right = .none
             return cell
         case (1, 0):
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: HeaderCell.self), for: indexPath) as! HeaderCell
             cell.label.text = "Start"
-            cell.grids.left = .none
-            cell.grids.right = .none
+            cell.gridlines.left = .none
+            cell.gridlines.right = .none
             return cell
         case (2, 0):
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: HeaderCell.self), for: indexPath) as! HeaderCell
             cell.label.text = "Duration"
             cell.label.textColor = .gray
-            cell.grids.left = .none
-            cell.grids.right = .default
+            cell.gridlines.left = .none
+            cell.gridlines.right = .default
             return cell
         case (3..<(3 + 7 * weeks.count), 0):
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: HeaderCell.self), for: indexPath) as! HeaderCell
             cell.label.text = weeks[(indexPath.column - 3) / 7]
-            cell.grids.left = .default
-            cell.grids.right = .default
+            cell.gridlines.left = .default
+            cell.gridlines.right = .default
             return cell
         case (3..<(3 + 7 * weeks.count), 1):
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: HeaderCell.self), for: indexPath) as! HeaderCell
             cell.label.text = String(format: "%02d Apr", indexPath.column - 2)
-            cell.grids.left = .default
-            cell.grids.right = .default
+            cell.gridlines.left = .default
+            cell.gridlines.right = .default
             return cell
         case (0, 2..<(2 + tasks.count)):
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: TaskCell.self), for: indexPath) as! TaskCell
             cell.label.text = tasks[indexPath.row - 2][0]
-            cell.grids.left = .none
-            cell.grids.right = .none
+            cell.gridlines.left = .none
+            cell.gridlines.right = .none
             return cell
         case (1, 2..<(2 + tasks.count)):
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: TextCell.self), for: indexPath) as! TextCell
             cell.label.text = String(format: "April %02d", Int(tasks[indexPath.row - 2][1])!)
-            cell.grids.left = .none
-            cell.grids.right = .none
+            cell.gridlines.left = .none
+            cell.gridlines.right = .none
             return cell
         case (2, 2..<(2 + tasks.count)):
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: TextCell.self), for: indexPath) as! TextCell
             cell.label.text = tasks[indexPath.row - 2][2]
-            cell.grids.left = .none
-            cell.grids.right = .none
+            cell.gridlines.left = .none
+            cell.gridlines.right = .none
             return cell
         case (3..<(3 + 7 * weeks.count), 2..<(2 + tasks.count)):
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: ChartBarCell.self), for: indexPath) as! ChartBarCell
