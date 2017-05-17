@@ -185,7 +185,7 @@ public class SpreadsheetView: UIView {
     let overlayView = UIScrollView()
 
     let rowHeaderView = ScrollView()
-    let columnHeaderView = ScrollView()
+    public let columnHeaderView = ScrollView()
     let cornerView = ScrollView()
     let tableView = ScrollView()
 
