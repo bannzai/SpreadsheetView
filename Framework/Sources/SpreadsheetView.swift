@@ -391,7 +391,7 @@ public class SpreadsheetView: UIView {
 
         let width: CGFloat
         let height: CGFloat
-        if let mergedCell = layoutProperties.mergedCellLayouts[Location(indexPath: indexPath)] {
+        if let mergedCell = mergedCell(for: Location(indexPath: indexPath)) {
             width = (mergedCell.from.column...mergedCell.to.column).reduce(0) { $0 + layoutProperties.columnWidthCache[$1] } + intercellSpacing.width
             height = (mergedCell.from.row...mergedCell.to.row).reduce(0) { $0 + layoutProperties.rowHeightCache[$1] } + intercellSpacing.height
         } else {
@@ -628,12 +628,12 @@ public class SpreadsheetView: UIView {
         let columnRecords = columnHeaderView.columnRecords + tableView.columnRecords
         let rowRecords = rowHeaderView.rowRecords + tableView.rowRecords
 
-        let x = columnRecords[column] + (column >= layoutProperties.frozenColumns ? tableView.frame.origin.x : 0) + intercellSpacing.width
-        let y = rowRecords[row] + (row >= layoutProperties.frozenRows ? tableView.frame.origin.y : 0) + intercellSpacing.height
+        let x = columnRecords[column] + (column >= frozenColumns ? tableView.frame.origin.x : 0) + intercellSpacing.width
+        let y = rowRecords[row] + (row >= frozenRows ? tableView.frame.origin.y : 0) + intercellSpacing.height
         let origin = CGPoint(x: x, y: y)
 
         let size: CGSize
-        if let mergedCell = layoutProperties.mergedCellLayouts[Location(row: row, column: column)] {
+        if let mergedCell = mergedCell(for: Location(row: row, column: column)) {
             let width = (mergedCell.from.column...mergedCell.to.column).reduce(0) { $0 + layoutProperties.columnWidthCache[$1] }
             let height = (mergedCell.from.row...mergedCell.to.row).reduce(0) { $0 + layoutProperties.rowHeightCache[$1] }
             size = CGSize(width: width, height: height)
