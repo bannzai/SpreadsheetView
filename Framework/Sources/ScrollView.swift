@@ -75,11 +75,6 @@ final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
             return
         }
         touchesBegan?(touches, event)
-        next?.touchesBegan(touches, with: event)
-    }
-
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        next?.touchesMoved(touches, with: event)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -87,7 +82,6 @@ final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
             return
         }
         touchesEnded?(touches, event)
-        next?.touchesEnded(touches, with: event)
     }
 
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -95,6 +89,5 @@ final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
             return
         }
         touchesCancelled?(touches, event)
-        next?.touchesCancelled(touches, with: event)
     }
 }
