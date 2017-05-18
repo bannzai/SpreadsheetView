@@ -12,51 +12,13 @@ extension SpreadsheetView {
     func scrollToHorizontalCenter() {
         rowHeaderView.contentOffset.x = centerOffset.x
         tableView.contentOffset.x = centerOffset.x
-
-        for cell in rowHeaderView.visibleCells.values {
-            cell.center.x += centerOffset.x
-        }
-        for cell in tableView.visibleCells.values {
-            cell.center.x += centerOffset.x
-        }
-
-        for grid in rowHeaderView.visibleHorizontalGridlines.values {
-            grid.position.x += centerOffset.x
-        }
-        for grid in rowHeaderView.visibleVerticalGridlines.values {
-            grid.position.x += centerOffset.x
-        }
-        for grid in tableView.visibleHorizontalGridlines.values {
-            grid.position.x += centerOffset.x
-        }
-        for grid in tableView.visibleVerticalGridlines.values {
-            grid.position.x += centerOffset.x
-        }
+        centerSubviewsHorizontally(offset: centerOffset.x)
     }
 
     func scrollToVerticalCenter() {
         columnHeaderView.contentOffset.y = centerOffset.y
         tableView.contentOffset.y = centerOffset.y
-
-        for cell in columnHeaderView.visibleCells.values {
-            cell.center.y += centerOffset.y
-        }
-        for cell in tableView.visibleCells.values {
-            cell.center.y += centerOffset.y
-        }
-
-        for grid in columnHeaderView.visibleHorizontalGridlines.values {
-            grid.position.y += centerOffset.y
-        }
-        for grid in columnHeaderView.visibleVerticalGridlines.values {
-            grid.position.y += centerOffset.y
-        }
-        for grid in tableView.visibleHorizontalGridlines.values {
-            grid.position.y += centerOffset.y
-        }
-        for grid in tableView.visibleVerticalGridlines.values {
-            grid.position.y += centerOffset.y
-        }
+        centerSubviewsVertically(offset: centerOffset.y)
     }
 
     func recenterHorizontallyIfNecessary() {
@@ -67,30 +29,38 @@ extension SpreadsheetView {
         let diff = (centerOffset.x - threshold) * (distance > 0 ? -1 : 1)
 
         if fabs(distance) > threshold {
-            let viewOffset = centerOffset.x + diff
-            rowHeaderView.contentOffset.x = viewOffset
-            tableView.contentOffset.x = viewOffset
+            let offset = centerOffset.x + diff
+            rowHeaderView.contentOffset.x = offset
+            tableView.contentOffset.x = offset
+            centerSubviewsHorizontally(offset: offset - currentOffset.x)
+        }
+    }
 
-            let cellOffset = viewOffset - currentOffset.x
-            for cell in rowHeaderView.visibleCells.values {
-                cell.center.x += cellOffset
-            }
-            for cell in tableView.visibleCells.values {
-                cell.center.x += cellOffset
-            }
+    func centerSubviewsHorizontally(offset: CGFloat) {
+        for cell in rowHeaderView.visibleCells {
+            cell.center.x += offset
+        }
+        for cell in tableView.visibleCells {
+            cell.center.x += offset
+        }
+        for border in rowHeaderView.visibleBorders {
+            border.center.x += offset
+        }
+        for border in tableView.visibleBorders {
+            border.center.x += offset
+        }
 
-            for grid in rowHeaderView.visibleHorizontalGridlines.values {
-                grid.position.x += cellOffset
-            }
-            for grid in rowHeaderView.visibleVerticalGridlines.values {
-                grid.position.x += cellOffset
-            }
-            for grid in tableView.visibleHorizontalGridlines.values {
-                grid.position.x += cellOffset
-            }
-            for grid in tableView.visibleVerticalGridlines.values {
-                grid.position.x += cellOffset
-            }
+        for gridline in rowHeaderView.visibleHorizontalGridlines {
+            gridline.position.x += offset
+        }
+        for gridline in rowHeaderView.visibleVerticalGridlines {
+            gridline.position.x += offset
+        }
+        for gridline in tableView.visibleHorizontalGridlines{
+            gridline.position.x += offset
+        }
+        for gridline in tableView.visibleVerticalGridlines {
+            gridline.position.x += offset
         }
     }
 
@@ -102,30 +72,38 @@ extension SpreadsheetView {
         let diff = (centerOffset.y - threshold) * (distance > 0 ? -1 : 1)
 
         if fabs(distance) > threshold {
-            let viewOffset = centerOffset.y + diff
-            columnHeaderView.contentOffset.y = viewOffset
-            tableView.contentOffset.y = viewOffset
+            let offset = centerOffset.y + diff
+            columnHeaderView.contentOffset.y = offset
+            tableView.contentOffset.y = offset
+            centerSubviewsVertically(offset: offset - currentOffset.y)
+        }
+    }
 
-            let cellOffset = viewOffset - currentOffset.y
-            for cell in columnHeaderView.visibleCells.values {
-                cell.center.y += cellOffset
-            }
-            for cell in tableView.visibleCells.values {
-                cell.center.y += cellOffset
-            }
+    func centerSubviewsVertically(offset: CGFloat) {
+        for cell in columnHeaderView.visibleCells {
+            cell.center.y += offset
+        }
+        for cell in tableView.visibleCells {
+            cell.center.y += offset
+        }
+        for border in rowHeaderView.visibleBorders {
+            border.center.y += offset
+        }
+        for border in tableView.visibleBorders {
+            border.center.y += offset
+        }
 
-            for grid in columnHeaderView.visibleHorizontalGridlines.values {
-                grid.position.y += cellOffset
-            }
-            for grid in columnHeaderView.visibleVerticalGridlines.values {
-                grid.position.y += cellOffset
-            }
-            for grid in tableView.visibleHorizontalGridlines.values {
-                grid.position.y += cellOffset
-            }
-            for grid in tableView.visibleVerticalGridlines.values {
-                grid.position.y += cellOffset
-            }
+        for gridline in columnHeaderView.visibleHorizontalGridlines {
+            gridline.position.y += offset
+        }
+        for gridline in columnHeaderView.visibleVerticalGridlines {
+            gridline.position.y += offset
+        }
+        for gridline in tableView.visibleHorizontalGridlines {
+            gridline.position.y += offset
+        }
+        for gridline in tableView.visibleVerticalGridlines {
+            gridline.position.y += offset
         }
     }
 

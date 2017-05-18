@@ -12,20 +12,10 @@ final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
     var columnRecords = [CGFloat]()
     var rowRecords = [CGFloat]()
 
-    var visibleCells = [Address: Cell]()
-    var visibleCellAddresses = Set<Address>()
-
-    var visibleVerticalGridlines = [Address: Gridline]()
-    var visibleVerticalGridAddresses = Set<Address>()
-    var reusableVerticalGridlines = Set<Gridline>()
-
-    var visibleHorizontalGridlines = [Address: Gridline]()
-    var visibleHorizontalGridAddresses = Set<Address>()
-    var reusableHorizontalGridlines = Set<Gridline>()
-
-    var visibleBorders = [Address: Border]()
-    var visibleBorderAddresses = Set<Address>()
-    var reusableBorders = Set<Border>()
+    var visibleCells = ReusableCollection<Cell>()
+    let visibleVerticalGridlines = ReusableCollection<Gridline>()
+    let visibleHorizontalGridlines = ReusableCollection<Gridline>()
+    let visibleBorders = ReusableCollection<Border>()
 
     typealias TouchHandler = (_ touches: Set<UITouch>, _ event: UIEvent?) -> Void
     var touchesBegan: TouchHandler?
@@ -36,30 +26,6 @@ final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
 
     var hasDisplayedContent: Bool {
         return columnRecords.count > 0 || rowRecords.count > 0
-    }
-
-    func dequeueReusableVerticalGrid() -> Gridline {
-        if let grid = reusableVerticalGridlines.first {
-            reusableVerticalGridlines.remove(grid)
-            return grid
-        }
-        return Gridline()
-    }
-
-    func dequeueReusableHorizontalGrid() -> Gridline {
-        if let grid = reusableHorizontalGridlines.first {
-            reusableHorizontalGridlines.remove(grid)
-            return grid
-        }
-        return Gridline()
-    }
-
-    func dequeueReusableBorder() -> Border {
-        if let border = reusableBorders.first {
-            reusableBorders.remove(border)
-            return border
-        }
-        return Border()
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
