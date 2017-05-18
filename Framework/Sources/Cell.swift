@@ -90,7 +90,7 @@ open class Cell: UIView {
 
         contentView.frame = bounds
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        addSubview(contentView)
+        insertSubview(contentView, at: 0)
     }
 
     open func prepareForReuse() {}
