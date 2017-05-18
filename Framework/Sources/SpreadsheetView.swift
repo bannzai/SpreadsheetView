@@ -524,12 +524,15 @@ public class SpreadsheetView: UIView {
     }
 
     private func indexPathForItem(at location: CGPoint, in scrollView: ScrollView) -> IndexPath? {
+        let insetX = scrollView.layoutAttributes.insets.x
+        let insetY = scrollView.layoutAttributes.insets.y
+
         func isPointInColumn(x: CGFloat, column: Int) -> Bool {
             guard column < scrollView.columnRecords.count else {
                 return false
             }
             let minX = scrollView.columnRecords[column] + intercellSpacing.width
-            let maxX = minX + layoutProperties.columnWidthCache[column % layoutProperties.numberOfColumns]
+            let maxX = minX + layoutProperties.columnWidthCache[(column + scrollView.layoutAttributes.startColumn) % numberOfColumns]
             return x >= minX && x <= maxX
         }
         func isPointInRow(y: CGFloat, row: Int) -> Bool {
@@ -537,29 +540,29 @@ public class SpreadsheetView: UIView {
                 return false
             }
             let minY = scrollView.rowRecords[row] + intercellSpacing.height
-            let maxY = minY + layoutProperties.rowHeightCache[row % layoutProperties.numberOfRows]
+            let maxY = minY + layoutProperties.rowHeightCache[(row + scrollView.layoutAttributes.startRow) % numberOfRows]
             return y >= minY && y <= maxY
         }
 
         let point = convert(location, to: scrollView)
-        let column = findIndex(in: scrollView.columnRecords, for: point.x)
-        let row = findIndex(in: scrollView.rowRecords, for: point.y)
+        let column = findIndex(in: scrollView.columnRecords, for: point.x - insetX)
+        let row = findIndex(in: scrollView.rowRecords, for: point.y - insetY)
 
-        switch (isPointInColumn(x: point.x, column: column), isPointInRow(y: point.y, row: row)) {
+        switch (isPointInColumn(x: point.x - insetX, column: column), isPointInRow(y: point.y, row: row)) {
         case (true, true):
             return IndexPath(row: row, column: column)
         case (true, false):
-            if isPointInRow(y: point.y, row: row + 1) {
+            if isPointInRow(y: point.y - insetY, row: row + 1) {
                 return IndexPath(row: row + 1, column: column)
             }
             return nil
         case (false, true):
-            if isPointInColumn(x: point.x, column: column + 1) {
+            if isPointInColumn(x: point.x - insetX, column: column + 1) {
                 return IndexPath(row: row, column: column + 1)
             }
             return nil
         case (false, false):
-            if isPointInColumn(x: point.x, column: column + 1) && isPointInRow(y: point.y, row: row + 1) {
+            if isPointInColumn(x: point.x - insetX, column: column + 1) && isPointInRow(y: point.y - insetY, row: row + 1) {
                 return IndexPath(row: row + 1, column: column + 1)
             }
             return nil
