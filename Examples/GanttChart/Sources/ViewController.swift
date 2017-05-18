@@ -228,4 +228,10 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
             return nil
         }
     }
+
+    /// Delegate
+
+    func spreadsheetView(_ spreadsheetView: SpreadsheetView, didSelectItemAt indexPath: IndexPath) {
+        print("Selected: (row: \(indexPath.row), column: \(indexPath.column))")
+    }
 }

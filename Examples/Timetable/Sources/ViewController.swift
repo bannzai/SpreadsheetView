@@ -37,6 +37,8 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         spreadsheetView.register(UINib(nibName: String(describing: SlotCell.self), bundle: nil), forCellWithReuseIdentifier: String(describing: SlotCell.self))
         spreadsheetView.register(BlankCell.self, forCellWithReuseIdentifier: String(describing: BlankCell.self))
 
+        spreadsheetView.backgroundColor = .black
+        
         let hairline = 1 / UIScreen.main.scale
         spreadsheetView.intercellSpacing = CGSize(width: hairline, height: hairline)
         spreadsheetView.gridStyle = .solid(width: hairline, color: .lightGray)
@@ -128,7 +130,10 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         if indexPath.column > 0 && indexPath.row == 0 {
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: ChannelCell.self), for: indexPath) as! ChannelCell
             cell.label.text = channels[indexPath.column - 1]
-            cell.gridlines = .all(.solid(width: 1, color: .black))
+            cell.gridlines.top = .solid(width: 1, color: .black)
+            cell.gridlines.bottom = .solid(width: 1, color: .black)
+            cell.gridlines.left = .solid(width: 1 / UIScreen.main.scale, color: UIColor(white: 0.3, alpha: 1))
+            cell.gridlines.right = cell.gridlines.left
             return cell
         }
 
@@ -145,8 +150,6 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
     /// Delegate
 
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, didSelectItemAt indexPath: IndexPath) {
-        if let cell = spreadsheetView.cellForItem(at: indexPath) as? SlotCell {
-            print(cell)
-        }
+        print("Selected: (row: \(indexPath.row), column: \(indexPath.column))")
     }
 }
