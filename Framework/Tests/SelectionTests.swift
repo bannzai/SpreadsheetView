@@ -214,7 +214,7 @@ class SelectionTests: XCTestCase {
     }
 
     func testTouchesFrozenColumns() {
-        let parameters = Parameters(frozenColumns: 2)
+        let parameters = Parameters(frozenColumns: 1)
         let viewController = defaultViewController(parameters: parameters)
 
         showViewController(viewController: viewController)
@@ -254,7 +254,7 @@ class SelectionTests: XCTestCase {
     }
 
     func testTouchesFrozenColumnsAndRows() {
-        let parameters = Parameters(frozenColumns: 2, frozenRows: 3)
+        let parameters = Parameters(frozenColumns: 1, frozenRows: 3)
         let viewController = defaultViewController(parameters: parameters)
 
         showViewController(viewController: viewController)
