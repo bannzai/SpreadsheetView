@@ -12,7 +12,10 @@
 
 ##### Bug Fixes
 
-* None.
+* Fix a view on the cell cannot receive touch events.
+  [#35](https://github.com/kishikawakatsumi/SpreadsheetView/pull/35)
+* Fix an issue that `reloadData()` doesn't reflect the latest state correctly.
+  [#37](https://github.com/kishikawakatsumi/SpreadsheetView/pull/37)
 
 ## 0.6.2 Release notes (2017-05-16)
 
