@@ -28,15 +28,15 @@
 
 Full configurable spreadsheet view user interfaces for iOS applications. With this framework, you can easily create complex layouts like schedule, Gantt chart, timetable as if you are using Excel.
 
-<img src="Resources/DailySchedule_portrait.png" style="width: 300px; height: 534px; border: 1px #888995 solid;" width="300" height="534"></img>&nbsp;<img src="Resources/DailySchedule_landscape.png" style="width: 534px; height: 300px; border: 1px #888995 solid;" width="534" height="300"></img><br>
-<img src="Resources/Timetable.png" style="width: 300px; height: 534px; border: 1px #888995 solid;" width="300" height="534"></img>&nbsp;
-<img src="Resources/GanttChart.png" style="width: 534px; height: 300px; border: 1px #888995 solid;" width="534" height="300"></img>
+<img src="Resources/DailySchedule_portrait.png" style="width: 300px; height: 534px;" width="300" height="534"></img>&nbsp;<img src="Resources/DailySchedule_landscape.png" style="width: 534px; height: 300px;" width="534" height="300"></img><br>
+<img src="Resources/Timetable.png" style="width: 300px; height: 534px;" width="300" height="534"></img>&nbsp;
+<img src="Resources/GanttChart.png" style="width: 534px; height: 300px;" width="534" height="300"></img>
 
 ## Features
 - [x] Fixed column and row headers
 - [x] Merge cells
 - [x] Circular infinite scrolling automatically
-- [x] Customize grids and borders for each cell
+- [x] Customize gridlines and borders for each cell
 - [x] Customize inter cell spacing vertically and horizontally
 - [x] Fast scrolling, memory efficient
 - [x] `UICollectionView` like API
@@ -109,7 +109,7 @@ func frozenColumns(in spreadsheetView: SpreadsheetView) -> Int {
 }
 ```
 
-<img src="Resources/ColumnHeader.gif" style="width: 200px; border: 1px #888995 solid;" width="200"></img>
+<img src="Resources/ColumnHeader.gif" style="width: 200px;" width="200"></img>
 
 #### Row Header
 ```swift
@@ -118,7 +118,7 @@ func frozenRows(in spreadsheetView: SpreadsheetView) -> Int {
 }
 ```
 
-<img src="Resources/RowHeader.gif" style="width: 200px; border: 1px #888995 solid;" width="200"></img>
+<img src="Resources/RowHeader.gif" style="width: 200px;" width="200"></img>
 
 #### both
 ```swift
@@ -131,7 +131,7 @@ func frozenRows(in spreadsheetView: SpreadsheetView) -> Int {
 }
 ```
 
-<img src="Resources/BothHeaders.gif" style="width: 200px; border: 1px #888995 solid;" width="200"></img>
+<img src="Resources/BothHeaders.gif" style="width: 200px;" width="200"></img>
 
 ### Merge cells
 Multiple cells can be merged and then they are treated as one cell. It is used for grouping cells.
@@ -147,7 +147,7 @@ func mergedCells(in spreadsheetView: SpreadsheetView) -> [CellRange] {
 }
 ```
 
-<img src="Resources/MergedCells.png" style="width: 200px; border: 1px #888995 solid;" width="200"></img>
+<img src="Resources/MergedCells.png" style="width: 200px;" width="200"></img>
 
 ### Circular Scrolling
 Your table acquires infinite scroll just set `circularScrolling` property.
@@ -167,7 +167,7 @@ spreadsheetView.circularScrolling = CircularScrolling.Configuration.vertically
 spreadsheetView.circularScrolling = CircularScrolling.Configuration.both
 ```
 
-<img src="Resources/CircularScrolling.gif" style="width: 200px; border: 1px #888995 solid;" width="200"></img>
+<img src="Resources/CircularScrolling.gif" style="width: 200px;" width="200"></img>
 
 If circular scrolling is enabled, you can set additional parameters that the option not to repeat column/row header and to extend column/row header to the left/top edges. `CircularScrolling.Configuration` is a builder pattern,  can easily select the appropriate combination by chaining properties.
 
@@ -189,7 +189,7 @@ The difference between gridlines and borders is that the gridlines are drawn at 
 
 #### Cell spacing
 
-<img src="Resources/IntercellSpacing.png" style="width: 200px; border: 1px 1px 0 0 #888995 solid;" width="200"></img>
+<img src="Resources/IntercellSpacing.png" style="width: 200px;" width="200"></img>
 
 ```swift
 spreadsheetView.intercellSpacing = CGSize(width: 1, height: 1)
@@ -197,7 +197,7 @@ spreadsheetView.intercellSpacing = CGSize(width: 1, height: 1)
 
 #### Gridlines
 
-<img src="Resources/Grid.png" style="width: 200px; border: 1px 1px 0 0 #888995 solid;" width="200"></img>
+<img src="Resources/Grid.png" style="width: 200px;" width="200"></img>
 
 `SpreadsheetView`'s `gridStyle` property is applied to the entire table.
 ```swift
@@ -206,15 +206,15 @@ spreadsheetView.gridStyle = .solid(width: 1, color: .lightGray)
 
 You can set different `gridStyle` for each cell and each side of the cell. If you set cell's `gridStyle` property to` default`, `SpreadsheetView`'s` gridStyle` property will be applied. Specify `none` means the grid will not be drawn.
 ```swift
-cell.grids.top = .solid(width: 1, color: .blue)
-cell.grids.left = .solid(width: 1, color: .blue)
-cell.grids.bottom = .none
-cell.grids.right = .none
+cell.gridlines.top = .solid(width: 1, color: .blue)
+cell.gridlines.left = .solid(width: 1, color: .blue)
+cell.gridlines.bottom = .none
+cell.gridlines.right = .none
 ```
 
 #### Border
 
-<img src="Resources/Border.png" style="width: 200px; border: 1px 1px 0 0 #888995 solid;" width="200"></img>
+<img src="Resources/Border.png" style="width: 200px;" width="200"></img>
 
 You can set different `borderStyle` for each cell as well.
 
