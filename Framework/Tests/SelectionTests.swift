@@ -193,8 +193,68 @@ class SelectionTests: XCTestCase {
         XCTAssertEqual(spreadsheetView.indexPathsForSelectedItems.count, 0)
     }
 
-    func testHandleTouches() {
+    func testTouches() {
         let parameters = Parameters()
+        let viewController = defaultViewController(parameters: parameters)
+
+        showViewController(viewController: viewController)
+        waitRunLoop()
+
+        guard let _ = viewController.view else {
+            XCTFail("fails to create root view controller")
+            return
+        }
+
+        let spreadsheetView = viewController.spreadsheetView
+
+        verifyBoundaries(spreadsheetView: spreadsheetView,
+                         columns: (0, parameters.numberOfColumns),
+                         rows: (0, parameters.numberOfRows),
+                         parameters: parameters)
+    }
+
+    func testTouchesFrozenColumns() {
+        let parameters = Parameters(frozenColumns: 2)
+        let viewController = defaultViewController(parameters: parameters)
+
+        showViewController(viewController: viewController)
+        waitRunLoop()
+
+        guard let _ = viewController.view else {
+            XCTFail("fails to create root view controller")
+            return
+        }
+
+        let spreadsheetView = viewController.spreadsheetView
+
+        verifyBoundaries(spreadsheetView: spreadsheetView,
+                         columns: (0, parameters.numberOfColumns),
+                         rows: (0, parameters.numberOfRows),
+                         parameters: parameters)
+    }
+
+    func testTouchesFrozenRows() {
+        let parameters = Parameters(frozenRows: 2)
+        let viewController = defaultViewController(parameters: parameters)
+
+        showViewController(viewController: viewController)
+        waitRunLoop()
+
+        guard let _ = viewController.view else {
+            XCTFail("fails to create root view controller")
+            return
+        }
+
+        let spreadsheetView = viewController.spreadsheetView
+
+        verifyBoundaries(spreadsheetView: spreadsheetView,
+                         columns: (0, parameters.numberOfColumns),
+                         rows: (0, parameters.numberOfRows),
+                         parameters: parameters)
+    }
+
+    func testTouchesFrozenColumnsAndRows() {
+        let parameters = Parameters(frozenColumns: 2, frozenRows: 3)
         let viewController = defaultViewController(parameters: parameters)
 
         showViewController(viewController: viewController)
@@ -225,29 +285,31 @@ class SelectionTests: XCTestCase {
         var offsetHeight: CGFloat = 0
         var leftEdgeColumn = 0
         for column in columns.from..<columns.to {
-            if width + parameters.columns[column] + parameters.intercellSpacing.width >= spreadsheetView.frame.width {
-                offsetWidth = calculateWidth(range: 0..<column, parameters: parameters)
-                if parameters.columnWidth - offsetWidth < spreadsheetView.frame.width {
+            let frozenWidth = calculateWidth(range: 0..<parameters.frozenColumns, parameters: parameters)
+            if column > parameters.frozenColumns && width + parameters.columns[column] + parameters.intercellSpacing.width >= spreadsheetView.frame.width - frozenWidth {
+                offsetWidth = calculateWidth(range: parameters.frozenColumns..<column, parameters: parameters)
+                if parameters.columnWidth - offsetWidth - frozenWidth < spreadsheetView.frame.width - frozenWidth {
                     offsetWidth -= spreadsheetView.frame.width - (parameters.columnWidth - offsetWidth)
                 }
                 width = 0
                 leftEdgeColumn = column
                 spreadsheetView.scrollToItem(at: IndexPath(row: 0, column: column), at: [.left, .top], animated: false)
-                waitRunLoop()
+                waitRunLoop(secs: 0.0001)
             }
             width += parameters.columns[column] + parameters.intercellSpacing.width
             height = 0
             offsetHeight = 0
 
             for row in rows.from..<rows.to {
-                if height + parameters.rows[row] + parameters.intercellSpacing.height >= spreadsheetView.frame.height {
-                    offsetHeight = calculateHeight(range: 0..<(row), parameters: parameters)
-                    if parameters.rowHeight - offsetHeight < spreadsheetView.frame.height {
+                let frozenHeight = calculateHeight(range: 0..<parameters.frozenRows, parameters: parameters)
+                if row > parameters.frozenRows && height + parameters.rows[row] + parameters.intercellSpacing.height >= spreadsheetView.frame.height - frozenHeight {
+                    offsetHeight = calculateHeight(range: parameters.frozenRows..<(row), parameters: parameters)
+                    if parameters.rowHeight - offsetHeight - frozenHeight < spreadsheetView.frame.height - frozenHeight {
                         offsetHeight -= spreadsheetView.frame.height - (parameters.rowHeight - offsetHeight)
                     }
                     height = 0
                     spreadsheetView.scrollToItem(at: IndexPath(row: row, column: leftEdgeColumn), at: [.left, .top], animated: false)
-                    waitRunLoop()
+                    waitRunLoop(secs: 0.0001)
                 }
                 height += parameters.rows[row] + parameters.intercellSpacing.height
 
@@ -258,10 +320,10 @@ class SelectionTests: XCTestCase {
                     let touch = Touch(location: location)
 
                     spreadsheetView.touchesBegan(Set<UITouch>([touch]), nil)
-                    waitRunLoop()
+                    waitRunLoop(secs: 0.0001)
 
                     spreadsheetView.touchesEnded(Set<UITouch>([touch]), nil)
-                    waitRunLoop()
+                    waitRunLoop(secs: 0.0001)
 
                     if shouldSucceed {
                         XCTAssertEqual(spreadsheetView.indexPathForSelectedItem, indexPath)
