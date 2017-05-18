@@ -24,6 +24,19 @@ public enum BorderStyle {
     case solid(width: CGFloat, color: UIColor)
 }
 
+extension BorderStyle: Equatable {
+    public static func ==(lhs: BorderStyle, rhs: BorderStyle) -> Bool {
+        switch (lhs, rhs) {
+        case (.none, .none):
+            return true
+        case let (.solid(lhs), .solid(rhs)):
+            return lhs.width == rhs.width && lhs.color == rhs.color
+        default:
+            return false
+        }
+    }
+}
+
 class Border: UIView {
     var borders: Borders = .all(.none)
 
