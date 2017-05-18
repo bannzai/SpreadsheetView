@@ -78,7 +78,7 @@ public final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
         next?.touchesBegan(touches, with: event)
     }
 
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         next?.touchesMoved(touches, with: event)
     }
 
