@@ -303,6 +303,11 @@ public class SpreadsheetView: UIView {
         rowHeaderView.layoutAttributes = layoutAttributeForRowHeaderView()
         tableView.layoutAttributes = layoutAttributeForTableView()
 
+        cornerView.resetReusableObjects()
+        columnHeaderView.resetReusableObjects()
+        rowHeaderView.resetReusableObjects()
+        tableView.resetReusableObjects()
+
         resetContentSize(of: cornerView)
         resetContentSize(of: columnHeaderView)
         resetContentSize(of: rowHeaderView)

@@ -13,9 +13,9 @@ final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
     var rowRecords = [CGFloat]()
 
     var visibleCells = ReusableCollection<Cell>()
-    let visibleVerticalGridlines = ReusableCollection<Gridline>()
-    let visibleHorizontalGridlines = ReusableCollection<Gridline>()
-    let visibleBorders = ReusableCollection<Border>()
+    var visibleVerticalGridlines = ReusableCollection<Gridline>()
+    var visibleHorizontalGridlines = ReusableCollection<Gridline>()
+    var visibleBorders = ReusableCollection<Border>()
 
     typealias TouchHandler = (_ touches: Set<UITouch>, _ event: UIEvent?) -> Void
     var touchesBegan: TouchHandler?
@@ -26,6 +26,25 @@ final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
 
     var hasDisplayedContent: Bool {
         return columnRecords.count > 0 || rowRecords.count > 0
+    }
+
+    func resetReusableObjects() {
+        for cell in visibleCells {
+            cell.removeFromSuperview()
+        }
+        for gridline in visibleVerticalGridlines {
+            gridline.removeFromSuperlayer()
+        }
+        for gridline in visibleHorizontalGridlines {
+            gridline.removeFromSuperlayer()
+        }
+        for border in visibleBorders {
+            border.removeFromSuperview()
+        }
+        visibleCells = ReusableCollection<Cell>()
+        visibleVerticalGridlines = ReusableCollection<Gridline>()
+        visibleHorizontalGridlines = ReusableCollection<Gridline>()
+        visibleBorders = ReusableCollection<Border>()
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
