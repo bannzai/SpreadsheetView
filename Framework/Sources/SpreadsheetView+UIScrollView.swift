@@ -9,7 +9,7 @@
 import UIKit
 
 extension SpreadsheetView {
-    var contentOffset: CGPoint {
+    public var contentOffset: CGPoint {
         get {
             return rootView.contentOffset
         }
@@ -18,7 +18,7 @@ extension SpreadsheetView {
         }
     }
 
-    var scrollIndicatorInsets: UIEdgeInsets {
+    public var scrollIndicatorInsets: UIEdgeInsets {
         get {
             return rootView.scrollIndicatorInsets
         }
