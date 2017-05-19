@@ -313,7 +313,6 @@ public class SpreadsheetView: UIView {
         if let cellReuseQueue = cellReuseQueues[identifier] {
             if let cell = cellReuseQueue.dequeue() {
                 cell.prepareForReuse()
-
                 return cell
             }
         } else {
@@ -323,19 +322,16 @@ public class SpreadsheetView: UIView {
         if identifier == blankCellReuseIdentifier {
             let cell = BlankCell()
             cell.reuseIdentifier = identifier
-
             return cell
         }
         if let clazz = cellClasses[identifier] {
             let cell = clazz.init()
             cell.reuseIdentifier = identifier
-
             return cell
         }
         if let nib = cellNibs[identifier] {
             if let cell = nib.instantiate(withOwner: nil, options: nil).first as? Cell {
                 cell.reuseIdentifier = identifier
-
                 return cell
             }
         }
