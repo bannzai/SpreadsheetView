@@ -31,6 +31,12 @@ extension SpreadsheetView {
         }
     }
 
+    public var contentSize: CGSize {
+        get {
+            return overlayView.contentSize
+        }
+    }
+
     public var contentInset: UIEdgeInsets {
         get {
             return rootView.contentInset

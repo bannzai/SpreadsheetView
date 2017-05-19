@@ -10,7 +10,7 @@
 
 ##### Bug Fixes
 
-* None.
+* Fixed an issue that behavior when adding subviews to spreadsheet view directly is not intuitive.
 
 ## 0.6.4 Release notes (2017-05-25)
 

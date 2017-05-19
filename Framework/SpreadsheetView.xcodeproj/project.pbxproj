@@ -17,6 +17,7 @@
 		143664CB1EB652F100321E5E /* SpreadsheetView+CirclularScrolling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143664CA1EB652F100321E5E /* SpreadsheetView+CirclularScrolling.swift */; };
 		143664CD1EB653A000321E5E /* SpreadsheetView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143664CC1EB653A000321E5E /* SpreadsheetView+Layout.swift */; };
 		143664CF1EB655CA00321E5E /* SpreadsheetView+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143664CE1EB655CA00321E5E /* SpreadsheetView+UIScrollViewDelegate.swift */; };
+		1451A0721ECEC2AF00C048DF /* SpreadsheetView+UIViewHierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1451A0711ECEC2AF00C048DF /* SpreadsheetView+UIViewHierarchy.swift */; };
 		1478491F1EC38F8D0020C938 /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1478491E1EC38F8B0020C938 /* ConfigurationTests.swift */; };
 		147898E31ECB607E004BB0A1 /* CellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147898E21ECB607E004BB0A1 /* CellTests.swift */; };
 		149E24001EBD4D620049E172 /* CircularScrolling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149E23FF1EBD4D620049E172 /* CircularScrolling.swift */; };
@@ -97,6 +98,7 @@
 		143664CA1EB652F100321E5E /* SpreadsheetView+CirclularScrolling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpreadsheetView+CirclularScrolling.swift"; sourceTree = "<group>"; };
 		143664CC1EB653A000321E5E /* SpreadsheetView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpreadsheetView+Layout.swift"; sourceTree = "<group>"; };
 		143664CE1EB655CA00321E5E /* SpreadsheetView+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpreadsheetView+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
+		1451A0711ECEC2AF00C048DF /* SpreadsheetView+UIViewHierarchy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpreadsheetView+UIViewHierarchy.swift"; sourceTree = "<group>"; };
 		1478491E1EC38F8B0020C938 /* ConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationTests.swift; sourceTree = "<group>"; };
 		147898E21ECB607E004BB0A1 /* CellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellTests.swift; sourceTree = "<group>"; };
 		149E23FF1EBD4D620049E172 /* CircularScrolling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularScrolling.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				149E24061EBF05A00049E172 /* LayoutEngine.swift */,
 				143664CA1EB652F100321E5E /* SpreadsheetView+CirclularScrolling.swift */,
 				143664C61EB6509800321E5E /* SpreadsheetView+Touches.swift */,
+				1451A0711ECEC2AF00C048DF /* SpreadsheetView+UIViewHierarchy.swift */,
 				143664C81EB6518600321E5E /* SpreadsheetView+UIScrollView.swift */,
 				143664CE1EB655CA00321E5E /* SpreadsheetView+UIScrollViewDelegate.swift */,
 				149E6A851EADE0EA000D851D /* SpreadsheetViewDataSource.swift */,
@@ -434,6 +437,7 @@
 				149E6A931EADE0EA000D851D /* SpreadsheetViewDataSource.swift in Sources */,
 				149E6A9B1EADE0EA000D851D /* Address.swift in Sources */,
 				149E6A9A1EADE0EA000D851D /* Location.swift in Sources */,
+				1451A0721ECEC2AF00C048DF /* SpreadsheetView+UIViewHierarchy.swift in Sources */,
 				14B2F2501EC031950014C199 /* Borders.swift in Sources */,
 				149E6A961EADE0EA000D851D /* ScrollView.swift in Sources */,
 				149E6A921EADE0EA000D851D /* SpreadsheetView.swift in Sources */,
