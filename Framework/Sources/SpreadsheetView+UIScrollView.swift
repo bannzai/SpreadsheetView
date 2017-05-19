@@ -66,4 +66,8 @@ extension SpreadsheetView {
         adjustScrollViewSizes()
         adjustOverlayViewFrame()
     }
+
+    public override func isKind(of aClass: AnyClass) -> Bool {
+        return rootView.isKind(of: aClass)
+    }
 }
