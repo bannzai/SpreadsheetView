@@ -2,9 +2,23 @@
 
 ##### Breaking
 
+* None.
+
+##### Enhancements
+
+* None.
+
+##### Bug Fixes
+
+* None.
+
+## 0.6.3 Release notes (2017-05-19)
+
+##### Breaking
+
 * Rename `Grids`/`Cell.grids` to `Gridlines`/`Cell.gridlines`. Old type and property are now deprecated.
   They will be removed in future version.   
-  [#13](https://github.com/kishikawakatsumi/SpreadsheetView/pull/13)
+  [#30](https://github.com/kishikawakatsumi/SpreadsheetView/pull/30)
 
 ##### Enhancements
 
