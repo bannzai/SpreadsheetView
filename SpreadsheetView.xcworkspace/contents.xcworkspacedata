@@ -12,6 +12,9 @@
       location = "container:"
       name = "Examples">
       <FileRef
+         location = "group:Examples/ClassData/ClassData.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:Examples/Schedule/Schedule.xcodeproj">
       </FileRef>
       <FileRef

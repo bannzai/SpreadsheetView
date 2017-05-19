@@ -81,8 +81,8 @@ public class SpreadsheetView: UIView {
     }
 
     public var visibleCells: [Cell] {
-        let cells: [Cell] = Array(columnHeaderView.visibleCells.values) + Array(rowHeaderView.visibleCells.values)
-            + Array(cornerView.visibleCells.values) + Array(tableView.visibleCells.values)
+        let cells: [Cell] = Array(columnHeaderView.visibleCells) + Array(rowHeaderView.visibleCells)
+            + Array(cornerView.visibleCells) + Array(tableView.visibleCells)
         return cells.sorted()
     }
 
@@ -191,8 +191,12 @@ public class SpreadsheetView: UIView {
 
     var cellClasses = [String: Cell.Type]()
     var cellNibs = [String: UINib]()
-    var cellReuseQueues = [String: CellReuseQueue]()
+    var cellReuseQueues = [String: ReuseQueue<Cell>]()
     let blankCellReuseIdentifier = UUID().uuidString
+
+    var horizontalGridlineReuseQueue = ReuseQueue<Gridline>()
+    var verticalGridlineReuseQueue = ReuseQueue<Gridline>()
+    var borderReuseQueue = ReuseQueue<Border>()
 
     var highlightedIndexPaths = Set<IndexPath>()
     var selectedIndexPaths = Set<IndexPath>()
@@ -299,6 +303,11 @@ public class SpreadsheetView: UIView {
         rowHeaderView.layoutAttributes = layoutAttributeForRowHeaderView()
         tableView.layoutAttributes = layoutAttributeForTableView()
 
+        cornerView.resetReusableObjects()
+        columnHeaderView.resetReusableObjects()
+        rowHeaderView.resetReusableObjects()
+        tableView.resetReusableObjects()
+
         resetContentSize(of: cornerView)
         resetContentSize(of: columnHeaderView)
         resetContentSize(of: rowHeaderView)
@@ -310,14 +319,14 @@ public class SpreadsheetView: UIView {
     }
 
     public func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> Cell {
-        if let cellReuseQueue = cellReuseQueues[identifier] {
-            if let cell = cellReuseQueue.dequeue() {
+        if let reuseQueue = cellReuseQueues[identifier] {
+            if let cell = reuseQueue.dequeue() {
                 cell.prepareForReuse()
                 return cell
             }
         } else {
-            let cellReuseQueue = CellReuseQueue()
-            cellReuseQueues[identifier] = cellReuseQueue
+            let reuseQueue = ReuseQueue<Cell>()
+            cellReuseQueues[identifier] = reuseQueue
         }
         if identifier == blankCellReuseIdentifier {
             let cell = BlankCell()
@@ -566,25 +575,25 @@ public class SpreadsheetView: UIView {
     }
 
     public func cellForItem(at indexPath: IndexPath) -> Cell? {
-        if let cell = tableView.visibleCells
+        if let cell = tableView.visibleCells.pairs
             .filter({ $0.key.row == indexPath.row && $0.key.column == indexPath.column })
             .map({ return $1 })
             .first {
             return cell
         }
-        if let cell = rowHeaderView.visibleCells
+        if let cell = rowHeaderView.visibleCells.pairs
             .filter({ $0.key.row == indexPath.row && $0.key.column == indexPath.column })
             .map({ return $1 })
             .first {
             return cell
         }
-        if let cell = columnHeaderView.visibleCells
+        if let cell = columnHeaderView.visibleCells.pairs
             .filter({ $0.key.row == indexPath.row && $0.key.column == indexPath.column })
             .map({ return $1 })
             .first {
             return cell
         }
-        if let cell = cornerView.visibleCells
+        if let cell = cornerView.visibleCells.pairs
             .filter({ $0.key.row == indexPath.row && $0.key.column == indexPath.column })
             .map({ return $1 })
             .first {
@@ -596,22 +605,22 @@ public class SpreadsheetView: UIView {
     public func cellsForItem(at indexPath: IndexPath) -> [Cell] {
         var cells = [Cell]()
         cells.append(contentsOf:
-            tableView.visibleCells
+            tableView.visibleCells.pairs
                 .filter { $0.key.row == indexPath.row && $0.key.column == indexPath.column }
                 .map { return $1 }
         )
         cells.append(contentsOf:
-            rowHeaderView.visibleCells
+            rowHeaderView.visibleCells.pairs
                 .filter { $0.key.row == indexPath.row && $0.key.column == indexPath.column }
                 .map { return $1 }
         )
         cells.append(contentsOf:
-            columnHeaderView.visibleCells
+            columnHeaderView.visibleCells.pairs
                 .filter { $0.key.row == indexPath.row && $0.key.column == indexPath.column }
                 .map { return $1 }
         )
         cells.append(contentsOf:
-            cornerView.visibleCells
+            cornerView.visibleCells.pairs
                 .filter { $0.key.row == indexPath.row && $0.key.column == indexPath.column }
                 .map { return $1 }
         )

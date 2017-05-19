@@ -34,7 +34,7 @@
 		149E6A991EADE0EA000D851D /* CellRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149E6A8B1EADE0EA000D851D /* CellRange.swift */; };
 		149E6A9A1EADE0EA000D851D /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149E6A8C1EADE0EA000D851D /* Location.swift */; };
 		149E6A9B1EADE0EA000D851D /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149E6A8D1EADE0EA000D851D /* Address.swift */; };
-		149E6A9C1EADE0EA000D851D /* CellReuseQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149E6A8E1EADE0EA000D851D /* CellReuseQueue.swift */; };
+		149E6A9C1EADE0EA000D851D /* ReuseQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149E6A8E1EADE0EA000D851D /* ReuseQueue.swift */; };
 		149E6A9D1EADE0EA000D851D /* IndexPath+Column.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149E6A8F1EADE0EA000D851D /* IndexPath+Column.swift */; };
 		149E6A9E1EADE0EA000D851D /* Array+BinarySearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149E6A901EADE0EA000D851D /* Array+BinarySearch.swift */; };
 		149E6AA61EADE19F000D851D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149E6AA51EADE19F000D851D /* AppDelegate.swift */; };
@@ -117,7 +117,7 @@
 		149E6A8B1EADE0EA000D851D /* CellRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellRange.swift; sourceTree = "<group>"; };
 		149E6A8C1EADE0EA000D851D /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		149E6A8D1EADE0EA000D851D /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
-		149E6A8E1EADE0EA000D851D /* CellReuseQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellReuseQueue.swift; sourceTree = "<group>"; };
+		149E6A8E1EADE0EA000D851D /* ReuseQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseQueue.swift; sourceTree = "<group>"; };
 		149E6A8F1EADE0EA000D851D /* IndexPath+Column.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IndexPath+Column.swift"; sourceTree = "<group>"; };
 		149E6A901EADE0EA000D851D /* Array+BinarySearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+BinarySearch.swift"; sourceTree = "<group>"; };
 		149E6AA31EADE19F000D851D /* HostApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HostApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,7 +232,7 @@
 				14B2F24F1EC031950014C199 /* Borders.swift */,
 				149E6A8C1EADE0EA000D851D /* Location.swift */,
 				149E6A8D1EADE0EA000D851D /* Address.swift */,
-				149E6A8E1EADE0EA000D851D /* CellReuseQueue.swift */,
+				149E6A8E1EADE0EA000D851D /* ReuseQueue.swift */,
 				149E6A8F1EADE0EA000D851D /* IndexPath+Column.swift */,
 				149E6A901EADE0EA000D851D /* Array+BinarySearch.swift */,
 				149E23E61EBD15940049E172 /* Supporting Files */,
@@ -426,7 +426,7 @@
 				149E6A9E1EADE0EA000D851D /* Array+BinarySearch.swift in Sources */,
 				143664CF1EB655CA00321E5E /* SpreadsheetView+UIScrollViewDelegate.swift in Sources */,
 				143664C91EB6518600321E5E /* SpreadsheetView+UIScrollView.swift in Sources */,
-				149E6A9C1EADE0EA000D851D /* CellReuseQueue.swift in Sources */,
+				149E6A9C1EADE0EA000D851D /* ReuseQueue.swift in Sources */,
 				149E24001EBD4D620049E172 /* CircularScrolling.swift in Sources */,
 				149E6A951EADE0EA000D851D /* ScrollPosition.swift in Sources */,
 				143664CD1EB653A000321E5E /* SpreadsheetView+Layout.swift in Sources */,
