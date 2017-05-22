@@ -9,7 +9,7 @@
 import UIKit
 
 extension SpreadsheetView {
-    public override func isKind(of aClass: AnyClass) -> Bool {
+    override open func isKind(of aClass: AnyClass) -> Bool {
         return rootView.isKind(of: aClass)
     }
 

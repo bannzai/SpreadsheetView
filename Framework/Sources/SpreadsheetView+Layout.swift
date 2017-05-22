@@ -9,7 +9,7 @@
 import UIKit
 
 extension SpreadsheetView {
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
 
         tableView.delegate = nil

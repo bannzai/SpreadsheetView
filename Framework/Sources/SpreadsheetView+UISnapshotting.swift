@@ -9,7 +9,7 @@
 import UIKit
 
 extension SpreadsheetView {
-    public override func resizableSnapshotView(from rect: CGRect, afterScreenUpdates afterUpdates: Bool, withCapInsets capInsets: UIEdgeInsets) -> UIView? {
+    open override func resizableSnapshotView(from rect: CGRect, afterScreenUpdates afterUpdates: Bool, withCapInsets capInsets: UIEdgeInsets) -> UIView? {
         if cornerView.frame.intersects(cornerView.convert(rect, to: self)) {
             return cornerView.resizableSnapshotView(from: rect.offsetBy(dx: -cornerView.frame.origin.x, dy: -cornerView.frame.origin.y),
                                                     afterScreenUpdates: afterUpdates,
