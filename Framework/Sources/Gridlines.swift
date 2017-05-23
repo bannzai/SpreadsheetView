@@ -1,5 +1,5 @@
 //
-//  Grids.swift
+//  Gridlines.swift
 //  SpreadsheetView
 //
 //  Created by Kishikawa Katsumi on 5/7/17.

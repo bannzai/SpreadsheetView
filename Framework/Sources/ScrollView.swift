@@ -12,20 +12,10 @@ public final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
     var columnRecords = [CGFloat]()
     var rowRecords = [CGFloat]()
 
-    var visibleCells = [Address: Cell]()
-    var visibleCellAddresses = Set<Address>()
-
-    var visibleVerticalGridlines = [Address: Gridline]()
-    var visibleVerticalGridAddresses = Set<Address>()
-    var reusableVerticalGridlines = Set<Gridline>()
-
-    var visibleHorizontalGridlines = [Address: Gridline]()
-    var visibleHorizontalGridAddresses = Set<Address>()
-    var reusableHorizontalGridlines = Set<Gridline>()
-
-    var visibleBorders = [Address: Border]()
-    var visibleBorderAddresses = Set<Address>()
-    var reusableBorders = Set<Border>()
+    var visibleCells = ReusableCollection<Cell>()
+    var visibleVerticalGridlines = ReusableCollection<Gridline>()
+    var visibleHorizontalGridlines = ReusableCollection<Gridline>()
+    var visibleBorders = ReusableCollection<Border>()
 
     typealias TouchHandler = (_ touches: Set<UITouch>, _ event: UIEvent?) -> Void
     var touchesBegan: TouchHandler?
@@ -38,28 +28,23 @@ public final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
         return columnRecords.count > 0 || rowRecords.count > 0
     }
 
-    func dequeueReusableVerticalGrid() -> Gridline {
-        if let grid = reusableVerticalGridlines.first {
-            reusableVerticalGridlines.remove(grid)
-            return grid
+    func resetReusableObjects() {
+        for cell in visibleCells {
+            cell.removeFromSuperview()
         }
-        return Gridline()
-    }
-
-    func dequeueReusableHorizontalGrid() -> Gridline {
-        if let grid = reusableHorizontalGridlines.first {
-            reusableHorizontalGridlines.remove(grid)
-            return grid
+        for gridline in visibleVerticalGridlines {
+            gridline.removeFromSuperlayer()
         }
-        return Gridline()
-    }
-
-    func dequeueReusableBorder() -> Border {
-        if let border = reusableBorders.first {
-            reusableBorders.remove(border)
-            return border
+        for gridline in visibleHorizontalGridlines {
+            gridline.removeFromSuperlayer()
         }
-        return Border()
+        for border in visibleBorders {
+            border.removeFromSuperview()
+        }
+        visibleCells = ReusableCollection<Cell>()
+        visibleVerticalGridlines = ReusableCollection<Gridline>()
+        visibleHorizontalGridlines = ReusableCollection<Gridline>()
+        visibleBorders = ReusableCollection<Border>()
     }
 
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -75,11 +60,6 @@ public final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
             return
         }
         touchesBegan?(touches, event)
-        next?.touchesBegan(touches, with: event)
-    }
-
-    override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        next?.touchesMoved(touches, with: event)
     }
 
     override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -87,7 +67,6 @@ public final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
             return
         }
         touchesEnded?(touches, event)
-        next?.touchesEnded(touches, with: event)
     }
 
     override public func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -95,6 +74,5 @@ public final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
             return
         }
         touchesCancelled?(touches, event)
-        next?.touchesCancelled(touches, with: event)
     }
 }

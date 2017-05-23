@@ -266,7 +266,16 @@ class LayoutEngine {
         let gridlines: Gridlines?
         let border: (borders: Borders?, hasBorders: Bool)
 
-        if !scrollView.visibleCellAddresses.contains(address) {
+        if scrollView.visibleCells.contains(address) {
+            if let cell = scrollView.visibleCells[address] {
+                cell.frame = frame
+                gridlines = cell.gridlines
+                border = (cell.borders, cell.hasBorder)
+            } else {
+                gridlines = nil
+                border = (nil, false)
+            }
+        } else {
             let indexPath = IndexPath(row: address.row, column: address.column)
 
             let cell = dataSource.spreadsheetView(spreadsheetView, cellForItemAt: indexPath) ?? spreadsheetView.dequeueReusableCell(withReuseIdentifier: blankCellReuseIdentifier, for: indexPath)
@@ -283,15 +292,6 @@ class LayoutEngine {
 
             scrollView.insertSubview(cell, at: 0)
             scrollView.visibleCells[address] = cell
-        } else {
-            if let cell = scrollView.visibleCells[address] {
-                cell.frame = frame
-                gridlines = cell.gridlines
-                border = (cell.borders, cell.hasBorder)
-            } else {
-                gridlines = nil
-                border = (nil, false)
-            }
         }
 
         if border.hasBorders {
@@ -364,20 +364,20 @@ class LayoutEngine {
             }
             frame.size.height = gridLayout.gridWidth
 
-            if !scrollView.visibleHorizontalGridAddresses.contains(address) {
-                let grid = scrollView.dequeueReusableHorizontalGrid()
-                grid.frame = frame
-                grid.color = gridLayout.gridColor
-                grid.zPosition = gridLayout.priority
-
-                scrollView.layer.addSublayer(grid)
-                scrollView.visibleHorizontalGridlines[address] = grid
-            } else {
-                if let grid = scrollView.visibleHorizontalGridlines[address] {
-                    grid.frame = frame
-                    grid.color = gridLayout.gridColor
-                    grid.zPosition = gridLayout.priority
+            if scrollView.visibleHorizontalGridlines.contains(address) {
+                if let gridline = scrollView.visibleHorizontalGridlines[address] {
+                    gridline.frame = frame
+                    gridline.color = gridLayout.gridColor
+                    gridline.zPosition = gridLayout.priority
                 }
+            } else {
+                let gridline = spreadsheetView.horizontalGridlineReuseQueue.dequeueOrCreate()
+                gridline.frame = frame
+                gridline.color = gridLayout.gridColor
+                gridline.zPosition = gridLayout.priority
+
+                scrollView.layer.addSublayer(gridline)
+                scrollView.visibleHorizontalGridlines[address] = gridline
             }
             visibleHorizontalGridAddresses.insert(address)
         }
@@ -399,20 +399,20 @@ class LayoutEngine {
             }
             frame.size.width = gridLayout.gridWidth
 
-            if !scrollView.visibleVerticalGridAddresses.contains(address) {
-                let grid = scrollView.dequeueReusableVerticalGrid()
-                grid.frame = frame
-                grid.color = gridLayout.gridColor
-                grid.zPosition = gridLayout.priority
-
-                scrollView.layer.addSublayer(grid)
-                scrollView.visibleVerticalGridlines[address] = grid
-            } else {
-                if let grid = scrollView.visibleVerticalGridlines[address] {
-                    grid.frame = frame
-                    grid.color = gridLayout.gridColor
-                    grid.zPosition = gridLayout.priority
+            if scrollView.visibleVerticalGridlines.contains(address) {
+                if let gridline = scrollView.visibleVerticalGridlines[address] {
+                    gridline.frame = frame
+                    gridline.color = gridLayout.gridColor
+                    gridline.zPosition = gridLayout.priority
                 }
+            } else {
+                let gridline = spreadsheetView.verticalGridlineReuseQueue.dequeueOrCreate()
+                gridline.frame = frame
+                gridline.color = gridLayout.gridColor
+                gridline.zPosition = gridLayout.priority
+
+                scrollView.layer.addSublayer(gridline)
+                scrollView.visibleVerticalGridlines[address] = gridline
             }
             visibleVerticalGridAddresses.insert(address)
         }
@@ -421,18 +421,18 @@ class LayoutEngine {
     private func renderBorders() {
         for address in visibleBorderAddresses {
             if let cell = scrollView.visibleCells[address] {
-                if !scrollView.visibleBorderAddresses.contains(address) {
-                    let border = scrollView.dequeueReusableBorder()
-                    border.borders = cell.borders
-                    border.frame = cell.frame
-                    scrollView.addSubview(border)
-                    scrollView.visibleBorders[address] = border
-                } else {
+                if scrollView.visibleBorders.contains(address) {
                     if let border = scrollView.visibleBorders[address] {
                         border.borders = cell.borders
                         border.frame = cell.frame
                         border.setNeedsDisplay()
                     }
+                } else {
+                    let border = spreadsheetView.borderReuseQueue.dequeueOrCreate()
+                    border.borders = cell.borders
+                    border.frame = cell.frame
+                    scrollView.addSubview(border)
+                    scrollView.visibleBorders[address] = border
                 }
             }
         }
@@ -467,47 +467,47 @@ class LayoutEngine {
     }
 
     private func returnReusableResouces() {
-        scrollView.visibleCellAddresses.subtract(visibleCellAddresses)
-        for address in scrollView.visibleCellAddresses {
+        scrollView.visibleCells.subtract(visibleCellAddresses)
+        for address in scrollView.visibleCells.addresses {
             if let cell = scrollView.visibleCells[address] {
                 cell.removeFromSuperview()
-                if let reuseIdentifier = cell.reuseIdentifier, let cellReuseQueue = spreadsheetView.cellReuseQueues[reuseIdentifier] {
-                    cellReuseQueue.enqueue(cell: cell)
+                if let reuseIdentifier = cell.reuseIdentifier, let reuseQueue = spreadsheetView.cellReuseQueues[reuseIdentifier] {
+                    reuseQueue.enqueue(cell)
                 }
                 scrollView.visibleCells[address] = nil
             }
         }
-        scrollView.visibleCellAddresses = visibleCellAddresses
+        scrollView.visibleCells.addresses = visibleCellAddresses
 
-        scrollView.visibleVerticalGridAddresses.subtract(visibleVerticalGridAddresses)
-        for address in scrollView.visibleVerticalGridAddresses {
-            if let grid = scrollView.visibleVerticalGridlines[address] {
-                grid.removeFromSuperlayer()
-                scrollView.reusableVerticalGridlines.insert(grid)
+        scrollView.visibleVerticalGridlines.subtract(visibleVerticalGridAddresses)
+        for address in scrollView.visibleVerticalGridlines.addresses {
+            if let gridline = scrollView.visibleVerticalGridlines[address] {
+                gridline.removeFromSuperlayer()
+                spreadsheetView.verticalGridlineReuseQueue.enqueue(gridline)
                 scrollView.visibleVerticalGridlines[address] = nil
             }
         }
-        scrollView.visibleVerticalGridAddresses = visibleVerticalGridAddresses
+        scrollView.visibleVerticalGridlines.addresses = visibleVerticalGridAddresses
 
-        scrollView.visibleHorizontalGridAddresses.subtract(visibleHorizontalGridAddresses)
-        for address in scrollView.visibleHorizontalGridAddresses {
-            if let grid = scrollView.visibleHorizontalGridlines[address] {
-                grid.removeFromSuperlayer()
-                scrollView.reusableHorizontalGridlines.insert(grid)
+        scrollView.visibleHorizontalGridlines.subtract(visibleHorizontalGridAddresses)
+        for address in scrollView.visibleHorizontalGridlines.addresses {
+            if let gridline = scrollView.visibleHorizontalGridlines[address] {
+                gridline.removeFromSuperlayer()
+                spreadsheetView.horizontalGridlineReuseQueue.enqueue(gridline)
                 scrollView.visibleHorizontalGridlines[address] = nil
             }
         }
-        scrollView.visibleHorizontalGridAddresses = visibleHorizontalGridAddresses
+        scrollView.visibleHorizontalGridlines.addresses = visibleHorizontalGridAddresses
 
-        scrollView.visibleBorderAddresses.subtract(visibleBorderAddresses)
-        for address in scrollView.visibleBorderAddresses {
+        scrollView.visibleBorders.subtract(visibleBorderAddresses)
+        for address in scrollView.visibleBorders.addresses {
             if let border = scrollView.visibleBorders[address] {
                 border.removeFromSuperview()
-                scrollView.reusableBorders.insert(border)
+                spreadsheetView.borderReuseQueue.enqueue(border)
                 scrollView.visibleBorders[address] = nil
             }
         }
-        scrollView.visibleBorderAddresses = visibleBorderAddresses
+        scrollView.visibleBorders.addresses = visibleBorderAddresses
     }
 }
 
