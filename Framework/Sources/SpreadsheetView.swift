@@ -295,7 +295,7 @@ public class SpreadsheetView: UIView {
 
     func refreshData() {
         layoutProperties = resetLayoutProperties()
-        circularScrollScalingFactor =  determineCircularScrollScalingFactor()
+        circularScrollScalingFactor = determineCircularScrollScalingFactor()
         centerOffset = calculateCenterOffset()
 
         cornerView.layoutAttributes = layoutAttributeForCornerView()
@@ -313,9 +313,17 @@ public class SpreadsheetView: UIView {
         resetContentSize(of: rowHeaderView)
         resetContentSize(of: tableView)
 
+        cornerView.frame = .zero
+        columnHeaderView.frame = CGRect(x: 0, y: 0, width: 0, height: rootView.frame.height)
+        rowHeaderView.frame = CGRect(x: 0, y: 0, width: rootView.frame.width, height: 0)
+
         cornerView.frame.size = cornerView.contentSize
         columnHeaderView.frame.size.width = columnHeaderView.contentSize.width
         rowHeaderView.frame.size.height = rowHeaderView.contentSize.height
+        if frozenColumns > 0 && frozenRows > 0 {
+            columnHeaderView.frame.size.height -= cornerView.frame.height - intercellSpacing.height
+            rowHeaderView.frame.size.width -= cornerView.frame.width - intercellSpacing.width
+        }
     }
 
     public func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> Cell {
@@ -654,72 +662,5 @@ public class SpreadsheetView: UIView {
 
     func mergedCell(for indexPath: Location) -> CellRange? {
         return layoutProperties.mergedCellLayouts[indexPath]
-    }
-
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-
-        tableView.delegate = nil
-        columnHeaderView.delegate = nil
-        rowHeaderView.delegate = nil
-        cornerView.delegate = nil
-        defer {
-            tableView.delegate = self
-            columnHeaderView.delegate = self
-            rowHeaderView.delegate = self
-            cornerView.delegate = self
-
-            needsReload = false
-        }
-
-        reloadDataIfNeeded()
-
-        guard numberOfColumns > 0 && numberOfRows > 0 else {
-            return
-        }
-
-        layoutCorner()
-        if needsReload && frozenColumns > 0 && frozenRows > 0 {
-            columnHeaderView.frame.size.height -= cornerView.frame.height - intercellSpacing.height
-            rowHeaderView.frame.size.width -= cornerView.frame.width - intercellSpacing.width
-        }
-
-        layoutRowHeader()
-        layoutColumnHeader()
-
-        if needsReload {
-            adjustScrollViewFrames()
-
-            if circularScrollingOptions.direction.contains(.horizontally) {
-                scrollToHorizontalCenter()
-                if circularScrollingOptions.headerStyle == .rowHeaderStartsFirstColumn {
-                    layoutRowHeader()
-                }
-            }
-            if circularScrollingOptions.direction.contains(.vertically) {
-                scrollToVerticalCenter()
-                if circularScrollingOptions.headerStyle == .columnHeaderStartsFirstRow {
-                    layoutColumnHeader()
-                }
-            }
-        }
-
-        layoutTable()
-
-        if needsReload {
-            adjustOverlayViewFrame()
-            arrangeScrollViews()
-        }
-
-        if circularScrollingOptions.direction.contains(.horizontally) {
-            recenterHorizontallyIfNecessary()
-        }
-        if circularScrollingOptions.direction.contains(.vertically) {
-            recenterVerticallyIfNecessary()
-        }
-    }
-
-    public override func isKind(of aClass: AnyClass) -> Bool {
-        return rootView.isKind(of: aClass)
     }
 }
