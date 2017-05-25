@@ -12,6 +12,21 @@
 
 * None.
 
+## 0.6.4 Release notes (2017-05-25)
+
+##### Breaking
+
+* None.
+
+##### Enhancements
+
+* None.
+
+##### Bug Fixes
+
+* Reset column/row header view frame when reloading to fix a rendering issue after `reloadData()`.
+  [#54](https://github.com/kishikawakatsumi/SpreadsheetView/pull/54)
+
 ## 0.6.3 Release notes (2017-05-19)
 
 ##### Breaking
