@@ -9,6 +9,64 @@
 import UIKit
 
 extension SpreadsheetView {
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+
+        tableView.delegate = nil
+        columnHeaderView.delegate = nil
+        rowHeaderView.delegate = nil
+        cornerView.delegate = nil
+        defer {
+            tableView.delegate = self
+            columnHeaderView.delegate = self
+            rowHeaderView.delegate = self
+            cornerView.delegate = self
+
+            needsReload = false
+        }
+
+        reloadDataIfNeeded()
+
+        guard numberOfColumns > 0 && numberOfRows > 0 else {
+            return
+        }
+
+        layoutCorner()
+        layoutRowHeader()
+        layoutColumnHeader()
+
+        if needsReload {
+            adjustScrollViewFrames()
+
+            if circularScrollingOptions.direction.contains(.horizontally) {
+                scrollToHorizontalCenter()
+                if circularScrollingOptions.headerStyle == .rowHeaderStartsFirstColumn {
+                    layoutRowHeader()
+                }
+            }
+            if circularScrollingOptions.direction.contains(.vertically) {
+                scrollToVerticalCenter()
+                if circularScrollingOptions.headerStyle == .columnHeaderStartsFirstRow {
+                    layoutColumnHeader()
+                }
+            }
+        }
+
+        layoutTable()
+
+        if needsReload {
+            adjustOverlayViewFrame()
+            arrangeScrollViews()
+        }
+
+        if circularScrollingOptions.direction.contains(.horizontally) {
+            recenterHorizontallyIfNecessary()
+        }
+        if circularScrollingOptions.direction.contains(.vertically) {
+            recenterVerticallyIfNecessary()
+        }
+    }
+
     func layout(scrollView: ScrollView) {
         let layoutEngine = LayoutEngine(spreadsheetView: self, scrollView: scrollView)
         layoutEngine.layout()
