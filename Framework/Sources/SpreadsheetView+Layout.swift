@@ -55,7 +55,7 @@ extension SpreadsheetView {
         layoutTable()
 
         if needsReload {
-            adjustOverlayViewFrame()
+            adjustOverlayViewContentSize()
             arrangeScrollViews()
         }
 
@@ -332,8 +332,7 @@ extension SpreadsheetView {
         }
     }
 
-    func adjustOverlayViewFrame() {
-        overlayView.scrollIndicatorInsets = rootView.scrollIndicatorInsets
+    func adjustOverlayViewContentSize() {
         overlayView.contentSize = CGSize(width: rootView.contentInset.left + rootView.contentInset.right + columnHeaderView.contentSize.width + tableView.contentSize.width,
                                          height: rootView.contentInset.top + rootView.contentInset.bottom + rowHeaderView.contentSize.height + tableView.contentSize.height)
     }
