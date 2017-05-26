@@ -75,7 +75,7 @@ public class SpreadsheetView: UIView {
             if let backgroundView = backgroundView {
                 backgroundView.frame = bounds
                 backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-                insertSubview(backgroundView, at: 0)
+                super.insertSubview(backgroundView, at: 0)
             }
         }
     }
@@ -221,7 +221,7 @@ public class SpreadsheetView: UIView {
         rootView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         rootView.showsHorizontalScrollIndicator = false
         rootView.showsVerticalScrollIndicator = false
-        addSubview(rootView)
+        super.addSubview(rootView)
 
         tableView.frame = bounds
         tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -261,7 +261,7 @@ public class SpreadsheetView: UIView {
         rootView.addSubview(columnHeaderView)
         rootView.addSubview(rowHeaderView)
         rootView.addSubview(cornerView)
-        addSubview(overlayView)
+        super.addSubview(overlayView)
 
         [tableView, columnHeaderView, rowHeaderView, cornerView, overlayView].forEach {
             addGestureRecognizer($0.panGestureRecognizer)

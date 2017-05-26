@@ -9,10 +9,6 @@
 import UIKit
 
 extension SpreadsheetView {
-    public override var subviews: [UIView] {
-        return overlayView.subviews
-    }
-
     public override func insertSubview(_ view: UIView, at index: Int) {
         overlayView.insertSubview(view, at: index)
     }
@@ -22,11 +18,7 @@ extension SpreadsheetView {
     }
 
     public override func addSubview(_ view: UIView) {
-        if view == rootView || view == overlayView {
-            super.addSubview(view)
-        } else {
-            overlayView.addSubview(view)
-        }
+        overlayView.addSubview(view)
     }
 
     public override func insertSubview(_ view: UIView, belowSubview siblingSubview: UIView) {
