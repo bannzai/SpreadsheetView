@@ -12,10 +12,9 @@ jobs:
   include:
   - stage: build
     script:
-    - bundle exec rake build-for-testing:simulator
+    - bundle exec rake build-for-testing:simulator DESTINATION='name=iPhone 7,OS=10.3'
     env:
     - CONFIGURATION="Release"
-    - DESTINATION='name=iPhone 7,OS=10.3'
   - stage: test
     script:
     # - bundle exec rake test-without-building:simulator
@@ -28,7 +27,6 @@ jobs:
     - ls -a build/Build/Intermediates/CodeCoverage/Products/Release-iphonesimulator
     env:
     - CONFIGURATION="Release"
-    - DESTINATION='name=iPhone 4s,OS=9.3'
   # - stage: test
   #   script:
   #   - bundle exec rake test-without-building:simulator
