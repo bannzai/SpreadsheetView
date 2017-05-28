@@ -143,17 +143,18 @@ jobs:
   #   env:
   #   - CONFIGURATION="Release"
   #   - DESTINATION='name=iPad Pro (12.9-inch),OS=10.3' TESTCASE='SelectionTests'
-  - stage: coverage
-    install: skip
-    script:
-    - bash <(curl -s https://codecov.io/bash) -D './build' -J '^SpreadsheetView$'
-  - stage: carthage
-    before_install:
-    - brew update
-    - brew outdated carthage || brew upgrade carthage
-    install: skip
-    script:
-    - carthage build --no-skip-current
+  # - stage: coverage
+  #   install: skip
+  #   script:
+  #   - bash <(curl -s https://codecov.io/bash) -D './build' -J '^SpreadsheetView$'
+  # - stage: carthage
+  #   before_install:
+  #   - brew update
+  #   - brew outdated carthage || brew upgrade carthage
+  #   install: skip
+  #   script:
+  #   - carthage build --no-skip-current
+skip_cleanup: true
 env:
   global:
   - LANG=en_US.UTF-8
