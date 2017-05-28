@@ -20,6 +20,12 @@ jobs:
     script:
     # - bundle exec rake test-without-building:simulator
     - ls -a build
+    - ls -a build/Build
+    - ls -a build/Logs
+    - ls -a build/Build/Intermediates
+    - ls -a build/Build/Intermediates/CodeCoverage
+    - ls -a build/Build/Intermediates/CodeCoverage/Products
+    - ls -a build/Build/Intermediates/CodeCoverage/Products/Release-iphonesimulator
     env:
     - CONFIGURATION="Release"
     - DESTINATION='name=iPhone 4s,OS=9.3'
