@@ -316,6 +316,7 @@ public class SpreadsheetView: UIView {
         cornerView.frame = .zero
         columnHeaderView.frame = CGRect(x: 0, y: 0, width: 0, height: rootView.frame.height)
         rowHeaderView.frame = CGRect(x: 0, y: 0, width: rootView.frame.width, height: 0)
+        tableView.frame = CGRect(origin: .zero, size: rootView.frame.size)
 
         cornerView.frame.size = cornerView.contentSize
         columnHeaderView.frame.size.width = columnHeaderView.contentSize.width
