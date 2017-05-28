@@ -1,111 +1,86 @@
 language: objective-c
 osx_image: xcode8.3
+git:
+  depth: 1
 cache:
   directories:
+  - build
+  - vendor
   - /usr/local/Homebrew
   - $HOME/Library/Caches/Homebrew
-  - vendor
-  - build
-install:
-- bundle install --path=vendor/bundle --binstubs=vendor/bin
 jobs:
   include:
   - stage: build
+    install:
+    - bundle install --path=vendor/bundle --binstubs=vendor/bin
     script:
     - bundle exec rake build-for-testing:simulator
       CONFIGURATION='Release' DESTINATION='name=iPhone 7,OS=10.3'
+  - &test
   - stage: test
     script:
     - bundle exec rake test-without-building:simulator
       CONFIGURATION='Release' DESTINATION='name=iPhone 4s,OS=9.3'
-  - stage: test
+    after_success:
+    - bash <(curl -s https://codecov.io/bash) -D './build' -J '^SpreadsheetView$'
+  - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
       CONFIGURATION='Release' DESTINATION='name=iPhone 5,OS=9.3'
-  - stage: test
+  - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
       CONFIGURATION='Release' DESTINATION='name=iPhone 6s,OS=10.3'
-  - stage: test
+  - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
       CONFIGURATION='Release' DESTINATION='name=iPhone 7 Plus,OS=10.3'
-  - stage: test
+  - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
       CONFIGURATION='Release' DESTINATION='name=iPad 2,OS=9.3' TESTCASE='MergedCellTests'
-  - stage: test
+  - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
       CONFIGURATION='Release' DESTINATION='name=iPad 2,OS=9.3' TESTCASE='ScrollTests/testTableViewScrolling'
-  - stage: test
+  - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
       CONFIGURATION='Release' DESTINATION='name=iPad 2,OS=9.3' TESTCASE='ScrollTests/testColumnHeaderViewScrolling'
-  - stage: test
+  - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
       CONFIGURATION='Release' DESTINATION='name=iPad 2,OS=9.3' TESTCASE='ScrollTests/testRowHeaderViewScrolling'
-  - stage: test
+  - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
       CONFIGURATION='Release' DESTINATION='name=iPad 2,OS=9.3' TESTCASE='ScrollTests/testColumnAndRowHeaderViewScrolling'
-  - stage: test
+  - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
       CONFIGURATION='Release' DESTINATION='name=iPad 2,OS=9.3' TESTCASE='ScrollTests/testCircularScrolling'
-  - stage: test
+  - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
       CONFIGURATION='Release' DESTINATION='name=iPad 2,OS=9.3' TESTCASE='SelectionTests'
-  - stage: test
+  - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
-      CONFIGURATION='Release' DESTINATION='name=iPad Air 2,OS=10.3' TESTCASE='MergedCellTests'
-  - stage: test
+      CONFIGURATION='Release' DESTINATION='name=iPad Air 2,OS=10.3'
+  - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
-      CONFIGURATION='Release' DESTINATION='name=iPad Air 2,OS=10.3' TESTCASE='ScrollTests'
-  - stage: test
+      CONFIGURATION='Release' DESTINATION='name=iPad Pro (9.7-inch),OS=10.3'
+  - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
-      CONFIGURATION='Release' DESTINATION='name=iPad Air 2,OS=10.3' TESTCASE='SelectionTests'
-  - stage: test
-    script:
-    - bundle exec rake test-without-building:simulator
-      CONFIGURATION='Release' DESTINATION='name=iPad Pro (9.7-inch),OS=10.3' TESTCASE='MergedCellTests'
-  - stage: test
-    script:
-    - bundle exec rake test-without-building:simulator
-      CONFIGURATION='Release' DESTINATION='name=iPad Pro (9.7-inch),OS=10.3' TESTCASE='ScrollTests'
-  - stage: test
-    script:
-    - bundle exec rake test-without-building:simulator
-      CONFIGURATION='Release' DESTINATION='name=iPad Pro (9.7-inch),OS=10.3' TESTCASE='SelectionTests'
-  - stage: test
-    script:
-    - bundle exec rake test-without-building:simulator
-      CONFIGURATION='Release' DESTINATION='name=iPad Pro (12.9-inch),OS=10.3' TESTCASE='MergedCellTests'
-  - stage: test
-    script:
-    - bundle exec rake test-without-building:simulator
-      CONFIGURATION='Release' DESTINATION='name=iPad Pro (12.9-inch),OS=10.3' TESTCASE='ScrollTests'
-  - stage: test
-    script:
-    - bundle exec rake test-without-building:simulator
-      CONFIGURATION='Release' DESTINATION='name=iPad Pro (12.9-inch),OS=10.3' TESTCASE='SelectionTests'
-  - stage: coverage
-    install: skip
-    script:
-    - bash <(curl -s https://codecov.io/bash) -D './build' -J '^SpreadsheetView$'
+      CONFIGURATION='Release' DESTINATION='name=iPad Pro (12.9-inch),OS=10.3'
   - stage: carthage
-    before_install:
+    install:
     - brew update
     - brew outdated carthage || brew upgrade carthage
-    install: skip
     script:
     - carthage build --no-skip-current
-skip_cleanup: true
 env:
   global:
   - LANG=en_US.UTF-8
@@ -113,3 +88,4 @@ env:
 branches:
   only:
   - master
+skip_cleanup: true
