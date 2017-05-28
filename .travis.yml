@@ -1,7 +1,5 @@
 language: objective-c
 osx_image: xcode8.3
-git:
-  depth: 10
 cache:
   directories:
   - build
