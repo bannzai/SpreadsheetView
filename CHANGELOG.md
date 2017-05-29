@@ -2,16 +2,34 @@
 
 ##### Breaking
 
-* None.
+* None.  
 
 ##### Enhancements
 
-* Make `contentOffset` and `scrollIndicatorInsets` public   
+* None.  
+
+##### Bug Fixes
+
+* None.  
+
+## 0.7.0 Release notes (2017-05-29)
+
+##### Breaking
+
+* None.  
+
+##### Enhancements
+
+* Make `contentOffset` and `scrollIndicatorInsets` public.  
   [#55](https://github.com/kishikawakatsumi/SpreadsheetView/pull/55)
 
 ##### Bug Fixes
 
 * Fixed an issue that behavior when adding subviews to spreadsheet view directly is not intuitive.  
+  https://github.com/kishikawakatsumi/SpreadsheetView/pull/57
+
+* Reset talbe view frame when reloading.  
+  https://github.com/kishikawakatsumi/SpreadsheetView/pull/60
 
 ## 0.6.4 Release notes (2017-05-25)
 

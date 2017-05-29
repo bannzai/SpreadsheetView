@@ -62,7 +62,6 @@ namespace 'test-without-building' do
     t.add_destination(destination) if destination
     t.add_only_testing("SpreadsheetViewTests/#{testcase}") if testcase
     t.add_build_option('-enableCodeCoverage', 'YES')
-    t.add_build_setting('ONLY_ACTIVE_ARCH', 'YES')
     t.build_dir = 'build'
     t.without_building = true
   end
