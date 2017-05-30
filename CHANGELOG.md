@@ -28,7 +28,7 @@
 * Fixed an issue that behavior when adding subviews to spreadsheet view directly is not intuitive.  
   https://github.com/kishikawakatsumi/SpreadsheetView/pull/57
 
-* Reset talbe view frame when reloading.  
+* Reset table view frame when reloading.  
   https://github.com/kishikawakatsumi/SpreadsheetView/pull/60
 
 ## 0.6.4 Release notes (2017-05-25)

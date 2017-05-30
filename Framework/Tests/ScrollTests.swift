@@ -345,7 +345,7 @@ class ScrollTests: XCTestCase {
 
         for column in columns.from..<columns.to {
             if column % 10 == 0 {
-                print("still running") // Work around for Travis CI timeout
+                print(".") // Work around for Travis CI timeout
             }
             var height = calculateHeight(range: 0..<rows.from, parameters: parameters)
 

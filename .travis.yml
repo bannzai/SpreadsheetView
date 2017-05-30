@@ -19,7 +19,7 @@ jobs:
     - bundle exec rake test-without-building:simulator
       DESTINATION='name=iPhone 4s,OS=9.3'
     after_success:
-    - bash <(curl -s https://codecov.io/bash) -D './build' -J '^SpreadsheetView$'
+    - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
   - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
