@@ -191,4 +191,65 @@ class ConfigurationTests: XCTestCase {
         XCTAssertEqual(CircularScrolling.Configuration.both.columnHeaderNotRepeated.rowHeaderNotRepeated.rowHeaderStartsFirstColumn.description,
                        "(direction: [\".vertically\", \".horizontally\"], tableStyle: [\".columnHeaderNotRepeated\", \".rowHeaderNotRepeated\"], headerStyle: .rowHeaderStartsFirstColumn)")
     }
+
+    func testScrollViewProperties() {
+        let spreadsheetView = SpreadsheetView()
+
+        XCTAssertEqual(spreadsheetView.showsVerticalScrollIndicator, true)
+        XCTAssertEqual(spreadsheetView.showsVerticalScrollIndicator, spreadsheetView.overlayView.showsVerticalScrollIndicator)
+        spreadsheetView.showsVerticalScrollIndicator = false
+        XCTAssertEqual(spreadsheetView.showsVerticalScrollIndicator, spreadsheetView.overlayView.showsVerticalScrollIndicator)
+
+        XCTAssertEqual(spreadsheetView.showsHorizontalScrollIndicator, true)
+        XCTAssertEqual(spreadsheetView.showsHorizontalScrollIndicator, spreadsheetView.overlayView.showsHorizontalScrollIndicator)
+        spreadsheetView.showsHorizontalScrollIndicator = false
+        XCTAssertEqual(spreadsheetView.showsHorizontalScrollIndicator, spreadsheetView.overlayView.showsHorizontalScrollIndicator)
+
+        XCTAssertEqual(spreadsheetView.scrollsToTop, true)
+        XCTAssertEqual(spreadsheetView.scrollsToTop, spreadsheetView.tableView.scrollsToTop)
+        spreadsheetView.scrollsToTop = false
+        XCTAssertEqual(spreadsheetView.scrollsToTop, spreadsheetView.tableView.scrollsToTop)
+
+        XCTAssertEqual(spreadsheetView.isDirectionalLockEnabled, false)
+        XCTAssertEqual(spreadsheetView.isDirectionalLockEnabled, spreadsheetView.tableView.isDirectionalLockEnabled)
+        spreadsheetView.isDirectionalLockEnabled = true
+        XCTAssertEqual(spreadsheetView.isDirectionalLockEnabled, spreadsheetView.tableView.isDirectionalLockEnabled)
+
+        XCTAssertEqual(spreadsheetView.bounces, true)
+        XCTAssertEqual(spreadsheetView.bounces, spreadsheetView.tableView.bounces)
+        spreadsheetView.bounces = false
+        XCTAssertEqual(spreadsheetView.bounces, spreadsheetView.tableView.bounces)
+
+        XCTAssertEqual(spreadsheetView.alwaysBounceVertical, false)
+        XCTAssertEqual(spreadsheetView.alwaysBounceVertical, spreadsheetView.tableView.alwaysBounceVertical)
+        spreadsheetView.alwaysBounceVertical = true
+        XCTAssertEqual(spreadsheetView.alwaysBounceVertical, spreadsheetView.tableView.alwaysBounceVertical)
+
+        XCTAssertEqual(spreadsheetView.alwaysBounceHorizontal, false)
+        XCTAssertEqual(spreadsheetView.alwaysBounceHorizontal, spreadsheetView.tableView.alwaysBounceHorizontal)
+        spreadsheetView.alwaysBounceHorizontal = true
+        XCTAssertEqual(spreadsheetView.alwaysBounceHorizontal, spreadsheetView.tableView.alwaysBounceHorizontal)
+
+        XCTAssertEqual(spreadsheetView.isPagingEnabled, false)
+        XCTAssertEqual(spreadsheetView.isPagingEnabled, spreadsheetView.tableView.isPagingEnabled)
+        spreadsheetView.isPagingEnabled = true
+        XCTAssertEqual(spreadsheetView.isPagingEnabled, spreadsheetView.tableView.isPagingEnabled)
+
+        XCTAssertEqual(spreadsheetView.isScrollEnabled, true)
+        XCTAssertEqual(spreadsheetView.isScrollEnabled, spreadsheetView.tableView.isScrollEnabled)
+        spreadsheetView.isScrollEnabled = false
+        XCTAssertEqual(spreadsheetView.isScrollEnabled, spreadsheetView.tableView.isScrollEnabled)
+
+        XCTAssertEqual(spreadsheetView.indicatorStyle, .default)
+        XCTAssertEqual(spreadsheetView.indicatorStyle, spreadsheetView.overlayView.indicatorStyle)
+        spreadsheetView.indicatorStyle = .white
+        XCTAssertEqual(spreadsheetView.indicatorStyle, spreadsheetView.overlayView.indicatorStyle)
+        spreadsheetView.indicatorStyle = .black
+        XCTAssertEqual(spreadsheetView.indicatorStyle, spreadsheetView.overlayView.indicatorStyle)
+
+        XCTAssertEqual(spreadsheetView.decelerationRate, UIScrollViewDecelerationRateNormal)
+        XCTAssertEqual(spreadsheetView.decelerationRate, spreadsheetView.tableView.decelerationRate)
+        spreadsheetView.decelerationRate = UIScrollViewDecelerationRateFast
+        XCTAssertEqual(spreadsheetView.decelerationRate, spreadsheetView.tableView.decelerationRate)
+    }
 }
