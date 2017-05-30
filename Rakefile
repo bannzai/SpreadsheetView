@@ -15,7 +15,7 @@ namespace :test do
     t.add_only_testing("SpreadsheetViewTests/#{testcase}") if testcase
     t.add_build_option('-enableCodeCoverage', 'YES')
     t.add_build_setting('ENABLE_TESTABILITY', 'YES')
-    t.add_build_setting('ONLY_ACTIVE_ARCH', 'YES')
+    t.add_build_setting('ONLY_ACTIVE_ARCH', 'NO')
     t.build_dir = 'build'
   end
 
@@ -43,6 +43,7 @@ namespace 'build-for-testing' do
     t.configuration = configuration
     t.add_build_option('-enableCodeCoverage', 'YES')
     t.add_build_setting('ENABLE_TESTABILITY', 'YES')
+    t.add_build_setting('ONLY_ACTIVE_ARCH', 'NO')
     t.build_dir = 'build'
     t.for_testing = true
   end
@@ -64,7 +65,21 @@ namespace 'test-without-building' do
     t.add_build_option('-enableCodeCoverage', 'YES')
     t.build_dir = 'build'
     t.without_building = true
+    t.after_action do
+      build_coverage_reports()
+    end
   end
 end
 
-XCJobs::Coverage::Coveralls.new()
+def build_coverage_reports()
+  project_name = 'SpreadsheetView'
+  profdata = Dir.glob(File.join('build', '/**/Coverage.profdata')).first  
+  Dir.glob(File.join('build', "/**/#{project_name}")) do |target|
+    output = `xcrun llvm-cov report -instr-profile "#{profdata}" "#{target}" -arch=x86_64`
+    if $?.success?
+      puts output
+      `xcrun llvm-cov show -instr-profile "#{profdata}" "#{target}" -arch=x86_64 -use-color=0 > coverage.txt`
+      break
+    end
+  end
+end
