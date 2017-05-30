@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class SpreadsheetView: UIView {
+open class SpreadsheetView: UIView {
     public weak var dataSource: SpreadsheetViewDataSource? {
         didSet {
             resetTouchHandlers(to: [tableView, columnHeaderView, rowHeaderView, cornerView])
