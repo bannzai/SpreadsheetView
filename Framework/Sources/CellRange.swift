@@ -22,6 +22,11 @@ public final class CellRange {
                   to: Location(row: to.row, column: to.column))
     }
 
+    public convenience init(from: IndexPath, to: IndexPath) {
+        self.init(from: Location(row: from.row, column: from.column),
+                  to: Location(row: to.row, column: to.column))
+    }
+
     init(from: Location, to: Location) {
         guard from.column <= to.column && from.row <= to.row else {
             fatalError("the value of `from` must be less than or equal to the value of `to`")
