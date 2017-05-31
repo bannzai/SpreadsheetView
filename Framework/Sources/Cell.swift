@@ -85,7 +85,7 @@ open class Cell: UIView {
         setup()
     }
 
-    func setup() {
+    private func setup() {
         backgroundColor = .white
 
         contentView.frame = bounds

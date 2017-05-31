@@ -189,8 +189,17 @@ class DebugCell: Cell {
         }
     }
 
-    override func setup() {
-        super.setup()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+
+    private func setup() {
         label.frame = bounds
         label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         label.font = UIFont.systemFont(ofSize: 8)

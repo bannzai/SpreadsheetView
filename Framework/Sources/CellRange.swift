@@ -46,6 +46,15 @@ public final class CellRange {
         return from.column <= cellRange.from.column && to.column >= cellRange.to.column &&
             from.row <= cellRange.from.row && to.row >= cellRange.to.row
     }
+
+    public func intersection(_ cellRange: CellRange) -> CellRange? {
+        guard from.column <= cellRange.to.column && to.column >= cellRange.from.column
+            && from.row <= cellRange.to.row && to.row >= cellRange.from.row else {
+                return nil
+        }
+        return CellRange(from: (max(from.row, cellRange.from.row), max(from.column, cellRange.from.column)),
+                         to: (min(to.row, cellRange.to.row), min(to.column, cellRange.to.column)))
+    }
 }
 
 extension CellRange: Hashable {

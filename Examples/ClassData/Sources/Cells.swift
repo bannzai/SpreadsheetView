@@ -22,6 +22,10 @@ class HeaderCell: Cell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        let bgView = UIView(frame: bounds)
+        bgView.backgroundColor = UIColor(white: 0.85, alpha: 1)
+        backgroundView = bgView
+
         label.frame = bounds
         label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         label.font = UIFont.boldSystemFont(ofSize: 14)
