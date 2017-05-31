@@ -645,19 +645,33 @@ public class SpreadsheetView: UIView {
         let columnRecords = columnHeaderView.columnRecords + tableView.columnRecords
         let rowRecords = rowHeaderView.rowRecords + tableView.rowRecords
 
-        let x = columnRecords[column] + (column >= frozenColumns ? tableView.frame.origin.x : 0) + intercellSpacing.width
-        let y = rowRecords[row] + (row >= frozenRows ? tableView.frame.origin.y : 0) + intercellSpacing.height
-        let origin = CGPoint(x: x, y: y)
-
+        let origin: CGPoint
         let size: CGSize
-        if let mergedCell = mergedCell(for: Location(row: row, column: column)) {
-            let width = (mergedCell.from.column...mergedCell.to.column).reduce(0) { $0 + layoutProperties.columnWidthCache[$1] }
-            let height = (mergedCell.from.row...mergedCell.to.row).reduce(0) { $0 + layoutProperties.rowHeightCache[$1] }
-            size = CGSize(width: width, height: height)
-        } else {
-            size = CGSize(width: layoutProperties.columnWidthCache[column], height: layoutProperties.rowHeightCache[row])
+        func originFor(column: Int, row: Int) -> CGPoint {
+            let x = columnRecords[column] + (column >= frozenColumns ? tableView.frame.origin.x : 0) + intercellSpacing.width
+            let y = rowRecords[row] + (row >= frozenRows ? tableView.frame.origin.y : 0) + intercellSpacing.height
+            return CGPoint(x: x, y: y)
         }
+        if let mergedCell = mergedCell(for: Location(row: row, column: column)) {
+            origin = originFor(column: mergedCell.from.column, row: mergedCell.from.row)
 
+            var width: CGFloat = 0
+            var height: CGFloat = 0
+            for column in mergedCell.from.column...mergedCell.to.column {
+                width += layoutProperties.columnWidthCache[column]
+            }
+            for row in mergedCell.from.row...mergedCell.to.row {
+                height += layoutProperties.rowHeightCache[row]
+            }
+            size = CGSize(width: width + intercellSpacing.width * CGFloat(mergedCell.columnCount - 1),
+                          height: height + intercellSpacing.height * CGFloat(mergedCell.rowCount - 1))
+        } else {
+            origin = originFor(column: column, row: row)
+
+            let width = layoutProperties.columnWidthCache[column]
+            let height = layoutProperties.rowHeightCache[row]
+            size = CGSize(width: width, height: height)
+        }
         return CGRect(origin: origin, size: size)
     }
 
