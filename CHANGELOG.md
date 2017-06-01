@@ -12,6 +12,25 @@
 
 * None.  
 
+## 0.7.1 Release notes (2017-06-01)
+
+##### Breaking
+
+* None.  
+
+##### Enhancements
+
+* Add an initializer that makes `CellRange` from `IndexPath`.  
+  [#71](https://github.com/kishikawakatsumi/SpreadsheetView/pull/71)
+
+##### Bug Fixes
+
+* Fixed an issue that spreadsheet view doesn't render merged cells correctly.  
+  [#69](https://github.com/kishikawakatsumi/SpreadsheetView/pull/69)
+
+* Fixed an issue where the `rectForItem(at:)` method returns incorrect values for merged cells.  
+  [#70](https://github.com/kishikawakatsumi/SpreadsheetView/pull/70)
+
 ## 0.7.0 Release notes (2017-05-29)
 
 ##### Breaking
@@ -26,10 +45,10 @@
 ##### Bug Fixes
 
 * Fixed an issue that behavior when adding subviews to spreadsheet view directly is not intuitive.  
-  https://github.com/kishikawakatsumi/SpreadsheetView/pull/57
+  [#57](https://github.com/kishikawakatsumi/SpreadsheetView/pull/57)
 
 * Reset table view frame when reloading.  
-  https://github.com/kishikawakatsumi/SpreadsheetView/pull/60
+  [#60](https://github.com/kishikawakatsumi/SpreadsheetView/pull/60)
 
 ## 0.6.4 Release notes (2017-05-25)
 
