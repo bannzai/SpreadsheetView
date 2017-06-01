@@ -148,17 +148,6 @@ class LayoutEngine {
                 columnStep += (mergedCell.columnCount - (column - mergedCell.from.column)) - 1
                 let address = Address(row: mergedCell.from.row, column: mergedCell.from.column,
                                       rowIndex: rowIndex - (row - mergedCell.from.row), columnIndex: columnIndex - (column - mergedCell.from.column))
-                if visibleCellAddresses.contains(address) {
-                    guard cellOrigin.x <= visibleRect.maxX else {
-                        cellOrigin.x += cellWidth
-                        return false
-                    }
-                    guard cellOrigin.y <= visibleRect.maxY else {
-                        return true
-                    }
-                    cellOrigin.x += cellWidth
-                    continue
-                }
 
                 if column < columnRecords.count {
                     let offsetWidth = columnRecords[column] - columnRecords[mergedCell.from.column]
@@ -181,6 +170,18 @@ class LayoutEngine {
                     }
                     cellOrigin.x -= offsetWidth
                 }
+                if visibleCellAddresses.contains(address) {
+                    guard cellOrigin.x <= visibleRect.maxX else {
+                        cellOrigin.x += cellWidth
+                        return false
+                    }
+                    guard cellOrigin.y <= visibleRect.maxY else {
+                        return true
+                    }
+                    cellOrigin.x += cellWidth
+                    continue
+                }
+
                 var offsetHeight: CGFloat = 0
                 if row < rowRecords.count {
                     offsetHeight = rowRecords[row] - rowRecords[mergedCell.from.row]
