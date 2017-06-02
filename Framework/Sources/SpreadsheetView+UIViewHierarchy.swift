@@ -36,8 +36,4 @@ extension SpreadsheetView {
     public override func sendSubview(toBack view: UIView) {
         overlayView.sendSubview(toBack: view)
     }
-
-    public override func resizableSnapshotView(from rect: CGRect, afterScreenUpdates afterUpdates: Bool, withCapInsets capInsets: UIEdgeInsets) -> UIView? {
-        return super.resizableSnapshotView(from: tableView.convert(rect, to: self), afterScreenUpdates: afterUpdates, withCapInsets: capInsets)
-    }
 }
