@@ -279,22 +279,26 @@ extension SpreadsheetView {
                 columnHeaderView.frame.origin.y = frozenRows > 0 ? rowHeaderView.frame.height : 0
             }
 
-            let height = rootView.frame.height - rootView.contentInset.top - rootView.contentInset.bottom - (circularScrollingOptions.headerStyle == .columnHeaderStartsFirstRow ? 0 : rowHeaderView.frame.height)
+            let height = rootView.frame.height - (rootView.contentInset.top + rootView.contentInset.bottom) - (circularScrollingOptions.headerStyle == .columnHeaderStartsFirstRow ? 0 : rowHeaderView.frame.height)
             columnHeaderView.frame.size.height = height < 0 ? 0 : height
 
             tableView.frame.origin.x = columnHeaderView.frame.width - intercellSpacing.width
             tableView.frame.size.width = (rootView.frame.width - (rootView.contentInset.left + rootView.contentInset.right)) - (columnHeaderView.frame.width - intercellSpacing.width)
+        } else {
+            tableView.frame.size.width = (rootView.frame.width - (rootView.contentInset.left + rootView.contentInset.right))
         }
         if frozenRows > 0 {
             if circularScrollingOptions.headerStyle != .rowHeaderStartsFirstColumn {
                 rowHeaderView.frame.origin.x = frozenColumns > 0 ? columnHeaderView.frame.width : 0
             }
 
-            let width = rootView.frame.width - rootView.contentInset.left - rootView.contentInset.right - (circularScrollingOptions.headerStyle == .rowHeaderStartsFirstColumn ? 0 : columnHeaderView.frame.width)
+            let width = rootView.frame.width - (rootView.contentInset.left + rootView.contentInset.right) - (circularScrollingOptions.headerStyle == .rowHeaderStartsFirstColumn ? 0 : columnHeaderView.frame.width)
             rowHeaderView.frame.size.width = width < 0 ? 0 : width
 
             tableView.frame.origin.y = rowHeaderView.frame.height - intercellSpacing.height
             tableView.frame.size.height = (rootView.frame.height - (rootView.contentInset.top + rootView.contentInset.bottom)) - (rowHeaderView.frame.height - intercellSpacing.height)
+        } else {
+            tableView.frame.size.height = (rootView.frame.height - (rootView.contentInset.top + rootView.contentInset.bottom))
         }
         if frozenColumns > 0 && frozenRows > 0 {
             if circularScrollingOptions.headerStyle != .columnHeaderStartsFirstRow {
@@ -313,9 +317,11 @@ extension SpreadsheetView {
             + (frozenColumns > 0 ? -columnHeaderView.frame.width + intercellSpacing.width : 0)
         if width > 0 {
             if width != tableView.frame.size.width {
+                rowHeaderView.frame.size.width = width
                 tableView.frame.size.width = width
             }
         } else {
+            rowHeaderView.frame.size.width = 0
             tableView.frame.size.width = 0
         }
 
@@ -333,8 +339,8 @@ extension SpreadsheetView {
     }
 
     func adjustOverlayViewContentSize() {
-        overlayView.contentSize = CGSize(width: rootView.contentInset.left + rootView.contentInset.right + columnHeaderView.contentSize.width + tableView.contentSize.width,
-                                         height: rootView.contentInset.top + rootView.contentInset.bottom + rowHeaderView.contentSize.height + tableView.contentSize.height)
+        overlayView.contentSize = CGSize(width: rootView.contentInset.left + rootView.contentInset.right + tableView.frame.origin.x - intercellSpacing.width + tableView.contentSize.width,
+                                         height: rootView.contentInset.top + rootView.contentInset.bottom + tableView.frame.origin.y - intercellSpacing.height + tableView.contentSize.height)
     }
 
     func arrangeScrollViews() {

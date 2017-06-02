@@ -118,7 +118,7 @@ class ViewTests: XCTestCase {
     }
 
     func testEmbedInNavigationController() {
-        let parameters = Parameters(circularScrolling: CircularScrolling.Configuration.horizontally)
+        let parameters = Parameters()
         let viewController = defaultViewController(parameters: parameters)
         let navigationController = UINavigationController(rootViewController: viewController)
 
@@ -142,7 +142,7 @@ class ViewTests: XCTestCase {
     }
 
     func testEmbedInNavigationControllerInTabBarController() {
-        let parameters = Parameters(circularScrolling: CircularScrolling.Configuration.horizontally)
+        let parameters = Parameters()
         let viewController = defaultViewController(parameters: parameters)
         let navigationController = UINavigationController(rootViewController: viewController)
         let tabBarController = UITabBarController()
@@ -168,7 +168,7 @@ class ViewTests: XCTestCase {
     }
 
     func testEmbedInTabBarController() {
-        let parameters = Parameters(circularScrolling: CircularScrolling.Configuration.horizontally)
+        let parameters = Parameters()
         let viewController = defaultViewController(parameters: parameters)
         let tabBarController = UITabBarController()
         tabBarController.viewControllers = [viewController]
