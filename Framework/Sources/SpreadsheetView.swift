@@ -242,6 +242,7 @@ public class SpreadsheetView: UIView {
         }
         set {
             tableView.isScrollEnabled = newValue
+            overlayView.isScrollEnabled = newValue
         }
     }
 
