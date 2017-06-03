@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import SpreadsheetView
 
 func waitRunLoop(secs: TimeInterval = 0) {
     RunLoop.main.run(until: Date(timeIntervalSinceNow: secs))
@@ -40,30 +41,34 @@ func showViewController(viewController: UIViewController) {
     window.makeKeyAndVisible()
 }
 
-func numberOfVisibleColumns(in view: UIView, contentOffset: CGPoint = CGPoint.zero, parameters: Parameters) -> Int {
+func numberOfVisibleColumns(in view: SpreadsheetView, contentOffset: CGPoint = CGPoint.zero, parameters: Parameters) -> Int {
     var columnCount = 0
     var width: CGFloat = 0
+    let frame = CGRect(origin: view.frame.origin,
+                       size: CGSize(width: view.frame.width - (view.contentInset.left + view.contentInset.right), height: view.frame.height - (view.contentInset.top + view.contentInset.bottom)))
     for columnWidth in parameters.columns {
         width += columnWidth + parameters.intercellSpacing.width
         if width > contentOffset.x {
             columnCount += 1
         }
-        if width + parameters.intercellSpacing.width > contentOffset.x + view.frame.width {
+        if width + parameters.intercellSpacing.width > contentOffset.x + frame.width {
             break
         }
     }
     return columnCount
 }
 
-func numberOfVisibleRows(in view: UIView, contentOffset: CGPoint = CGPoint.zero, parameters: Parameters) -> Int {
+func numberOfVisibleRows(in view: SpreadsheetView, contentOffset: CGPoint = CGPoint.zero, parameters: Parameters) -> Int {
     var rowCount = 0
     var height: CGFloat = 0
+    let frame = CGRect(origin: view.frame.origin,
+                       size: CGSize(width: view.frame.width - (view.contentInset.left + view.contentInset.right), height: view.frame.height - (view.contentInset.top + view.contentInset.bottom)))
     for rowHeight in parameters.rows {
         height += rowHeight + parameters.intercellSpacing.height
         if height > contentOffset.y {
             rowCount += 1
         }
-        if height + parameters.intercellSpacing.height > contentOffset.y + view.frame.height {
+        if height + parameters.intercellSpacing.height > contentOffset.y + frame.height {
             break
         }
     }
