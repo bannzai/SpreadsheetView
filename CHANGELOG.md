@@ -12,6 +12,27 @@
 
 * None.  
 
+## 0.7.2 Release notes (2017-06-03)
+
+##### Breaking
+
+* None.  
+
+##### Enhancements
+
+* None.
+
+##### Bug Fixes
+
+* Fix an issue where `resizableSnapshotView (from: afterScreenUpdates: withCapInsets:)` does not work as intended.  
+  [#75](https://github.com/kishikawakatsumi/SpreadsheetView/pull/75)
+
+* Fix an issue where the scroll area isn't correct.  
+  [#76](https://github.com/kishikawakatsumi/SpreadsheetView/pull/76)
+
+* Fix scrolling doens't sync during deceleration.  
+  [#77](https://github.com/kishikawakatsumi/SpreadsheetView/pull/77)
+
 ## 0.7.1 Release notes (2017-06-01)
 
 ##### Breaking
@@ -25,10 +46,10 @@
 
 ##### Bug Fixes
 
-* Fixed an issue that spreadsheet view doesn't render merged cells correctly.  
+* Fix an issue that spreadsheet view doesn't render merged cells correctly.  
   [#69](https://github.com/kishikawakatsumi/SpreadsheetView/pull/69)
 
-* Fixed an issue where the `rectForItem(at:)` method returns incorrect values for merged cells.  
+* Fix an issue where the `rectForItem(at:)` method returns incorrect values for merged cells.  
   [#70](https://github.com/kishikawakatsumi/SpreadsheetView/pull/70)
 
 ## 0.7.0 Release notes (2017-05-29)
@@ -44,7 +65,7 @@
 
 ##### Bug Fixes
 
-* Fixed an issue that behavior when adding subviews to spreadsheet view directly is not intuitive.  
+* Fix an issue that behavior when adding subviews to spreadsheet view directly is not intuitive.  
   [#57](https://github.com/kishikawakatsumi/SpreadsheetView/pull/57)
 
 * Reset table view frame when reloading.  
@@ -81,6 +102,7 @@
 
 * Fix a view on the cell cannot receive touch events.  
   [#42](https://github.com/kishikawakatsumi/SpreadsheetView/pull/42)
+
 * Fix an issue that `reloadData()` doesn't reflect the latest state correctly.  
   [#37](https://github.com/kishikawakatsumi/SpreadsheetView/pull/37)
 
@@ -98,6 +120,7 @@
 
 * Fix returning incorrect rect from `rectForItem(at:)`  
   [#13](https://github.com/kishikawakatsumi/SpreadsheetView/pull/13)
+
 * Fix not working `flashScrollIndicators()` method.  
   [#14](https://github.com/kishikawakatsumi/SpreadsheetView/pull/14)
 
