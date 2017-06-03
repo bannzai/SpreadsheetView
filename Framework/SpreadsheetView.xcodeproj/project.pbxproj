@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		141210001EE1D7A7004E41A3 /* SpreadsheetView+UISnapshotting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14120FFF1EE1D7A7004E41A3 /* SpreadsheetView+UISnapshotting.swift */; };
 		143664BD1EB59DCA00321E5E /* ViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143664BC1EB59DCA00321E5E /* ViewTests.swift */; };
 		143664BF1EB5A01600321E5E /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143664BE1EB5A01500321E5E /* HelperFunctions.swift */; };
 		143664C11EB5A07300321E5E /* HelperObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143664C01EB5A07300321E5E /* HelperObjects.swift */; };
@@ -88,6 +89,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		14120FFF1EE1D7A7004E41A3 /* SpreadsheetView+UISnapshotting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpreadsheetView+UISnapshotting.swift"; sourceTree = "<group>"; };
 		143664BC1EB59DCA00321E5E /* ViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTests.swift; sourceTree = "<group>"; };
 		143664BE1EB5A01500321E5E /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		143664C01EB5A07300321E5E /* HelperObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperObjects.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				143664CA1EB652F100321E5E /* SpreadsheetView+CirclularScrolling.swift */,
 				143664C61EB6509800321E5E /* SpreadsheetView+Touches.swift */,
 				1451A0711ECEC2AF00C048DF /* SpreadsheetView+UIViewHierarchy.swift */,
+				14120FFF1EE1D7A7004E41A3 /* SpreadsheetView+UISnapshotting.swift */,
 				143664C81EB6518600321E5E /* SpreadsheetView+UIScrollView.swift */,
 				143664CE1EB655CA00321E5E /* SpreadsheetView+UIScrollViewDelegate.swift */,
 				149E6A851EADE0EA000D851D /* SpreadsheetViewDataSource.swift */,
@@ -444,6 +447,7 @@
 				149E6A971EADE0EA000D851D /* Cell.swift in Sources */,
 				149E6A991EADE0EA000D851D /* CellRange.swift in Sources */,
 				149E6A9D1EADE0EA000D851D /* IndexPath+Column.swift in Sources */,
+				141210001EE1D7A7004E41A3 /* SpreadsheetView+UISnapshotting.swift in Sources */,
 				143664CB1EB652F100321E5E /* SpreadsheetView+CirclularScrolling.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
