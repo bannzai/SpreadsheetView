@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
+public final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
     var columnRecords = [CGFloat]()
     var rowRecords = [CGFloat]()
 
@@ -47,29 +47,29 @@ final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
         visibleBorders = ReusableCollection<Border>()
     }
 
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return gestureRecognizer is UIPanGestureRecognizer
     }
 
-    override func touchesShouldBegin(_ touches: Set<UITouch>, with event: UIEvent?, in view: UIView) -> Bool {
+    override public func touchesShouldBegin(_ touches: Set<UITouch>, with event: UIEvent?, in view: UIView) -> Bool {
         return hasDisplayedContent
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard hasDisplayedContent else {
             return
         }
         touchesBegan?(touches, event)
     }
 
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard hasDisplayedContent else {
             return
         }
         touchesEnded?(touches, event)
     }
 
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard hasDisplayedContent else {
             return
         }
