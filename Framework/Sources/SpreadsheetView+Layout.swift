@@ -199,6 +199,7 @@ extension SpreadsheetView {
                                 fatalError("cannot merge cells in a range that overlap existing merged cells")
                             }
                         }
+                        mergedCell.size = nil
                         layouts[location] = mergedCell
                     }
                 }
