@@ -72,6 +72,14 @@ extension SpreadsheetView {
 
     func _adjustContentOffsetIfNecessary() {}
 
+    func _adjustedHorizontalOffsetPinnedToScrollableBounds(_ arg1: CGFloat) -> CGFloat {
+        return 0
+    }
+    
+    func _adjustedVerticalOffsetPinnedToScrollableBounds(_ arg1: CGFloat) -> CGFloat {
+        return 0
+    }
+
     func _notifyDidScroll() {
         adjustScrollViewSizes()
         adjustOverlayViewContentSize()
