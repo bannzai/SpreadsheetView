@@ -35,6 +35,17 @@ extension SpreadsheetView {
         layoutRowHeader()
         layoutColumnHeader()
 
+        if self.stickyRowHeader {
+            self.rowHeaderView.frame.origin.y = min(self.rootView.contentOffset.y, 0)
+            self.rowHeaderView.contentOffset.x = self.tableView.contentOffset.x
+            self.cornerView.frame.origin.y = min(self.rootView.contentOffset.y, 0)
+        }
+        if self.stickyColumnHeader {
+            self.columnHeaderView.frame.origin.x = min(self.rootView.contentOffset.x, 0)
+            self.columnHeaderView.contentOffset.y = self.tableView.contentOffset.y
+            self.cornerView.frame.origin.x = min(self.rootView.contentOffset.x, 0)
+        }
+        
         if needsReload {
             adjustScrollViewFrames()
 
