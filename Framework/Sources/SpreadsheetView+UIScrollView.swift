@@ -46,34 +46,16 @@ extension SpreadsheetView {
         }
     }
 
-    var _isAutomaticContentOffsetAdjustmentEnabled: Bool {
-        get {
-            return isAutomaticContentOffsetAdjustmentEnabled
-        }
-    }
-
-    var _canScrollX: Bool {
-        return tableView.isScrollEnabled && tableView.contentSize.width > tableView.frame.width
-    }
-
-    var _canScrollY: Bool {
-        return tableView.isScrollEnabled && tableView.contentSize.height > tableView.frame.height
-    }
-
-    var _panGestureRecognizer: UIPanGestureRecognizer? {
-        get {
-            return rootView.panGestureRecognizer
-        }
-    }
-
-    func _setAutomaticContentOffsetAdjustmentEnabled(_ enabled: Bool) {
-        isAutomaticContentOffsetAdjustmentEnabled = enabled
-    }
-
-    func _adjustContentOffsetIfNecessary() {}
-
     func _notifyDidScroll() {
         adjustScrollViewSizes()
         adjustOverlayViewContentSize()
+    }
+
+    public override func forwardingTarget(for aSelector: Selector!) -> Any? {
+        if overlayView.responds(to: aSelector) {
+            return overlayView
+        } else {
+            return super.forwardingTarget(for: aSelector)
+        }
     }
 }
