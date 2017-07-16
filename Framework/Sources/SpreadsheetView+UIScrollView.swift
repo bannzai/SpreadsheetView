@@ -10,7 +10,11 @@ import UIKit
 
 extension SpreadsheetView {
     public override func isKind(of aClass: AnyClass) -> Bool {
-        return rootView.isKind(of: aClass)
+        if #available(iOS 11.0, *) {
+            return super.isKind(of: aClass)
+        } else {
+            return rootView.isKind(of: aClass)
+        }
     }
 
     public var contentOffset: CGPoint {
@@ -52,10 +56,14 @@ extension SpreadsheetView {
     }
 
     public override func forwardingTarget(for aSelector: Selector!) -> Any? {
-        if overlayView.responds(to: aSelector) {
-            return overlayView
-        } else {
+        if #available(iOS 11.0, *) {
             return super.forwardingTarget(for: aSelector)
+        } else {
+            if overlayView.responds(to: aSelector) {
+                return overlayView
+            } else {
+                return super.forwardingTarget(for: aSelector)
+            }
         }
     }
 }

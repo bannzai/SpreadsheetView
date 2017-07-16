@@ -275,31 +275,37 @@ extension SpreadsheetView {
     }
 
     func adjustScrollViewFrames() {
+        let contentInset: UIEdgeInsets
+        if #available(iOS 11.0, *) {
+            contentInset = rootView.value(forKey: "adjustedContentInset") as! UIEdgeInsets
+        } else {
+            contentInset = rootView.contentInset
+        }
         if frozenColumns > 0 {
             if circularScrollingOptions.headerStyle != .columnHeaderStartsFirstRow {
                 columnHeaderView.frame.origin.y = frozenRows > 0 ? rowHeaderView.frame.height : 0
             }
 
-            let height = rootView.frame.height - (rootView.contentInset.top + rootView.contentInset.bottom) - (circularScrollingOptions.headerStyle == .columnHeaderStartsFirstRow ? 0 : rowHeaderView.frame.height)
+            let height = rootView.frame.height - (contentInset.top + contentInset.bottom) - (circularScrollingOptions.headerStyle == .columnHeaderStartsFirstRow ? 0 : rowHeaderView.frame.height)
             columnHeaderView.frame.size.height = height < 0 ? 0 : height
 
             tableView.frame.origin.x = columnHeaderView.frame.width - intercellSpacing.width
-            tableView.frame.size.width = (rootView.frame.width - (rootView.contentInset.left + rootView.contentInset.right)) - (columnHeaderView.frame.width - intercellSpacing.width)
+            tableView.frame.size.width = (rootView.frame.width - (contentInset.left + contentInset.right)) - (columnHeaderView.frame.width - intercellSpacing.width)
         } else {
-            tableView.frame.size.width = (rootView.frame.width - (rootView.contentInset.left + rootView.contentInset.right))
+            tableView.frame.size.width = (rootView.frame.width - (contentInset.left + contentInset.right))
         }
         if frozenRows > 0 {
             if circularScrollingOptions.headerStyle != .rowHeaderStartsFirstColumn {
                 rowHeaderView.frame.origin.x = frozenColumns > 0 ? columnHeaderView.frame.width : 0
             }
 
-            let width = rootView.frame.width - (rootView.contentInset.left + rootView.contentInset.right) - (circularScrollingOptions.headerStyle == .rowHeaderStartsFirstColumn ? 0 : columnHeaderView.frame.width)
+            let width = rootView.frame.width - (contentInset.left + contentInset.right) - (circularScrollingOptions.headerStyle == .rowHeaderStartsFirstColumn ? 0 : columnHeaderView.frame.width)
             rowHeaderView.frame.size.width = width < 0 ? 0 : width
 
             tableView.frame.origin.y = rowHeaderView.frame.height - intercellSpacing.height
-            tableView.frame.size.height = (rootView.frame.height - (rootView.contentInset.top + rootView.contentInset.bottom)) - (rowHeaderView.frame.height - intercellSpacing.height)
+            tableView.frame.size.height = (rootView.frame.height - (contentInset.top + contentInset.bottom)) - (rowHeaderView.frame.height - intercellSpacing.height)
         } else {
-            tableView.frame.size.height = (rootView.frame.height - (rootView.contentInset.top + rootView.contentInset.bottom))
+            tableView.frame.size.height = (rootView.frame.height - (contentInset.top + contentInset.bottom))
         }
         if frozenColumns > 0 && frozenRows > 0 {
             if circularScrollingOptions.headerStyle != .columnHeaderStartsFirstRow {
@@ -314,8 +320,15 @@ extension SpreadsheetView {
     }
 
     func adjustScrollViewSizes() {
-        let width = rootView.frame.width - rootView.contentInset.left - rootView.contentInset.right
-            + (frozenColumns > 0 ? -columnHeaderView.frame.width + intercellSpacing.width : 0)
+        let contentInset: UIEdgeInsets
+        if #available(iOS 11.0, *) {
+            contentInset = rootView.value(forKey: "adjustedContentInset") as! UIEdgeInsets
+        } else {
+            contentInset = rootView.contentInset
+        }
+
+        let width = rootView.frame.width - contentInset.left - contentInset.right +
+            (frozenColumns > 0 ? -columnHeaderView.frame.width + intercellSpacing.width : 0)
         if width > 0 {
             if width != tableView.frame.size.width {
                 rowHeaderView.frame.size.width = width
@@ -326,8 +339,8 @@ extension SpreadsheetView {
             tableView.frame.size.width = 0
         }
 
-        let height = rootView.frame.height - rootView.contentInset.top - rootView.contentInset.bottom
-            + (frozenRows > 0 ? -rowHeaderView.frame.height + intercellSpacing.height : 0)
+        let height = rootView.frame.height - contentInset.top - contentInset.bottom +
+            (frozenRows > 0 ? -rowHeaderView.frame.height + intercellSpacing.height : 0)
         if height > 0 {
             if height != tableView.frame.size.height {
                 columnHeaderView.frame.size.height = height
@@ -340,8 +353,15 @@ extension SpreadsheetView {
     }
 
     func adjustOverlayViewContentSize() {
-        overlayView.contentSize = CGSize(width: rootView.contentInset.left + rootView.contentInset.right + tableView.frame.origin.x - intercellSpacing.width + tableView.contentSize.width,
-                                         height: rootView.contentInset.top + rootView.contentInset.bottom + tableView.frame.origin.y - intercellSpacing.height + tableView.contentSize.height)
+        let contentInset: UIEdgeInsets
+        if #available(iOS 11.0, *) {
+            contentInset = rootView.value(forKey: "adjustedContentInset") as! UIEdgeInsets
+        } else {
+            contentInset = rootView.contentInset
+        }
+        let width = contentInset.left + contentInset.right + tableView.frame.origin.x - intercellSpacing.width + tableView.contentSize.width
+        let height = contentInset.top + contentInset.bottom + tableView.frame.origin.y - intercellSpacing.height + tableView.contentSize.height
+        overlayView.contentSize = CGSize(width: width, height: height)
     }
 
     func arrangeScrollViews() {
