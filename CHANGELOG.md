@@ -12,6 +12,30 @@
 
 * None.  
 
+## 0.7.3 Release notes (2017-07-16)
+
+##### Breaking
+
+* None.  
+
+##### Enhancements
+
+* None.
+
+##### Bug Fixes
+
+* Clear cached merged cell size after reloading.  
+  [#85](https://github.com/kishikawakatsumi/SpreadsheetView/pull/85)
+
+* Fix an issue that may crash when paging is enabled.  
+  [#96](https://github.com/kishikawakatsumi/SpreadsheetView/pull/96)
+  
+* Fix Swift 4 compilation error.  
+  [#98](https://github.com/kishikawakatsumi/SpreadsheetView/pull/98)
+
+* Fix an issue that an app crashes if spreadsheet view with UINavigationController on iOS 11.
+  [#90](https://github.com/kishikawakatsumi/SpreadsheetView/pull/90)
+
 ## 0.7.2 Release notes (2017-06-03)
 
 ##### Breaking
