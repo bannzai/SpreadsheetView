@@ -325,6 +325,7 @@ public class SpreadsheetView: UIView {
         rootView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         rootView.showsHorizontalScrollIndicator = false
         rootView.showsVerticalScrollIndicator = false
+        rootView.delegate = self
         super.addSubview(rootView)
 
         tableView.frame = bounds
