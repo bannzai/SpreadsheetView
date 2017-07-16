@@ -4,14 +4,15 @@ namespace :test do
   desc 'test on simulator'
   XCJobs::Test.new("simulator") do |t|
     configuration = ENV['CONFIGURATION'] || 'Release'
-    destination = ENV['DESTINATION']
+    destinations = eval(ENV['DESTINATIONS'] || '[]')
     testcase = ENV['TESTCASE']
 
     t.workspace = 'SpreadsheetView'
     t.scheme = 'SpreadsheetView'
     t.sdk = 'iphonesimulator'
     t.configuration = configuration
-    t.add_destination(destination) if destination
+    
+    destinations.each { |destination| t.add_destination(destination) }
     t.add_only_testing("SpreadsheetViewTests/#{testcase}") if testcase
     t.add_build_option('-enableCodeCoverage', 'YES')
     t.add_build_setting('ENABLE_TESTABILITY', 'YES')
@@ -53,14 +54,14 @@ namespace 'test-without-building' do
   desc 'test on simulator without building'
   XCJobs::Test.new("simulator") do |t|
     configuration = ENV['CONFIGURATION'] || 'Release'
-    destination = ENV['DESTINATION']
+    destinations = eval(ENV['DESTINATIONS'] || '[]')
     testcase = ENV['TESTCASE']
 
     t.workspace = 'SpreadsheetView'
     t.scheme = 'SpreadsheetView'
     t.sdk = 'iphonesimulator'
     t.configuration = configuration
-    t.add_destination(destination) if destination
+    destinations.each { |destination| t.add_destination(destination) }
     t.add_only_testing("SpreadsheetViewTests/#{testcase}") if testcase
     t.add_build_option('-enableCodeCoverage', 'YES')
     t.build_dir = 'build'
