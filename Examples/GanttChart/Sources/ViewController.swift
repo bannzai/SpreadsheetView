@@ -93,8 +93,6 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         spreadsheetView.dataSource = self
         spreadsheetView.delegate = self
 
-        spreadsheetView.alwaysBounceVertical = true
-
         let hairline = 1 / UIScreen.main.scale
         spreadsheetView.intercellSpacing = CGSize(width: 0, height: hairline)
         spreadsheetView.gridStyle = .solid(width: hairline, color: .lightGray)
