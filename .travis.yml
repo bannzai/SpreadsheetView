@@ -35,7 +35,11 @@ jobs:
   - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
-      DESTINATIONS="['name=iPad Pro (9.7-inch),OS=10.3.1', 'name=iPad Pro (12.9-inch),OS=10.3.1']"
+      DESTINATIONS="['name=iPad Pro (9.7-inch),OS=10.3.1']"
+  - <<: *test
+    script:
+    - bundle exec rake test-without-building:simulator
+      DESTINATIONS="['name=iPad Pro (12.9-inch),OS=10.3.1']"
   - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
