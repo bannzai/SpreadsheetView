@@ -150,7 +150,7 @@ class LayoutEngine {
                                       rowIndex: rowIndex - (row - mergedCell.from.row), columnIndex: columnIndex - (column - mergedCell.from.column))
 
                 if column < columnRecords.count {
-                    let offsetWidth = columnRecords[column] - columnRecords[mergedCell.from.column]
+                    let offsetWidth = columnRecords[column - startColumn] - columnRecords[mergedCell.from.column - startColumn]
                     cellOrigin.x -= offsetWidth
                 } else {
                     let fromColumn = mergedCell.from.column
@@ -184,7 +184,7 @@ class LayoutEngine {
 
                 var offsetHeight: CGFloat = 0
                 if row < rowRecords.count {
-                    offsetHeight = rowRecords[row] - rowRecords[mergedCell.from.row]
+                    offsetHeight = rowRecords[row - startRow] - rowRecords[mergedCell.from.row - startRow]
                 } else {
                     let fromRow = mergedCell.from.row
                     let endRow = rowRecords.count - 1
