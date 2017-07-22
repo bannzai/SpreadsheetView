@@ -576,6 +576,13 @@ public class SpreadsheetView: UIView {
             fatalError("attempt to use a scroll position with multiple vertical positioning styles")
         }
 
+        if contentOffset.x < 0 {
+            contentOffset.x = 0
+        }
+        if contentOffset.y < 0 {
+            contentOffset.y = 0
+        }
+
         return contentOffset
     }
 
