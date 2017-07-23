@@ -12,6 +12,26 @@
 
 * None.  
 
+## 0.8.0 Release notes (2017-07-23)
+
+##### Breaking
+
+* None.  
+
+##### Enhancements
+
+* Add `stickyRowHeader` and `stickyColumnHeader` options those make row/column headers stick to the top/left.  
+  [Leo Mehlig](https://github.com/leoMehlig)
+  [#93](https://github.com/kishikawakatsumi/SpreadsheetView/pull/93)
+
+##### Bug Fixes
+
+* Fix an issue that rendering of merged cells might be misaligned.  
+  [#103](https://github.com/kishikawakatsumi/SpreadsheetView/pull/103)
+
+* Fixed an issue where the `scrollToItem (at: at: animated:)` method caused the view to scroll beyond the scrollable area.  
+  [#104](https://github.com/kishikawakatsumi/SpreadsheetView/pull/104)
+
 ## 0.7.3 Release notes (2017-07-16)
 
 ##### Breaking
