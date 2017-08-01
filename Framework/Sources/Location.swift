@@ -17,6 +17,10 @@ public struct Location: Hashable {
         self.column = column
     }
 
+    init(address: Address) {
+        self.init(row: address.row, column: address.column)
+    }
+
     init(indexPath: IndexPath) {
         self.init(row: indexPath.row, column: indexPath.column)
     }

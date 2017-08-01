@@ -710,31 +710,10 @@ public class SpreadsheetView: UIView {
     }
 
     public func cellForItem(at indexPath: IndexPath) -> Cell? {
-        if let cell = tableView.visibleCells.pairs
-            .filter({ $0.key.row == indexPath.row && $0.key.column == indexPath.column })
-            .map({ return $1 })
-            .first {
-            return cell
-        }
-        if let cell = rowHeaderView.visibleCells.pairs
-            .filter({ $0.key.row == indexPath.row && $0.key.column == indexPath.column })
-            .map({ return $1 })
-            .first {
-            return cell
-        }
-        if let cell = columnHeaderView.visibleCells.pairs
-            .filter({ $0.key.row == indexPath.row && $0.key.column == indexPath.column })
-            .map({ return $1 })
-            .first {
-            return cell
-        }
-        if let cell = cornerView.visibleCells.pairs
-            .filter({ $0.key.row == indexPath.row && $0.key.column == indexPath.column })
-            .map({ return $1 })
-            .first {
-            return cell
-        }
-        return nil
+        return tableView.visibleCells.cell(at: indexPath) ??
+                rowHeaderView.visibleCells.cell(at: indexPath) ??
+                columnHeaderView.visibleCells.cell(at: indexPath) ??
+                cornerView.visibleCells.cell(at: indexPath)
     }
 
     public func cellsForItem(at indexPath: IndexPath) -> [Cell] {
@@ -764,7 +743,7 @@ public class SpreadsheetView: UIView {
 
     public func rectForItem(at indexPath: IndexPath) -> CGRect {
         let (column, row) = (indexPath.column, indexPath.row)
-        guard column >= 0 && column < numberOfColumns && row >= 0 && row < numberOfRows else {
+        guard (0..<numberOfColumns).contains(column) && (0..<numberOfRows).contains(row) else {
             return .zero
         }
 

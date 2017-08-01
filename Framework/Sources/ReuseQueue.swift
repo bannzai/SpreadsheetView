@@ -57,3 +57,12 @@ final class ReusableCollection<Reusable>: Sequence where Reusable: NSObject {
         return AnyIterator(pairs.values.makeIterator())
     }
 }
+
+
+extension ReusableCollection where Reusable == Cell {
+    func cell(at indexPath: IndexPath) -> Cell? {
+        return pairs.first {
+            Location(address: $0.key) == Location(indexPath: indexPath)
+        }?.value
+    }
+}
