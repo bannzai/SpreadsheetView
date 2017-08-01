@@ -8,16 +8,7 @@
 
 import UIKit
 
-public struct Borders {
-    public var top: BorderStyle
-    public var bottom: BorderStyle
-    public var left: BorderStyle
-    public var right: BorderStyle
-
-    public static func all(_ style: BorderStyle) -> Borders {
-        return Borders(top: style, bottom: style, left: style, right: style)
-    }
-}
+public typealias Borders = RectStyle<BorderStyle>
 
 public enum BorderStyle {
     case none
@@ -38,7 +29,7 @@ extension BorderStyle: Equatable {
 }
 
 class Border: UIView {
-    var borders: Borders = .all(.none)
+    var borders: Borders = Borders(all: .none)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
