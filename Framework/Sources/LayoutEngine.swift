@@ -440,31 +440,14 @@ class LayoutEngine {
     }
 
     private func extractGridStyle(style: GridStyle) -> (width: CGFloat, color: UIColor, priority: CGFloat) {
-        let gridWidth: CGFloat
-        let gridColor: UIColor
-        let priority: CGFloat
-        switch style {
-        case .default:
-            switch defaultGridStyle {
-            case let .solid(width, color):
-                gridWidth = width
-                gridColor = color
-                priority = 0
-            default:
-                gridWidth = 0
-                gridColor = .clear
-                priority = 0
-            }
-        case let .solid(width, color):
-            gridWidth = width
-            gridColor = color
-            priority = 200
-        case .none:
-            gridWidth = 0
-            gridColor = .clear
-            priority = 100
+        switch (style, defaultGridStyle) {
+        case let (.default, .solid(width, color)):
+            return (width, color, 0)
+        case let (.solid(width, color), _):
+            return (width, color, 200)
+        default:
+            return (0, .clear, 0)
         }
-        return (gridWidth, gridColor, priority)
     }
 
     private func returnReusableResouces() {
