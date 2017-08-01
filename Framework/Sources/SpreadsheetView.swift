@@ -316,8 +316,8 @@ public class SpreadsheetView: UIView {
     var verticalGridlineReuseQueue = ReuseQueue<Gridline>()
     var borderReuseQueue = ReuseQueue<Border>()
 
-    var highlightedIndexPaths = Set<IndexPath>()
-    var selectedIndexPaths = Set<IndexPath>()
+    var highlightedIndexPaths : Set<IndexPath> = []
+    var selectedIndexPaths : Set<IndexPath> = []
     var pendingSelectionIndexPath: IndexPath?
     var currentTouch: UITouch?
 
