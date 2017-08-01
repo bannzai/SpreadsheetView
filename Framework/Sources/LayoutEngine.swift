@@ -68,7 +68,7 @@ class LayoutEngine {
         rowHeightCache = spreadsheetView.layoutProperties.rowHeightCache
 
         visibleRect = CGRect(origin: scrollView.contentOffset, size: scrollView.frame.size)
-        cellOrigin = CGPoint.zero
+        cellOrigin = .zero
 
         startColumn = scrollView.layoutAttributes.startColumn
         startRow = scrollView.layoutAttributes.startRow

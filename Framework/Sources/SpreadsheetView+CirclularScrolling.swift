@@ -138,7 +138,7 @@ extension SpreadsheetView {
     }
 
     func calculateCenterOffset() -> CGPoint {
-        var centerOffset = CGPoint.zero
+        var centerOffset : CGPoint = .zero
         if circularScrollingOptions.direction.contains(.horizontally) {
             for column in 0..<layoutProperties.numberOfColumns {
                 centerOffset.x += layoutProperties.columnWidthCache[column % numberOfColumns] + intercellSpacing.width

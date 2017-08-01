@@ -112,7 +112,7 @@ public class SpreadsheetView: UIView {
     }
     var circularScrollingOptions = CircularScrolling.Configuration.none.options
     var circularScrollScalingFactor: (horizontal: Int, vertical: Int) = (1, 1)
-    var centerOffset = CGPoint.zero
+    var centerOffset : CGPoint = .zero
 
     /// The view that provides the background appearance.
     ///

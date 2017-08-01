@@ -41,7 +41,7 @@ func showViewController(viewController: UIViewController) {
     window.makeKeyAndVisible()
 }
 
-func numberOfVisibleColumns(in view: SpreadsheetView, contentOffset: CGPoint = CGPoint.zero, parameters: Parameters) -> Int {
+func numberOfVisibleColumns(in view: SpreadsheetView, contentOffset: CGPoint = .zero, parameters: Parameters) -> Int {
     var columnCount = 0
     var width: CGFloat = 0
     let frame = CGRect(origin: view.frame.origin,
@@ -58,7 +58,7 @@ func numberOfVisibleColumns(in view: SpreadsheetView, contentOffset: CGPoint = C
     return columnCount
 }
 
-func numberOfVisibleRows(in view: SpreadsheetView, contentOffset: CGPoint = CGPoint.zero, parameters: Parameters) -> Int {
+func numberOfVisibleRows(in view: SpreadsheetView, contentOffset: CGPoint = .zero, parameters: Parameters) -> Int {
     var rowCount = 0
     var height: CGFloat = 0
     let frame = CGRect(origin: view.frame.origin,

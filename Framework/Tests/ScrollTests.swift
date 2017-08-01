@@ -361,8 +361,8 @@ class ScrollTests: XCTestCase {
 
                 let rect = cell.convert(cell.bounds, to: spreadsheetView)
 
-                var actual = CGPoint.zero
-                var expected = CGPoint.zero
+                var actual : CGPoint = .zero
+                var expected : CGPoint = .zero
                 if scrollPosition.contains(.left) {
                     actual.x = rect.origin.x
                     if parameters.circularScrolling.options.direction.contains(CircularScrolling.Direction.horizontally) {
