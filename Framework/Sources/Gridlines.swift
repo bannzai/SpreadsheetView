@@ -8,16 +8,7 @@
 
 import UIKit
 
-public struct Gridlines {
-    public var top: GridStyle
-    public var bottom: GridStyle
-    public var left: GridStyle
-    public var right: GridStyle
-
-    public static func all(_ style: GridStyle) -> Gridlines {
-        return Gridlines(top: style, bottom: style, left: style, right: style)
-    }
-}
+public typealias Gridlines = RectStyle<GridStyle>
 
 @available(*, deprecated: 0.6.3, renamed: "Gridlines")
 public typealias Grids = Gridlines

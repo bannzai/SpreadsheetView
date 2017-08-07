@@ -18,13 +18,11 @@ public final class CellRange {
     var size: CGSize?
 
     public convenience init(from: (row: Int, column: Int), to: (row: Int, column: Int)) {
-        self.init(from: Location(row: from.row, column: from.column),
-                  to: Location(row: to.row, column: to.column))
+        self.init(from: Location(key: from), to: Location(key: to))
     }
 
     public convenience init(from: IndexPath, to: IndexPath) {
-        self.init(from: Location(row: from.row, column: from.column),
-                  to: Location(row: to.row, column: to.column))
+        self.init(from: Location(indexPath: from), to: Location(indexPath: to))
     }
 
     init(from: Location, to: Location) {

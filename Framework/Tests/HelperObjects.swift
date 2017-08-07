@@ -208,7 +208,7 @@ class DebugCell: Cell {
 }
 
 class Touch: UITouch {
-    var location = CGPoint.zero
+    var location : CGPoint = .zero
 
     convenience init(location: CGPoint) {
         self.init()

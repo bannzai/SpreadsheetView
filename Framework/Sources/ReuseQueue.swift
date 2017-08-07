@@ -23,10 +23,7 @@ final class ReuseQueue<Reusable> where Reusable: NSObject {
     }
 
     func dequeueOrCreate() -> Reusable {
-        if let _ = reusableObjects.first {
-            return reusableObjects.removeFirst()
-        }
-        return Reusable()
+        return dequeue() ?? Reusable()
     }
 }
 
@@ -51,12 +48,21 @@ final class ReusableCollection<Reusable>: Sequence where Reusable: NSObject {
         get {
             return pairs[key]
         }
-        set(newValue) {
+        set {
             pairs[key] = newValue
         }
     }
 
     func makeIterator() -> AnyIterator<Reusable> {
         return AnyIterator(pairs.values.makeIterator())
+    }
+}
+
+
+extension ReusableCollection where Reusable == Cell {
+    func cell(at indexPath: IndexPath) -> Cell? {
+        return pairs.first {
+            Location(address: $0.key) == Location(indexPath: indexPath)
+        }?.value
     }
 }

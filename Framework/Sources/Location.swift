@@ -12,9 +12,17 @@ public struct Location: Hashable {
     public let row: Int
     public let column: Int
 
+    init(key: (row: Int, column: Int)) {
+        self.init(row: key.row, column: key.column)
+    }
+
     init(row: Int, column: Int) {
         self.row = row
         self.column = column
+    }
+
+    init(address: Address) {
+        self.init(row: address.row, column: address.column)
     }
 
     init(indexPath: IndexPath) {
