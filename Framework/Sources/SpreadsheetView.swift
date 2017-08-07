@@ -297,6 +297,11 @@ public class SpreadsheetView: UIView {
     public var mergedCells: [CellRange] {
         return layoutProperties.mergedCells
     }
+
+    public var scrollView: UIScrollView {
+        return overlayView
+    }
+
     var layoutProperties = LayoutProperties()
 
     let rootView = UIScrollView()
