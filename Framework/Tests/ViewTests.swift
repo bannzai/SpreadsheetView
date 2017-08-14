@@ -120,6 +120,7 @@ class ViewTests: XCTestCase {
     func testEmbedInNavigationController() {
         let parameters = Parameters()
         let viewController = defaultViewController(parameters: parameters)
+        viewController.title = "Navigation Controller"
         let navigationController = UINavigationController(rootViewController: viewController)
 
         showViewController(viewController: navigationController)
@@ -134,16 +135,27 @@ class ViewTests: XCTestCase {
         verify(view: spreadsheetView, parameters: parameters)
 
         XCTAssertEqual(spreadsheetView.frame, spreadsheetView.window!.frame)
-        XCTAssertEqual(spreadsheetView.contentInset.top,
-                       UIApplication.shared.statusBarFrame.height + viewController.navigationController!.navigationBar.frame.height)
-        XCTAssertEqual(spreadsheetView.contentInset.left, 0)
-        XCTAssertEqual(spreadsheetView.contentInset.right, 0)
-        XCTAssertEqual(spreadsheetView.contentInset.bottom, 0)
+        if #available(iOS 11.0, *) {
+            XCTAssertEqual(spreadsheetView.adjustedContentInset.top,
+                           UIApplication.shared.statusBarFrame.height + viewController.navigationController!.navigationBar.frame.height)
+            XCTAssertEqual(spreadsheetView.adjustedContentInset.left, 0)
+            XCTAssertEqual(spreadsheetView.adjustedContentInset.right, 0)
+            XCTAssertEqual(spreadsheetView.adjustedContentInset.bottom, 0)
+
+            XCTAssertEqual(spreadsheetView.contentInset, .zero)
+        } else {
+            XCTAssertEqual(spreadsheetView.contentInset.top,
+                           UIApplication.shared.statusBarFrame.height + viewController.navigationController!.navigationBar.frame.height)
+            XCTAssertEqual(spreadsheetView.contentInset.left, 0)
+            XCTAssertEqual(spreadsheetView.contentInset.right, 0)
+            XCTAssertEqual(spreadsheetView.contentInset.bottom, 0)
+        }
     }
 
     func testEmbedInNavigationControllerInTabBarController() {
         let parameters = Parameters()
         let viewController = defaultViewController(parameters: parameters)
+        viewController.title = "Navigation Controller"
         let navigationController = UINavigationController(rootViewController: viewController)
         let tabBarController = UITabBarController()
         tabBarController.viewControllers = [navigationController]
@@ -160,11 +172,21 @@ class ViewTests: XCTestCase {
         verify(view: spreadsheetView, parameters: parameters)
 
         XCTAssertEqual(spreadsheetView.frame, spreadsheetView.window!.frame)
-        XCTAssertEqual(spreadsheetView.contentInset.top,
-                       UIApplication.shared.statusBarFrame.height + viewController.navigationController!.navigationBar.frame.height)
-        XCTAssertEqual(spreadsheetView.contentInset.left, 0)
-        XCTAssertEqual(spreadsheetView.contentInset.right, 0)
-        XCTAssertEqual(spreadsheetView.contentInset.bottom, viewController.tabBarController!.tabBar.frame.height)
+        if #available(iOS 11.0, *) {
+            XCTAssertEqual(spreadsheetView.adjustedContentInset.top,
+                           UIApplication.shared.statusBarFrame.height + viewController.navigationController!.navigationBar.frame.height)
+            XCTAssertEqual(spreadsheetView.adjustedContentInset.left, 0)
+            XCTAssertEqual(spreadsheetView.adjustedContentInset.right, 0)
+            XCTAssertEqual(spreadsheetView.adjustedContentInset.bottom, viewController.tabBarController!.tabBar.frame.height)
+
+            XCTAssertEqual(spreadsheetView.contentInset, .zero)
+        } else {
+            XCTAssertEqual(spreadsheetView.contentInset.top,
+                           UIApplication.shared.statusBarFrame.height + viewController.navigationController!.navigationBar.frame.height)
+            XCTAssertEqual(spreadsheetView.contentInset.left, 0)
+            XCTAssertEqual(spreadsheetView.contentInset.right, 0)
+            XCTAssertEqual(spreadsheetView.contentInset.bottom, viewController.tabBarController!.tabBar.frame.height)
+        }
     }
 
     func testEmbedInTabBarController() {
@@ -186,6 +208,9 @@ class ViewTests: XCTestCase {
 
         XCTAssertEqual(spreadsheetView.frame, spreadsheetView.window!.frame)
         XCTAssertEqual(spreadsheetView.contentInset, .zero)
+        if #available(iOS 11.0, *) {
+            XCTAssertEqual(spreadsheetView.adjustedContentInset, .zero)
+        }
     }
 
     func testReloading() {
