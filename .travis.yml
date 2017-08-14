@@ -43,6 +43,18 @@ jobs:
   - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
+      DESTINATIONS="['name=iPhone 6s Plus,OS=11.0']"
+  - <<: *test
+    script:
+    - bundle exec rake test-without-building:simulator
+      DESTINATIONS="['name=iPhone 7,OS=11.0']"
+  - <<: *test
+    script:
+    - bundle exec rake test-without-building:simulator
+      DESTINATIONS="['name=iPad Pro (12.9-inch),OS=11.0']"
+  - <<: *test
+    script:
+    - bundle exec rake test-without-building:simulator
       DESTINATIONS="['name=iPad 2,OS=9.3']" TESTCASE='MergedCellTests'
   - <<: *test
     script:
