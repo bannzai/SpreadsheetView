@@ -94,7 +94,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         spreadsheetView.delegate = self
 
         let hairline = 1 / UIScreen.main.scale
-        spreadsheetView.intercellSpacing = CGSize(width: 0, height: hairline)
+        spreadsheetView.intercellSpacing = CGSize(width: hairline, height: hairline)
         spreadsheetView.gridStyle = .solid(width: hairline, color: .lightGray)
 
         spreadsheetView.register(HeaderCell.self, forCellWithReuseIdentifier: String(describing: HeaderCell.self))
@@ -164,14 +164,14 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         case (0, 0):
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: HeaderCell.self), for: indexPath) as! HeaderCell
             cell.label.text = "Task"
-            cell.gridlines.left = .none
+            cell.gridlines.left = .default
             cell.gridlines.right = .none
             return cell
         case (1, 0):
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: HeaderCell.self), for: indexPath) as! HeaderCell
             cell.label.text = "Start"
-            cell.gridlines.left = .none
-            cell.gridlines.right = .none
+            cell.gridlines.left = .solid(width: 1 / UIScreen.main.scale, color: cell.backgroundColor!)
+            cell.gridlines.right = cell.gridlines.left
             return cell
         case (2, 0):
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: HeaderCell.self), for: indexPath) as! HeaderCell
@@ -195,7 +195,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         case (0, 2..<(2 + tasks.count)):
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: TaskCell.self), for: indexPath) as! TaskCell
             cell.label.text = tasks[indexPath.row - 2][0]
-            cell.gridlines.left = .none
+            cell.gridlines.left = .default
             cell.gridlines.right = .none
             return cell
         case (1, 2..<(2 + tasks.count)):
