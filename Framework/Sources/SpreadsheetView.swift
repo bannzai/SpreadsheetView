@@ -128,8 +128,19 @@ public class SpreadsheetView: UIView {
             if let backgroundView = backgroundView {
                 backgroundView.frame = bounds
                 backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-                super.insertSubview(backgroundView, at: 0)
+                guard #available(iOS 11.0, *) else {
+                    super.insertSubview(backgroundView, at: 0)
+                    return
+                }
             }
+        }
+    }
+
+    @available(iOS 11.0, *)
+    public override func safeAreaInsetsDidChange() {
+        if let backgroundView = backgroundView {
+            backgroundView.removeFromSuperview()
+            super.insertSubview(backgroundView, at: 0)
         }
     }
 
@@ -388,6 +399,9 @@ public class SpreadsheetView: UIView {
 
         [tableView, columnHeaderView, rowHeaderView, cornerView, overlayView].forEach {
             addGestureRecognizer($0.panGestureRecognizer)
+            if #available(iOS 11.0, *) {
+                $0.contentInsetAdjustmentBehavior = .never
+            }
         }
     }
 
