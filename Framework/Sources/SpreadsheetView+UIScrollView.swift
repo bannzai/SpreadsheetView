@@ -47,12 +47,12 @@ extension SpreadsheetView {
         }
         set {
             rootView.contentInset = newValue
+            overlayView.contentInset = newValue
         }
     }
 
     func _notifyDidScroll() {
-        adjustScrollViewSizes()
-        adjustOverlayViewContentSize()
+        resetScrollViewFrame()
     }
 
     public override func forwardingTarget(for aSelector: Selector!) -> Any? {

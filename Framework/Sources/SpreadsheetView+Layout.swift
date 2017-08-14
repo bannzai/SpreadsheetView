@@ -21,8 +21,6 @@ extension SpreadsheetView {
             columnHeaderView.delegate = self
             rowHeaderView.delegate = self
             cornerView.delegate = self
-
-            needsReload = false
         }
 
         reloadDataIfNeeded()
@@ -31,40 +29,17 @@ extension SpreadsheetView {
             return
         }
 
-        layoutCorner()
-        layoutRowHeader()
-        layoutColumnHeader()
-
-        if needsReload {
-            adjustScrollViewFrames()
-
-            if circularScrollingOptions.direction.contains(.horizontally) {
-                scrollToHorizontalCenter()
-                if circularScrollingOptions.headerStyle == .rowHeaderStartsFirstColumn {
-                    layoutRowHeader()
-                }
-            }
-            if circularScrollingOptions.direction.contains(.vertically) {
-                scrollToVerticalCenter()
-                if circularScrollingOptions.headerStyle == .columnHeaderStartsFirstRow {
-                    layoutColumnHeader()
-                }
-            }
-        }
-
-        layoutTable()
-
-        if needsReload {
-            adjustOverlayViewContentSize()
-            arrangeScrollViews()
-        }
-
         if circularScrollingOptions.direction.contains(.horizontally) {
             recenterHorizontallyIfNecessary()
         }
         if circularScrollingOptions.direction.contains(.vertically) {
             recenterVerticallyIfNecessary()
         }
+
+        layoutCornerView()
+        layoutRowHeaderView()
+        layoutColumnHeaderView()
+        layoutTableView()
     }
 
     func layout(scrollView: ScrollView) {
@@ -72,40 +47,37 @@ extension SpreadsheetView {
         layoutEngine.layout()
     }
 
-    func layoutCorner() {
+    func layoutCornerView() {
         guard frozenColumns > 0 && frozenRows > 0 && circularScrolling.options.headerStyle == .none else {
                 cornerView.frame.size = CGSize.zero
                 cornerView.isHidden = true
                 return
         }
         cornerView.isHidden = false
-
         layout(scrollView: cornerView)
     }
 
-    func layoutColumnHeader() {
+    func layoutColumnHeaderView() {
         guard frozenColumns > 0 else {
             columnHeaderView.frame.size.width = 0
             columnHeaderView.isHidden = true
             return
         }
         columnHeaderView.isHidden = false
-
         layout(scrollView: columnHeaderView)
     }
 
-    func layoutRowHeader() {
+    func layoutRowHeaderView() {
         guard frozenRows > 0 else {
             rowHeaderView.frame.size.height = 0
             rowHeaderView.isHidden = true
             return
         }
         rowHeaderView.isHidden = false
-
         layout(scrollView: rowHeaderView)
     }
 
-    func layoutTable() {
+    func layoutTableView() {
         layout(scrollView: tableView)
     }
 
@@ -271,100 +243,74 @@ extension SpreadsheetView {
             }
         }
 
-        scrollView.contentSize = CGSize(width: width + intercellSpacing.width, height: height + intercellSpacing.height)
+        scrollView.state.contentSize = CGSize(width: width + intercellSpacing.width, height: height + intercellSpacing.height)
     }
 
-    func adjustScrollViewFrames() {
+    func resetScrollViewFrame() {
+        defer {
+            cornerView.frame = cornerView.state.frame
+            columnHeaderView.frame = columnHeaderView.state.frame
+            rowHeaderView.frame = rowHeaderView.state.frame
+            tableView.frame = tableView.state.frame
+        }
+
         let contentInset: UIEdgeInsets
         if #available(iOS 11.0, *) {
             contentInset = rootView.value(forKey: "adjustedContentInset") as! UIEdgeInsets
         } else {
             contentInset = rootView.contentInset
         }
+        let horizontalInset = contentInset.left + contentInset.right
+        let verticalInset = contentInset.top + contentInset.bottom
+
+        cornerView.state.frame = CGRect(origin: .zero, size: cornerView.state.contentSize)
+        columnHeaderView.state.frame = CGRect(x: 0, y: 0, width: columnHeaderView.state.contentSize.width, height: frame.height)
+        rowHeaderView.state.frame = CGRect(x: 0, y: 0, width: frame.width, height: rowHeaderView.state.contentSize.height)
+        tableView.state.frame = CGRect(origin: .zero, size: frame.size)
+
         if frozenColumns > 0 {
             if circularScrollingOptions.headerStyle != .columnHeaderStartsFirstRow {
-                columnHeaderView.frame.origin.y = frozenRows > 0 ? rowHeaderView.frame.height : 0
+                columnHeaderView.state.frame.origin.y = frozenRows > 0 ? rowHeaderView.state.frame.height : 0
             }
 
-            let height = rootView.frame.height - (contentInset.top + contentInset.bottom) - (circularScrollingOptions.headerStyle == .columnHeaderStartsFirstRow ? 0 : rowHeaderView.frame.height)
-            columnHeaderView.frame.size.height = height < 0 ? 0 : height
-
-            tableView.frame.origin.x = columnHeaderView.frame.width - intercellSpacing.width
-            tableView.frame.size.width = (rootView.frame.width - (contentInset.left + contentInset.right)) - (columnHeaderView.frame.width - intercellSpacing.width)
+            tableView.state.frame.origin.x = columnHeaderView.state.frame.width - intercellSpacing.width
+            tableView.state.frame.size.width = (frame.width - horizontalInset) - (columnHeaderView.state.frame.width - intercellSpacing.width)
         } else {
-            tableView.frame.size.width = (rootView.frame.width - (contentInset.left + contentInset.right))
+            tableView.state.frame.size.width = frame.width - horizontalInset
         }
         if frozenRows > 0 {
             if circularScrollingOptions.headerStyle != .rowHeaderStartsFirstColumn {
-                rowHeaderView.frame.origin.x = frozenColumns > 0 ? columnHeaderView.frame.width : 0
+                rowHeaderView.state.frame.origin.x = frozenColumns > 0 ? columnHeaderView.state.frame.width : 0
             }
 
-            let width = rootView.frame.width - (contentInset.left + contentInset.right) - (circularScrollingOptions.headerStyle == .rowHeaderStartsFirstColumn ? 0 : columnHeaderView.frame.width)
-            rowHeaderView.frame.size.width = width < 0 ? 0 : width
-
-            tableView.frame.origin.y = rowHeaderView.frame.height - intercellSpacing.height
-            tableView.frame.size.height = (rootView.frame.height - (contentInset.top + contentInset.bottom)) - (rowHeaderView.frame.height - intercellSpacing.height)
+            tableView.state.frame.origin.y = rowHeaderView.state.frame.height - intercellSpacing.height
+            tableView.state.frame.size.height = (frame.height - verticalInset) - (rowHeaderView.state.frame.height - intercellSpacing.height)
         } else {
-            tableView.frame.size.height = (rootView.frame.height - (contentInset.top + contentInset.bottom))
+            tableView.state.frame.size.height = frame.height - verticalInset
         }
         if frozenColumns > 0 && frozenRows > 0 {
             if circularScrollingOptions.headerStyle != .columnHeaderStartsFirstRow {
-                columnHeaderView.frame.origin.y -= intercellSpacing.height
-                columnHeaderView.frame.size.height += intercellSpacing.height
+                columnHeaderView.state.frame.origin.y -= intercellSpacing.height
+                columnHeaderView.state.frame.size.height += intercellSpacing.height
             }
             if circularScrollingOptions.headerStyle != .rowHeaderStartsFirstColumn {
-                rowHeaderView.frame.origin.x -= intercellSpacing.width
-                rowHeaderView.frame.size.width += intercellSpacing.width
+                rowHeaderView.state.frame.origin.x -= intercellSpacing.width
+                rowHeaderView.state.frame.size.width += intercellSpacing.width
             }
         }
+        
+        resetOverlayViewContentSize(contentInset)
     }
 
-    func adjustScrollViewSizes() {
-        let contentInset: UIEdgeInsets
-        if #available(iOS 11.0, *) {
-            contentInset = rootView.value(forKey: "adjustedContentInset") as! UIEdgeInsets
-        } else {
-            contentInset = rootView.contentInset
-        }
-
-        let width = rootView.frame.width - contentInset.left - contentInset.right +
-            (frozenColumns > 0 ? -columnHeaderView.frame.width + intercellSpacing.width : 0)
-        if width > 0 {
-            if width != tableView.frame.size.width {
-                rowHeaderView.frame.size.width = width
-                tableView.frame.size.width = width
-            }
-        } else {
-            rowHeaderView.frame.size.width = 0
-            tableView.frame.size.width = 0
-        }
-
-        let height = rootView.frame.height - contentInset.top - contentInset.bottom +
-            (frozenRows > 0 ? -rowHeaderView.frame.height + intercellSpacing.height : 0)
-        if height > 0 {
-            if height != tableView.frame.size.height {
-                columnHeaderView.frame.size.height = height
-                tableView.frame.size.height = height
-            }
-        } else {
-            columnHeaderView.frame.size.height = 0
-            tableView.frame.size.height = 0
-        }
-    }
-
-    func adjustOverlayViewContentSize() {
-        let contentInset: UIEdgeInsets
-        if #available(iOS 11.0, *) {
-            contentInset = rootView.value(forKey: "adjustedContentInset") as! UIEdgeInsets
-        } else {
-            contentInset = rootView.contentInset
-        }
-        let width = contentInset.left + contentInset.right + tableView.frame.origin.x - intercellSpacing.width + tableView.contentSize.width
-        let height = contentInset.top + contentInset.bottom + tableView.frame.origin.y - intercellSpacing.height + tableView.contentSize.height
+    func resetOverlayViewContentSize(_ contentInset: UIEdgeInsets) {
+        let width = contentInset.left + contentInset.right + tableView.state.frame.origin.x - intercellSpacing.width + tableView.state.contentSize.width
+        let height = contentInset.top + contentInset.bottom + tableView.state.frame.origin.y - intercellSpacing.height + tableView.state.contentSize.height
         overlayView.contentSize = CGSize(width: width, height: height)
+        overlayView.contentOffset.x = tableView.state.contentOffset.x - contentInset.left
+        overlayView.contentOffset.y = tableView.state.contentOffset.y - contentInset.top
     }
 
-    func arrangeScrollViews() {
+    func resetScrollViewArrangement() {
         tableView.removeFromSuperview()
         columnHeaderView.removeFromSuperview()
         rowHeaderView.removeFromSuperview()

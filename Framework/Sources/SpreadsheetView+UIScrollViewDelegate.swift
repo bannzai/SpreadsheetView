@@ -55,7 +55,6 @@ extension SpreadsheetView: UIScrollViewDelegate {
 
     @available(iOS 11.0, *)
     public func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
-        adjustScrollViewSizes()
-        adjustOverlayViewContentSize()
+        resetScrollViewFrame()
     }
 }

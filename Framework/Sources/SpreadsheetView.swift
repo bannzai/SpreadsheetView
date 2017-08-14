@@ -16,7 +16,7 @@ public class SpreadsheetView: UIView {
     public weak var dataSource: SpreadsheetViewDataSource? {
         didSet {
             resetTouchHandlers(to: [tableView, columnHeaderView, rowHeaderView, cornerView])
-            reloadData()
+            setNeedsReload()
         }
     }
     /// The object that acts as the delegate of the spreadsheet view.
@@ -219,14 +219,13 @@ public class SpreadsheetView: UIView {
             tableView.alwaysBounceHorizontal = newValue
         }
     }
-    
+
     /// A Boolean value that determines wheather the row header always sticks to the top.
     /// - Note: `bounces` has to be `true` and there has to be at least one `frozenRow`.
     /// The default value is `false`.
     ///
     /// - SeeAlso: `stickyColumnHeader`
     public var stickyRowHeader: Bool = false
-    
     /// A Boolean value that determines wheather the column header always sticks to the top.
     /// - Note: `bounces` has to be `true` and there has to be at least one `frozenColumn`.
     /// The default value is `false`.
@@ -307,8 +306,8 @@ public class SpreadsheetView: UIView {
     let rootView = UIScrollView()
     let overlayView = UIScrollView()
 
-    let rowHeaderView = ScrollView()
     let columnHeaderView = ScrollView()
+    let rowHeaderView = ScrollView()
     let cornerView = ScrollView()
     let tableView = ScrollView()
 
@@ -403,21 +402,6 @@ public class SpreadsheetView: UIView {
     }
 
     public func reloadData() {
-        setNeedsReload()
-    }
-
-    func reloadDataIfNeeded() {
-        if needsReload {
-            refreshData()
-        }
-    }
-
-    func setNeedsReload() {
-        needsReload = true
-        setNeedsLayout()
-    }
-
-    func refreshData() {
         layoutProperties = resetLayoutProperties()
         circularScrollScalingFactor = determineCircularScrollScalingFactor()
         centerOffset = calculateCenterOffset()
@@ -437,18 +421,29 @@ public class SpreadsheetView: UIView {
         resetContentSize(of: rowHeaderView)
         resetContentSize(of: tableView)
 
-        cornerView.frame = .zero
-        columnHeaderView.frame = CGRect(x: 0, y: 0, width: 0, height: rootView.frame.height)
-        rowHeaderView.frame = CGRect(x: 0, y: 0, width: rootView.frame.width, height: 0)
-        tableView.frame = CGRect(origin: .zero, size: rootView.frame.size)
+        resetScrollViewFrame()
+        resetScrollViewArrangement()
 
-        cornerView.frame.size = cornerView.contentSize
-        columnHeaderView.frame.size.width = columnHeaderView.contentSize.width
-        rowHeaderView.frame.size.height = rowHeaderView.contentSize.height
-        if frozenColumns > 0 && frozenRows > 0 {
-            columnHeaderView.frame.size.height -= cornerView.frame.height - intercellSpacing.height
-            rowHeaderView.frame.size.width -= cornerView.frame.width - intercellSpacing.width
+        if circularScrollingOptions.direction.contains(.horizontally) && tableView.contentOffset.x == 0 {
+            scrollToHorizontalCenter()
         }
+        if circularScrollingOptions.direction.contains(.vertically) && tableView.contentOffset.y == 0 {
+            scrollToVerticalCenter()
+        }
+
+        needsReload = false
+        setNeedsLayout()
+    }
+
+    func reloadDataIfNeeded() {
+        if needsReload {
+            reloadData()
+        }
+    }
+
+    func setNeedsReload() {
+        needsReload = true
+        setNeedsLayout()
     }
 
     public func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> Cell {
