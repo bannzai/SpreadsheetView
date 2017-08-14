@@ -75,9 +75,8 @@ extension SpreadsheetView {
 
     func layoutCornerView() {
         guard frozenColumns > 0 && frozenRows > 0 && circularScrolling.options.headerStyle == .none else {
-                cornerView.frame.size = CGSize.zero
-                cornerView.isHidden = true
-                return
+            cornerView.isHidden = true
+            return
         }
         cornerView.isHidden = false
         layout(scrollView: cornerView)
@@ -85,7 +84,6 @@ extension SpreadsheetView {
 
     func layoutColumnHeaderView() {
         guard frozenColumns > 0 else {
-            columnHeaderView.frame.size.width = 0
             columnHeaderView.isHidden = true
             return
         }
@@ -95,7 +93,6 @@ extension SpreadsheetView {
 
     func layoutRowHeaderView() {
         guard frozenRows > 0 else {
-            rowHeaderView.frame.size.height = 0
             rowHeaderView.isHidden = true
             return
         }
@@ -295,34 +292,26 @@ extension SpreadsheetView {
         tableView.state.frame = CGRect(origin: .zero, size: frame.size)
 
         if frozenColumns > 0 {
-            if circularScrollingOptions.headerStyle != .columnHeaderStartsFirstRow {
-                columnHeaderView.state.frame.origin.y = frozenRows > 0 ? rowHeaderView.state.frame.height : 0
-            }
-
             tableView.state.frame.origin.x = columnHeaderView.state.frame.width - intercellSpacing.width
             tableView.state.frame.size.width = (frame.width - horizontalInset) - (columnHeaderView.state.frame.width - intercellSpacing.width)
+
+            if circularScrollingOptions.headerStyle != .rowHeaderStartsFirstColumn {
+                rowHeaderView.state.frame.origin.x = tableView.state.frame.origin.x
+                rowHeaderView.state.frame.size.width = tableView.state.frame.size.width
+            }
         } else {
             tableView.state.frame.size.width = frame.width - horizontalInset
         }
         if frozenRows > 0 {
-            if circularScrollingOptions.headerStyle != .rowHeaderStartsFirstColumn {
-                rowHeaderView.state.frame.origin.x = frozenColumns > 0 ? columnHeaderView.state.frame.width : 0
-            }
-
             tableView.state.frame.origin.y = rowHeaderView.state.frame.height - intercellSpacing.height
             tableView.state.frame.size.height = (frame.height - verticalInset) - (rowHeaderView.state.frame.height - intercellSpacing.height)
+
+            if circularScrollingOptions.headerStyle != .columnHeaderStartsFirstRow {
+                columnHeaderView.state.frame.origin.y = tableView.state.frame.origin.y
+                columnHeaderView.state.frame.size.height = tableView.state.frame.size.height
+            }
         } else {
             tableView.state.frame.size.height = frame.height - verticalInset
-        }
-        if frozenColumns > 0 && frozenRows > 0 {
-            if circularScrollingOptions.headerStyle != .columnHeaderStartsFirstRow {
-                columnHeaderView.state.frame.origin.y -= intercellSpacing.height
-                columnHeaderView.state.frame.size.height += intercellSpacing.height
-            }
-            if circularScrollingOptions.headerStyle != .rowHeaderStartsFirstColumn {
-                rowHeaderView.state.frame.origin.x -= intercellSpacing.width
-                rowHeaderView.state.frame.size.width += intercellSpacing.width
-            }
         }
         
         resetOverlayViewContentSize(contentInset)
