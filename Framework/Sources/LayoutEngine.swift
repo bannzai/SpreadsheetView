@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LayoutEngine {
+final class LayoutEngine {
     private let spreadsheetView: SpreadsheetView
     private let scrollView: ScrollView
 

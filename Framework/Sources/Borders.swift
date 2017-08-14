@@ -37,7 +37,7 @@ extension BorderStyle: Equatable {
     }
 }
 
-class Border: UIView {
+final class Border: UIView {
     var borders: Borders = .all(.none)
 
     override init(frame: CGRect) {

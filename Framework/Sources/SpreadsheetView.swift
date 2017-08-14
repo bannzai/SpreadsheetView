@@ -324,8 +324,8 @@ public class SpreadsheetView: UIView {
     let cornerView = ScrollView()
     let tableView = ScrollView()
 
-    var cellClasses = [String: Cell.Type]()
-    var cellNibs = [String: UINib]()
+    private var cellClasses = [String: Cell.Type]()
+    private var cellNibs = [String: UINib]()
     var cellReuseQueues = [String: ReuseQueue<Cell>]()
     let blankCellReuseIdentifier = UUID().uuidString
 
@@ -338,8 +338,7 @@ public class SpreadsheetView: UIView {
     var pendingSelectionIndexPath: IndexPath?
     var currentTouch: UITouch?
 
-    var needsReload = true
-    var isAutomaticContentOffsetAdjustmentEnabled = true
+    private var needsReload = true
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -459,7 +458,7 @@ public class SpreadsheetView: UIView {
         }
     }
 
-    func setNeedsReload() {
+    private func setNeedsReload() {
         needsReload = true
         setNeedsLayout()
     }
@@ -511,18 +510,6 @@ public class SpreadsheetView: UIView {
                 $0.touchesCancelled = nil
             }
         }
-    }
-
-    public func flashScrollIndicators() {
-        overlayView.flashScrollIndicators()
-    }
-
-    public func setContentOffset(_ contentOffset: CGPoint, animated: Bool) {
-        tableView.setContentOffset(contentOffset, animated: animated)
-    }
-
-    public func scrollRectToVisible(_ rect: CGRect, animated: Bool) {
-        tableView.scrollRectToVisible(rect, animated: animated)
     }
 
     public func scrollToItem(at indexPath: IndexPath, at scrollPosition: ScrollPosition, animated: Bool) {
