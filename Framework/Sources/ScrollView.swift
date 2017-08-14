@@ -23,6 +23,12 @@ final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
     var touchesCancelled: TouchHandler?
 
     var layoutAttributes = LayoutAttributes(startColumn: 0, startRow: 0, numberOfColumns: 0, numberOfRows: 0, columnCount: 0, rowCount: 0, insets: CGPoint.zero)
+    var state = State()
+    struct State {
+        var frame = CGRect.zero
+        var contentSize = CGSize.zero
+        var contentOffset = CGPoint.zero
+    }
 
     var hasDisplayedContent: Bool {
         return columnRecords.count > 0 || rowRecords.count > 0

@@ -16,7 +16,33 @@ extension SpreadsheetView {
         columnHeaderView.delegate = nil
         rowHeaderView.delegate = nil
         cornerView.delegate = nil
+
+        cornerView.state.frame = cornerView.frame
+        columnHeaderView.state.frame = columnHeaderView.frame
+        rowHeaderView.state.frame = rowHeaderView.frame
+        tableView.state.frame = tableView.frame
+
+        cornerView.state.contentSize = cornerView.contentSize
+        columnHeaderView.state.contentSize = columnHeaderView.contentSize
+        rowHeaderView.state.contentSize = rowHeaderView.contentSize
+        tableView.state.contentSize = tableView.contentSize
+
+        cornerView.state.contentOffset = cornerView.contentOffset
+        columnHeaderView.state.contentOffset = columnHeaderView.contentOffset
+        rowHeaderView.state.contentOffset = rowHeaderView.contentOffset
+        tableView.state.contentOffset = tableView.contentOffset
+
         defer {
+            cornerView.contentSize = cornerView.state.contentSize
+            columnHeaderView.contentSize = columnHeaderView.state.contentSize
+            rowHeaderView.contentSize = rowHeaderView.state.contentSize
+            tableView.contentSize = tableView.state.contentSize
+
+            cornerView.contentOffset = cornerView.state.contentOffset
+            columnHeaderView.contentOffset = columnHeaderView.state.contentOffset
+            rowHeaderView.contentOffset = rowHeaderView.state.contentOffset
+            tableView.contentOffset = tableView.state.contentOffset
+
             tableView.delegate = self
             columnHeaderView.delegate = self
             rowHeaderView.delegate = self
