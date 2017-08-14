@@ -85,6 +85,34 @@ class ConfigurationTests: XCTestCase {
 
         do {
             let configuration = CircularScrolling.Configuration
+                .both.rowHeaderStartsFirstColumn
+            XCTAssertEqual(configuration.options.direction, [.both])
+            XCTAssertEqual(configuration.options.headerStyle, .rowHeaderStartsFirstColumn)
+            XCTAssertEqual(configuration.options.tableStyle, [.columnHeaderNotRepeated])
+        }
+        do {
+            let configuration = CircularScrolling.Configuration
+                .both.columnHeaderStartsFirstRow
+            XCTAssertEqual(configuration.options.direction, [.both])
+            XCTAssertEqual(configuration.options.headerStyle, .columnHeaderStartsFirstRow)
+            XCTAssertEqual(configuration.options.tableStyle, [.rowHeaderNotRepeated])
+        }
+        do {
+            let configuration = CircularScrolling.Configuration
+                .both.rowHeaderStartsFirstColumn.rowHeaderNotRepeated
+            XCTAssertEqual(configuration.options.direction, [.both])
+            XCTAssertEqual(configuration.options.headerStyle, .rowHeaderStartsFirstColumn)
+            XCTAssertEqual(configuration.options.tableStyle, [.columnHeaderNotRepeated, .rowHeaderNotRepeated])
+        }
+        do {
+            let configuration = CircularScrolling.Configuration
+                .both.columnHeaderStartsFirstRow.columnHeaderNotRepeated
+            XCTAssertEqual(configuration.options.direction, [.both])
+            XCTAssertEqual(configuration.options.headerStyle, .columnHeaderStartsFirstRow)
+            XCTAssertEqual(configuration.options.tableStyle, [.columnHeaderNotRepeated, .rowHeaderNotRepeated])
+        }
+        do {
+            let configuration = CircularScrolling.Configuration
                 .both.columnHeaderNotRepeated
             XCTAssertEqual(configuration.options.direction, [.both])
             XCTAssertEqual(configuration.options.headerStyle, .none)
@@ -124,6 +152,13 @@ class ConfigurationTests: XCTestCase {
             XCTAssertEqual(configuration.options.direction, [.both])
             XCTAssertEqual(configuration.options.headerStyle, .columnHeaderStartsFirstRow)
             XCTAssertEqual(configuration.options.tableStyle, [.columnHeaderNotRepeated, .rowHeaderNotRepeated])
+        }
+        do {
+            let configuration = CircularScrolling.Configuration
+                .both.rowHeaderNotRepeated
+            XCTAssertEqual(configuration.options.direction, [.both])
+            XCTAssertEqual(configuration.options.headerStyle, .none)
+            XCTAssertEqual(configuration.options.tableStyle, [.rowHeaderNotRepeated])
         }
         do {
             let configuration = CircularScrolling.Configuration
