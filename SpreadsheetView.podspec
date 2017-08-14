@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
   s.name             = 'SpreadsheetView'
-  s.version          = '0.8.0'
+  s.version          = '0.8.1'
   s.summary          = 'Full configurable spreadsheet view user interfaces for iOS applications.'
   s.description      = <<-DESC
-                         Full configurable spreadsheet view user interfaces for iOS applications. With this framework, 
+                         Full configurable spreadsheet view user interfaces for iOS applications. With this framework,
                          you can easily create complex layouts like schedule, gantt chart or timetable as if you are using Excel.
 
                          Features
