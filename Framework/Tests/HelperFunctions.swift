@@ -42,10 +42,19 @@ func showViewController(viewController: UIViewController) {
 }
 
 func numberOfVisibleColumns(in view: SpreadsheetView, contentOffset: CGPoint = CGPoint.zero, parameters: Parameters) -> Int {
+    let contentInset: UIEdgeInsets
+    if #available(iOS 11.0, *) {
+        contentInset = view.adjustedContentInset
+    } else {
+        contentInset = view.contentInset
+    }
+    let horizontalInset = contentInset.left + contentInset.right
+    let verticalInset = contentInset.top + contentInset.bottom
+
     var columnCount = 0
     var width: CGFloat = 0
     let frame = CGRect(origin: view.frame.origin,
-                       size: CGSize(width: view.frame.width - (view.contentInset.left + view.contentInset.right), height: view.frame.height - (view.contentInset.top + view.contentInset.bottom)))
+                       size: CGSize(width: view.frame.width - horizontalInset, height: view.frame.height - verticalInset))
     for columnWidth in parameters.columns {
         width += columnWidth + parameters.intercellSpacing.width
         if width > contentOffset.x {
@@ -59,10 +68,19 @@ func numberOfVisibleColumns(in view: SpreadsheetView, contentOffset: CGPoint = C
 }
 
 func numberOfVisibleRows(in view: SpreadsheetView, contentOffset: CGPoint = CGPoint.zero, parameters: Parameters) -> Int {
+    let contentInset: UIEdgeInsets
+    if #available(iOS 11.0, *) {
+        contentInset = view.adjustedContentInset
+    } else {
+        contentInset = view.contentInset
+    }
+    let horizontalInset = contentInset.left + contentInset.right
+    let verticalInset = contentInset.top + contentInset.bottom
+
     var rowCount = 0
     var height: CGFloat = 0
     let frame = CGRect(origin: view.frame.origin,
-                       size: CGSize(width: view.frame.width - (view.contentInset.left + view.contentInset.right), height: view.frame.height - (view.contentInset.top + view.contentInset.bottom)))
+                       size: CGSize(width: view.frame.width - horizontalInset, height: view.frame.height - verticalInset))
     for rowHeight in parameters.rows {
         height += rowHeight + parameters.intercellSpacing.height
         if height > contentOffset.y {

@@ -47,12 +47,21 @@ extension SpreadsheetView {
         }
         set {
             rootView.contentInset = newValue
+            overlayView.contentInset = newValue
         }
     }
 
+    #if swift(>=3.2)
+    @available(iOS 11.0, *)
+    public var adjustedContentInset: UIEdgeInsets {
+        get {
+            return rootView.adjustedContentInset
+        }
+    }
+    #endif
+
     func _notifyDidScroll() {
-        adjustScrollViewSizes()
-        adjustOverlayViewContentSize()
+        resetScrollViewFrame()
     }
 
     public override func forwardingTarget(for aSelector: Selector!) -> Any? {
