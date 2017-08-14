@@ -51,12 +51,14 @@ extension SpreadsheetView {
         }
     }
 
+    #if swift(>=3.2)
     @available(iOS 11.0, *)
     public var adjustedContentInset: UIEdgeInsets {
         get {
             return rootView.adjustedContentInset
         }
     }
+    #endif
 
     func _notifyDidScroll() {
         resetScrollViewFrame()
