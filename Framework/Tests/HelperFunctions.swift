@@ -102,11 +102,11 @@ func numberOfVisibleRows(in view: SpreadsheetView, contentOffset: CGPoint = CGPo
 }
 
 func calculateWidth(range: CountableRange<Int>, parameters: Parameters) -> CGFloat {
-    return range.map { return parameters.columns[$0] }.reduce(0) { $0 + $1 + parameters.intercellSpacing.width }
+    return range.map { return parameters.columns[$0] }.reduce(0) { $0 + $1 + parameters.intercellSpacing.width } + (range.count > 0 ? parameters.intercellSpacing.width : 0)
 }
 
 func calculateHeight(range: CountableRange<Int>, parameters: Parameters) -> CGFloat {
-    return range.map { return parameters.rows[$0] }.reduce(0) { $0 + $1 + parameters.intercellSpacing.height }
+    return range.map { return parameters.rows[$0] }.reduce(0) { $0 + $1 + parameters.intercellSpacing.height } + (range.count > 0 ? parameters.intercellSpacing.height : 0)
 }
 
 func randomArray<T>(seeds: [T], count: Int) -> [T] {

@@ -232,6 +232,11 @@ class ViewTests: XCTestCase {
         }
 
         let spreadsheetView = viewController.spreadsheetView
+
+        XCTAssertEqual(spreadsheetView.contentSize, CGSize(width: calculateWidth(range: 0..<firstParameters.numberOfColumns, parameters: firstParameters),
+                                                           height: calculateHeight(range: 0..<firstParameters.numberOfRows, parameters: firstParameters)))
+        XCTAssertEqual(spreadsheetView.contentSize, CGSize(width: spreadsheetView.tableView.frame.origin.x + spreadsheetView.tableView.contentSize.width,
+                                                           height: spreadsheetView.tableView.frame.origin.y + spreadsheetView.tableView.contentSize.height))
         verify(view: spreadsheetView, parameters: firstParameters)
 
         let secondParameters = Parameters(numberOfColumns: 20, numberOfRows: 30, frozenColumns: 2, frozenRows: 3, intercellSpacing: CGSize(width: 2, height: 2), gridStyle: .solid(width: 2, color: .yellow))
@@ -240,6 +245,10 @@ class ViewTests: XCTestCase {
         spreadsheetView.reloadData()
         waitRunLoop()
 
+        XCTAssertEqual(spreadsheetView.contentSize, CGSize(width: calculateWidth(range: 0..<secondParameters.numberOfColumns, parameters: secondParameters),
+                                                           height: calculateHeight(range: 0..<secondParameters.numberOfRows, parameters: secondParameters)))
+        XCTAssertEqual(spreadsheetView.contentSize, CGSize(width: spreadsheetView.tableView.frame.origin.x + spreadsheetView.tableView.contentSize.width,
+                                                           height: spreadsheetView.tableView.frame.origin.y + spreadsheetView.tableView.contentSize.height))
         verify(view: spreadsheetView, parameters: secondParameters)
 
         let thirdParameters = Parameters(numberOfColumns: 3, numberOfRows: 6, frozenColumns: 0, frozenRows: 0)
@@ -248,7 +257,23 @@ class ViewTests: XCTestCase {
         spreadsheetView.reloadData()
         waitRunLoop()
 
+        XCTAssertEqual(spreadsheetView.contentSize, CGSize(width: calculateWidth(range: 0..<thirdParameters.numberOfColumns, parameters: thirdParameters),
+                                                           height: calculateHeight(range: 0..<thirdParameters.numberOfRows, parameters: thirdParameters)))
+        XCTAssertEqual(spreadsheetView.contentSize, CGSize(width: spreadsheetView.tableView.frame.origin.x + spreadsheetView.tableView.contentSize.width,
+                                                           height: spreadsheetView.tableView.frame.origin.y + spreadsheetView.tableView.contentSize.height))
         verify(view: spreadsheetView, parameters: thirdParameters)
+
+        let fourthParameters = Parameters(numberOfColumns: 50, numberOfRows: 60, frozenColumns: 1, frozenRows: 1)
+        applyNewParameters(fourthParameters, to: viewController)
+
+        spreadsheetView.reloadData()
+        waitRunLoop()
+
+        XCTAssertEqual(spreadsheetView.contentSize, CGSize(width: calculateWidth(range: 0..<fourthParameters.numberOfColumns, parameters: fourthParameters),
+                                                           height: calculateHeight(range: 0..<fourthParameters.numberOfRows, parameters: fourthParameters)))
+        XCTAssertEqual(spreadsheetView.contentSize, CGSize(width: spreadsheetView.tableView.frame.origin.x + spreadsheetView.tableView.contentSize.width,
+                                                           height: spreadsheetView.tableView.frame.origin.y + spreadsheetView.tableView.contentSize.height))
+        verify(view: spreadsheetView, parameters: fourthParameters)
     }
 
     func applyNewParameters(_ parameters: Parameters, to viewController: SpreadsheetViewController) {

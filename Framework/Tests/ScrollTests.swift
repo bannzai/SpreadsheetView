@@ -338,8 +338,8 @@ class ScrollTests: XCTestCase {
                             scrollPosition: ScrollPosition, parameters: Parameters) {
         print("parameters: \(parameters), scrollPosition: \(scrollPosition)")
 
-        let frozenWidth = calculateWidth(range: 0..<parameters.frozenColumns, parameters: parameters)
-        let frozenHeight = calculateHeight(range: 0..<parameters.frozenRows, parameters: parameters)
+        let frozenWidth = calculateWidth(range: 0..<parameters.frozenColumns, parameters: parameters) - (parameters.frozenColumns > 0 ? parameters.intercellSpacing.width : 0)
+        let frozenHeight = calculateHeight(range: 0..<parameters.frozenRows, parameters: parameters) - (parameters.frozenRows > 0 ? parameters.intercellSpacing.height : 0)
 
         var width = calculateWidth(range: 0..<columns.from, parameters: parameters)
 
