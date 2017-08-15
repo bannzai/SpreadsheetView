@@ -136,11 +136,13 @@ class ViewTests: XCTestCase {
 
         XCTAssertEqual(spreadsheetView.frame, spreadsheetView.window!.frame)
         if #available(iOS 11.0, *) {
+            #if swift(>=3.2)
             XCTAssertEqual(spreadsheetView.adjustedContentInset.top,
                            UIApplication.shared.statusBarFrame.height + viewController.navigationController!.navigationBar.frame.height)
             XCTAssertEqual(spreadsheetView.adjustedContentInset.left, 0)
             XCTAssertEqual(spreadsheetView.adjustedContentInset.right, 0)
             XCTAssertEqual(spreadsheetView.adjustedContentInset.bottom, 0)
+            #endif
 
             XCTAssertEqual(spreadsheetView.contentInset, .zero)
         } else {
@@ -173,11 +175,13 @@ class ViewTests: XCTestCase {
 
         XCTAssertEqual(spreadsheetView.frame, spreadsheetView.window!.frame)
         if #available(iOS 11.0, *) {
+            #if swift(>=3.2)
             XCTAssertEqual(spreadsheetView.adjustedContentInset.top,
                            UIApplication.shared.statusBarFrame.height + viewController.navigationController!.navigationBar.frame.height)
             XCTAssertEqual(spreadsheetView.adjustedContentInset.left, 0)
             XCTAssertEqual(spreadsheetView.adjustedContentInset.right, 0)
             XCTAssertEqual(spreadsheetView.adjustedContentInset.bottom, viewController.tabBarController!.tabBar.frame.height)
+            #endif
 
             XCTAssertEqual(spreadsheetView.contentInset, .zero)
         } else {
@@ -208,9 +212,11 @@ class ViewTests: XCTestCase {
 
         XCTAssertEqual(spreadsheetView.frame, spreadsheetView.window!.frame)
         XCTAssertEqual(spreadsheetView.contentInset, .zero)
+        #if swift(>=3.2)
         if #available(iOS 11.0, *) {
             XCTAssertEqual(spreadsheetView.adjustedContentInset, .zero)
         }
+        #endif
     }
 
     func testReloading() {

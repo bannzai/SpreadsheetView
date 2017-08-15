@@ -1,5 +1,4 @@
 language: objective-c
-osx_image: xcode9
 cache:
   directories:
   - build
@@ -9,12 +8,14 @@ cache:
 jobs:
   include:
   - stage: build
+    osx_image: xcode9
     install:
     - bundle install --path=vendor/bundle --binstubs=vendor/bin
     script:
     - bundle exec rake build-for-testing:simulator
   - &test
-    stage: test
+    stage: 'test (xcode9)'
+    osx_image: xcode9
     script:
     - bundle exec rake test-without-building:simulator
       DESTINATIONS="['name=iPhone 4s,OS=9.3']"
@@ -68,7 +69,27 @@ jobs:
     script:
     - bundle exec rake test-without-building:simulator
       DESTINATIONS="['name=iPad 2,OS=9.3']" TESTCASE='SelectionTests'
+  - stage: 'test (xcode8.3)'
+    osx_image: xcode8.3
+    script:
+    - bundle exec rake test:simulator DESTINATIONS="['name=iPhone 4s,OS=9.3']"
+    after_success:
+    - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
+  - stage: 'test (xcode8.3)'
+    osx_image: xcode8.3
+    script:
+    - bundle exec rake test:simulator DESTINATIONS="['name=iPhone 7,OS=10.3.1']"
+    after_success:
+    - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
   - stage: carthage
+    osx_image: xcode9
+    install:
+    - brew update
+    - brew outdated carthage || brew upgrade carthage
+    script:
+    - carthage build --no-skip-current
+  - stage: carthage
+    osx_image: xcode8.3
     install:
     - brew update
     - brew outdated carthage || brew upgrade carthage

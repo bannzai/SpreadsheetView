@@ -11,13 +11,16 @@ namespace :test do
     t.scheme = 'SpreadsheetView'
     t.sdk = 'iphonesimulator'
     t.configuration = configuration
-    
+
     destinations.each { |destination| t.add_destination(destination) }
     t.add_only_testing("SpreadsheetViewTests/#{testcase}") if testcase
     t.add_build_option('-enableCodeCoverage', 'YES')
     t.add_build_setting('ENABLE_TESTABILITY', 'YES')
     t.add_build_setting('ONLY_ACTIVE_ARCH', 'NO')
     t.build_dir = 'build'
+    t.after_action do
+      build_coverage_reports()
+    end
   end
 
   desc 'test on device'
@@ -74,7 +77,7 @@ end
 
 def build_coverage_reports()
   project_name = 'SpreadsheetView'
-  profdata = Dir.glob(File.join('build', '/**/Coverage.profdata')).first  
+  profdata = Dir.glob(File.join('build', '/**/Coverage.profdata')).first
   Dir.glob(File.join('build', "/**/#{project_name}")) do |target|
     output = `xcrun llvm-cov report -instr-profile "#{profdata}" "#{target}" -arch=x86_64`
     if $?.success?
