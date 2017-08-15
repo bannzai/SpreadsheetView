@@ -68,12 +68,12 @@ extension SpreadsheetView {
         layoutTableView()
     }
 
-    func layout(scrollView: ScrollView) {
+    private func layout(scrollView: ScrollView) {
         let layoutEngine = LayoutEngine(spreadsheetView: self, scrollView: scrollView)
         layoutEngine.layout()
     }
 
-    func layoutCornerView() {
+    private func layoutCornerView() {
         guard frozenColumns > 0 && frozenRows > 0 && circularScrolling.options.headerStyle == .none else {
             cornerView.isHidden = true
             return
@@ -82,7 +82,7 @@ extension SpreadsheetView {
         layout(scrollView: cornerView)
     }
 
-    func layoutColumnHeaderView() {
+    private func layoutColumnHeaderView() {
         guard frozenColumns > 0 else {
             columnHeaderView.isHidden = true
             return
@@ -91,7 +91,7 @@ extension SpreadsheetView {
         layout(scrollView: columnHeaderView)
     }
 
-    func layoutRowHeaderView() {
+    private func layoutRowHeaderView() {
         guard frozenRows > 0 else {
             rowHeaderView.isHidden = true
             return
@@ -100,7 +100,7 @@ extension SpreadsheetView {
         layout(scrollView: rowHeaderView)
     }
 
-    func layoutTableView() {
+    private func layoutTableView() {
         layout(scrollView: tableView)
     }
 

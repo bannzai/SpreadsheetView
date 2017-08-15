@@ -9,14 +9,6 @@
 import UIKit
 
 extension SpreadsheetView {
-    public override func isKind(of aClass: AnyClass) -> Bool {
-        if #available(iOS 11.0, *) {
-            return super.isKind(of: aClass)
-        } else {
-            return rootView.isKind(of: aClass)
-        }
-    }
-
     public var contentOffset: CGPoint {
         get {
             return tableView.contentOffset
@@ -60,8 +52,28 @@ extension SpreadsheetView {
     }
     #endif
 
+    public func flashScrollIndicators() {
+        overlayView.flashScrollIndicators()
+    }
+
+    public func setContentOffset(_ contentOffset: CGPoint, animated: Bool) {
+        tableView.setContentOffset(contentOffset, animated: animated)
+    }
+
+    public func scrollRectToVisible(_ rect: CGRect, animated: Bool) {
+        tableView.scrollRectToVisible(rect, animated: animated)
+    }
+
     func _notifyDidScroll() {
         resetScrollViewFrame()
+    }
+    
+    public override func isKind(of aClass: AnyClass) -> Bool {
+        if #available(iOS 11.0, *) {
+            return super.isKind(of: aClass)
+        } else {
+            return rootView.isKind(of: aClass)
+        }
     }
 
     public override func forwardingTarget(for aSelector: Selector!) -> Any? {
