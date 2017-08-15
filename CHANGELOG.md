@@ -12,6 +12,25 @@
 
 * None.  
 
+## 0.8.1 Release notes (2017-08-14)
+
+##### Breaking
+
+* None.  
+
+##### Enhancements
+
+* Expose the scroll view associated with the spreadsheet view. It allows interacting the scroll view's delegate.  
+  [#115](https://github.com/kishikawakatsumi/SpreadsheetView/pull/115)
+
+* Expose `adjustedContentInset` property which is introduced from iOS 11 as well as `UIScrollView`.  
+  [#115](https://github.com/kishikawakatsumi/SpreadsheetView/pull/115)
+
+##### Bug Fixes
+
+* Fix an issue that content offset jumps after reloading.  
+  [#117](https://github.com/kishikawakatsumi/SpreadsheetView/pull/117)
+
 ## 0.8.0 Release notes (2017-07-23)
 
 ##### Breaking
