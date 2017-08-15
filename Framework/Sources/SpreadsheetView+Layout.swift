@@ -241,6 +241,10 @@ extension SpreadsheetView {
     }
 
     func resetContentSize(of scrollView: ScrollView) {
+        defer {
+            scrollView.contentSize = scrollView.state.contentSize
+        }
+
         scrollView.columnRecords.removeAll()
         scrollView.rowRecords.removeAll()
 
