@@ -12,6 +12,24 @@
 
 * None.  
 
+## 0.8.2 Release notes (2017-08-15)
+
+##### Breaking
+
+* None.  
+
+##### Enhancements
+
+* None.  
+
+##### Bug Fixes
+
+* Reflect the content size from the model to the view after reloading.  
+  [#126](https://github.com/kishikawakatsumi/SpreadsheetView/pull/126)
+
+* Fixed an issue that `contentSize` value was slightly incorrect.  
+  [#127](https://github.com/kishikawakatsumi/SpreadsheetView/pull/127)
+
 ## 0.8.1 Release notes (2017-08-14)
 
 ##### Breaking
