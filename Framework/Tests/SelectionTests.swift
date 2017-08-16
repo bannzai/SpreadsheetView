@@ -285,9 +285,9 @@ class SelectionTests: XCTestCase {
         var offsetHeight: CGFloat = 0
         var leftEdgeColumn = 0
         for column in columns.from..<columns.to {
-            let frozenWidth = calculateWidth(range: 0..<parameters.frozenColumns, parameters: parameters)
+            let frozenWidth = calculateWidth(range: 0..<parameters.frozenColumns, parameters: parameters) - (parameters.frozenColumns > 0 ? parameters.intercellSpacing.width : 0)
             if column > parameters.frozenColumns && width + parameters.columns[column] + parameters.intercellSpacing.width >= spreadsheetView.frame.width - frozenWidth {
-                offsetWidth = calculateWidth(range: parameters.frozenColumns..<column, parameters: parameters)
+                offsetWidth = calculateWidth(range: parameters.frozenColumns..<column, parameters: parameters) - parameters.intercellSpacing.width
                 if parameters.columnWidth - offsetWidth - frozenWidth < spreadsheetView.frame.width - frozenWidth {
                     offsetWidth -= spreadsheetView.frame.width - (parameters.columnWidth - offsetWidth)
                 }
@@ -301,9 +301,9 @@ class SelectionTests: XCTestCase {
             offsetHeight = 0
 
             for row in rows.from..<rows.to {
-                let frozenHeight = calculateHeight(range: 0..<parameters.frozenRows, parameters: parameters)
+                let frozenHeight = calculateHeight(range: 0..<parameters.frozenRows, parameters: parameters) - (parameters.frozenRows > 0 ? parameters.intercellSpacing.height : 0)
                 if row > parameters.frozenRows && height + parameters.rows[row] + parameters.intercellSpacing.height >= spreadsheetView.frame.height - frozenHeight {
-                    offsetHeight = calculateHeight(range: parameters.frozenRows..<(row), parameters: parameters)
+                    offsetHeight = calculateHeight(range: parameters.frozenRows..<(row), parameters: parameters) - parameters.intercellSpacing.height
                     if parameters.rowHeight - offsetHeight - frozenHeight < spreadsheetView.frame.height - frozenHeight {
                         offsetHeight -= spreadsheetView.frame.height - (parameters.rowHeight - offsetHeight)
                     }

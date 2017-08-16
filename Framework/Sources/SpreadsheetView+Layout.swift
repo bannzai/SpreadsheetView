@@ -326,8 +326,8 @@ extension SpreadsheetView {
     }
 
     func resetOverlayViewContentSize(_ contentInset: UIEdgeInsets) {
-        let width = contentInset.left + contentInset.right + tableView.state.frame.origin.x - intercellSpacing.width + tableView.state.contentSize.width
-        let height = contentInset.top + contentInset.bottom + tableView.state.frame.origin.y - intercellSpacing.height + tableView.state.contentSize.height
+        let width = contentInset.left + contentInset.right + tableView.state.frame.origin.x + tableView.state.contentSize.width
+        let height = contentInset.top + contentInset.bottom + tableView.state.frame.origin.y + tableView.state.contentSize.height
         overlayView.contentSize = CGSize(width: width, height: height)
         overlayView.contentOffset.x = tableView.state.contentOffset.x - contentInset.left
         overlayView.contentOffset.y = tableView.state.contentOffset.y - contentInset.top
