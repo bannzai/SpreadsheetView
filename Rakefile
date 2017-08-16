@@ -18,8 +18,12 @@ namespace :test do
     t.add_build_setting('ENABLE_TESTABILITY', 'YES')
     t.add_build_setting('ONLY_ACTIVE_ARCH', 'NO')
     t.build_dir = 'build'
-    t.after_action do
-      build_coverage_reports()
+    t.after_action do |output, status|
+      if status.exitstatus == 65
+        Rake::Task['test:simulator'].execute()
+      else
+        build_coverage_reports()
+      end
     end
   end
 
@@ -69,8 +73,12 @@ namespace 'test-without-building' do
     t.add_build_option('-enableCodeCoverage', 'YES')
     t.build_dir = 'build'
     t.without_building = true
-    t.after_action do
-      build_coverage_reports()
+    t.after_action do |output, status|
+      if status.exitstatus == 65
+        Rake::Task['test-without-building:simulator'].execute()
+      else
+        build_coverage_reports()
+      end
     end
   end
 end
