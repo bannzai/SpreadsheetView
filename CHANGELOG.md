@@ -12,6 +12,21 @@
 
 * None.  
 
+## 0.8.3 Release notes (2017-08-19)
+
+##### Breaking
+
+* None.  
+
+##### Enhancements
+
+* None.  
+
+##### Bug Fixes
+
+* Fix flickering column header when circular scrolling is enabled.    
+  [#131](https://github.com/kishikawakatsumi/SpreadsheetView/pull/131)
+
 ## 0.8.2 Release notes (2017-08-15)
 
 ##### Breaking
