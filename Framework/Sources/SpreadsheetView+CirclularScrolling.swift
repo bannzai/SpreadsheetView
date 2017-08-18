@@ -25,11 +25,11 @@ extension SpreadsheetView {
         let threshold = tableView.state.contentSize.width / 4
         if fabs(distance) > threshold {
             if distance > 0 {
-                columnHeaderView.state.contentOffset.x = distance
+                rowHeaderView.state.contentOffset.x = distance
                 tableView.state.contentOffset.x = distance
             } else {
                 let offset = centerOffset.x + (centerOffset.x - threshold)
-                columnHeaderView.state.contentOffset.x = offset
+                rowHeaderView.state.contentOffset.x = offset
                 tableView.state.contentOffset.x = offset
             }
         }
