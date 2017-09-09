@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SpreadsheetView'
-  s.version          = '0.8.3'
+  s.version          = '0.8.4'
   s.summary          = 'Full configurable spreadsheet view user interfaces for iOS applications.'
   s.description      = <<-DESC
                          Full configurable spreadsheet view user interfaces for iOS applications. With this framework,
