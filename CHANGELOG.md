@@ -12,6 +12,21 @@
 
 * None.  
 
+## 0.8.4 Release notes (2017-09-09)
+
+##### Breaking
+
+* None.  
+
+##### Enhancements
+
+* None.  
+
+##### Bug Fixes
+
+* Fix to crash in iOS 11 if binary built with base SDK iOS 10.   
+  [#138](https://github.com/kishikawakatsumi/SpreadsheetView/pull/138)
+
 ## 0.8.3 Release notes (2017-08-19)
 
 ##### Breaking
@@ -24,7 +39,7 @@
 
 ##### Bug Fixes
 
-* Fix flickering column header when circular scrolling is enabled.    
+* Fix flickering column header when circular scrolling is enabled.  
   [#131](https://github.com/kishikawakatsumi/SpreadsheetView/pull/131)
 
 ## 0.8.2 Release notes (2017-08-15)
