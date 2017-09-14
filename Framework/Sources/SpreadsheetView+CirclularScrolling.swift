@@ -105,6 +105,7 @@ extension SpreadsheetView {
                 }
                 centerOffset.y -=  intercellSpacing.height * CGFloat(layoutProperties.frozenRows)
             }
+            centerOffset.y *= CGFloat(circularScrollScalingFactor.vertical / 3)
         }
         return centerOffset
     }
