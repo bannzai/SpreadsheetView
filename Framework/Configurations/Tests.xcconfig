@@ -1,0 +1,9 @@
+SUPPORTED_PLATFORMS = iphoneos iphonesimulator appletvos appletvsimulator;
+
+APPLICATION_EXTENSION_API_ONLY = NO;
+
+LD_RUNPATH_SEARCH_PATHS[sdk=iphone*] = $(inherited) @executable_path/Frameworks @loader_path/Frameworks;
+LD_RUNPATH_SEARCH_PATHS[sdk=appletv*] = $(inherited) @executable_path/Frameworks @loader_path/Frameworks;
+
+DEVELOPMENT_TEAM = 27AEDK3C9F;
+

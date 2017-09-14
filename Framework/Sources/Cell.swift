@@ -86,7 +86,11 @@ open class Cell: UIView {
     }
 
     func setup() {
+        #if os(tvOS)
+        backgroundColor = .clear
+        #else
         backgroundColor = .white
+        #endif
 
         contentView.frame = bounds
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -103,6 +107,10 @@ open class Cell: UIView {
         } else {
             isSelected = selected
         }
+    }
+
+    open override var canBecomeFocused: Bool {
+        return true
     }
 }
 

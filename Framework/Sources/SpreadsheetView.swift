@@ -80,6 +80,7 @@ public class SpreadsheetView: UIView {
         }
     }
 
+    #if os(iOS)
     /// A Boolean value that controls whether the scroll-to-top gesture is enabled.
     ///
     /// - Note: The scroll-to-top gesture is a tap on the status bar. When a user makes this gesture,
@@ -97,6 +98,7 @@ public class SpreadsheetView: UIView {
             tableView.scrollsToTop = scrollsToTop
         }
     }
+    #endif
 
     public var circularScrolling: CircularScrollingConfiguration = CircularScrolling.Configuration.none {
         didSet {
@@ -106,7 +108,9 @@ public class SpreadsheetView: UIView {
             }
             if circularScrollingOptions.direction.contains(.vertically) {
                 showsVerticalScrollIndicator = false
+                #if os(iOS)
                 scrollsToTop = false
+                #endif
             }
         }
     }
@@ -246,6 +250,7 @@ public class SpreadsheetView: UIView {
     /// - SeeAlso: `stickyRowHeader`
     public var stickyColumnHeader: Bool = false
 
+    #if os(iOS)
     /// A Boolean value that determines whether paging is enabled for the scroll view.
     /// - Note: If the value of this property is `true`, the scroll view stops on multiples of the scroll view’s bounds when the user scrolls.
     /// The default value is false.
@@ -257,6 +262,7 @@ public class SpreadsheetView: UIView {
             tableView.isPagingEnabled = newValue
         }
     }
+    #endif
 
     /// A Boolean value that determines whether scrolling is enabled.
     /// - Note: If the value of this property is `true`, scrolling is enabled, and if it is `false`, scrolling is disabled. The default is `true`.
@@ -401,7 +407,7 @@ public class SpreadsheetView: UIView {
         [tableView, columnHeaderView, rowHeaderView, cornerView, overlayView].forEach {
             addGestureRecognizer($0.panGestureRecognizer)
             #if swift(>=3.2)
-            if #available(iOS 11.0, *) {
+            if #available(iOS 11.0, tvOS 11.0, *) {
                 $0.contentInsetAdjustmentBehavior = .never
             }
             #endif
@@ -808,5 +814,62 @@ public class SpreadsheetView: UIView {
 
     func mergedCell(for indexPath: Location) -> CellRange? {
         return layoutProperties.mergedCellLayouts[indexPath]
+    }
+
+    var canBecomeFocused_ = true
+    public override var canBecomeFocused: Bool {
+        return canBecomeFocused_
+    }
+
+    public override var preferredFocusEnvironments: [UIFocusEnvironment] {
+        print("preferredFocusEnvironments")
+        isScrollEnabled = false
+        canBecomeFocused_ = false
+//        DispatchQueue.main.async { [weak self] in
+//            self?.isScrollEnabled = true
+//        }
+        if let next = nextFocusedView__ {
+            print("next: C\(next.indexPath.column)")
+            return [visibleCells.sorted()[nextIndex__]]
+        }
+        return visibleCells.sorted().filter { $0.canBecomeFocused }
+    }
+
+//    public override var preferredFocusedView: UIView? {
+//        print("preferredFocusedView")
+//        isScrollEnabled = false
+//        return visibleCells.sorted().filter { $0.canBecomeFocused }.first
+//    }
+
+    open override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
+        print("shouldUpdateFocus")
+        return true
+    }
+
+    var nextFocusedView__: Cell? = nil
+    var nextIndex__ = 0
+
+    public override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        print("didUpdateFocus")
+        if let cell = context.nextFocusedView as? Cell {
+            nextFocusedView__ = cell
+            print("C\(cell.indexPath.column)")
+        }
+        if let cell = context.nextFocusedView as? Cell {
+            switch context.focusHeading {
+            case UIFocusHeading.left:
+                break
+            case UIFocusHeading.right:
+                if cell.frame.maxX + 100 > tableView.contentOffset.x + tableView.frame.width {
+                    scrollRectToVisible(CGRect(x: cell.frame.maxX + 100, y: cell.frame.origin.y, width: 1, height: 1), animated: true)
+                }
+            case UIFocusHeading.up:
+                break
+            case UIFocusHeading.down:
+                break
+            default:
+                break
+            }
+        }
     }
 }

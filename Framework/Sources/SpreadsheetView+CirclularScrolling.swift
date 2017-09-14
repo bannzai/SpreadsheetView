@@ -24,6 +24,14 @@ extension SpreadsheetView {
         let distance = currentOffset.x - centerOffset.x
         let threshold = tableView.state.contentSize.width / 4
         if fabs(distance) > threshold {
+            print("recenter")
+            if let cell = UIScreen.main.focusedView as? Cell {
+                print("C\(cell.indexPath.column)")
+                if let index = visibleCells.sorted().index(of: cell) {
+                    nextIndex__ = index
+                }
+                setNeedsFocusUpdate()
+            }
             if distance > 0 {
                 rowHeaderView.state.contentOffset.x = distance
                 tableView.state.contentOffset.x = distance

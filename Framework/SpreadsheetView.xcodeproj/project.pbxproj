@@ -90,6 +90,11 @@
 
 /* Begin PBXFileReference section */
 		14120FFF1EE1D7A7004E41A3 /* SpreadsheetView+UISnapshotting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpreadsheetView+UISnapshotting.swift"; sourceTree = "<group>"; };
+		1424A9721F697CB300CD8F1A /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		1424A9731F697CB300CD8F1A /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		1424A9741F697CB300CD8F1A /* SpreadsheetView.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SpreadsheetView.xcconfig; sourceTree = "<group>"; };
+		1424A9751F697CB300CD8F1A /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		1424A9761F697CB300CD8F1A /* Tests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Tests.xcconfig; sourceTree = "<group>"; };
 		143664BC1EB59DCA00321E5E /* ViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTests.swift; sourceTree = "<group>"; };
 		143664BE1EB5A01500321E5E /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		143664C01EB5A07300321E5E /* HelperObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperObjects.swift; sourceTree = "<group>"; };
@@ -162,6 +167,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1424A9711F697CB300CD8F1A /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				1424A9721F697CB300CD8F1A /* Base.xcconfig */,
+				1424A9731F697CB300CD8F1A /* Debug.xcconfig */,
+				1424A9741F697CB300CD8F1A /* SpreadsheetView.xcconfig */,
+				1424A9751F697CB300CD8F1A /* Release.xcconfig */,
+				1424A9761F697CB300CD8F1A /* Tests.xcconfig */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
 		149E23E61EBD15940049E172 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +217,7 @@
 			children = (
 				149E6A6B1EADE047000D851D /* Sources */,
 				149E6A761EADE047000D851D /* Tests */,
+				1424A9711F697CB300CD8F1A /* Configurations */,
 				149E6A6A1EADE047000D851D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -512,6 +530,7 @@
 /* Begin XCBuildConfiguration section */
 		149E6A7B1EADE048000D851D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1424A9731F697CB300CD8F1A /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BITCODE_GENERATION_MODE = marker;
@@ -567,6 +586,7 @@
 		};
 		149E6A7C1EADE048000D851D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1424A9751F697CB300CD8F1A /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BITCODE_GENERATION_MODE = bitcode;
@@ -615,6 +635,7 @@
 		};
 		149E6A7E1EADE048000D851D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1424A9741F697CB300CD8F1A /* SpreadsheetView.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -634,6 +655,7 @@
 		};
 		149E6A7F1EADE048000D851D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1424A9741F697CB300CD8F1A /* SpreadsheetView.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -653,6 +675,7 @@
 		};
 		149E6A811EADE048000D851D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1424A9761F697CB300CD8F1A /* Tests.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = 27AEDK3C9F;
@@ -666,6 +689,7 @@
 		};
 		149E6A821EADE048000D851D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1424A9761F697CB300CD8F1A /* Tests.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = 27AEDK3C9F;

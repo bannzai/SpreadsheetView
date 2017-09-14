@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="13196" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="appleTV" orientation="landscape">
+        <adaptation id="light"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="Ea0-DS-m4U" customClass="SlotCell" customModule="TV" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="140" height="200"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o3A-rD-8fH">
+                    <rect key="frame" x="2" y="2" width="24" height="11"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A9v-jr-fZM">
+                    <rect key="frame" x="28" y="2" width="23" height="11"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="9"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iWb-2w-9ud">
+                    <rect key="frame" x="20" y="15" width="118" height="11"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="118" id="jjJ-uK-sTq"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="iWb-2w-9ud" firstAttribute="leading" secondItem="Ea0-DS-m4U" secondAttribute="leading" constant="20" id="27K-bi-mv7"/>
+                <constraint firstItem="o3A-rD-8fH" firstAttribute="top" secondItem="Ea0-DS-m4U" secondAttribute="top" constant="2" id="DE0-fA-Vy2"/>
+                <constraint firstItem="o3A-rD-8fH" firstAttribute="leading" secondItem="Ea0-DS-m4U" secondAttribute="leading" constant="2" id="DhN-tl-xa4"/>
+                <constraint firstItem="A9v-jr-fZM" firstAttribute="baseline" secondItem="o3A-rD-8fH" secondAttribute="baseline" id="Tv3-vZ-S3B"/>
+                <constraint firstItem="iWb-2w-9ud" firstAttribute="top" secondItem="o3A-rD-8fH" secondAttribute="bottom" constant="2" id="ULV-kU-IKV"/>
+                <constraint firstItem="A9v-jr-fZM" firstAttribute="leading" secondItem="o3A-rD-8fH" secondAttribute="trailing" constant="2" id="qX9-DF-OLl"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="210-xw-usN"/>
+            <connections>
+                <outlet property="minutesLabel" destination="o3A-rD-8fH" id="Wde-co-eDN"/>
+                <outlet property="tableHighlightLabel" destination="A9v-jr-fZM" id="EKh-qd-Pds"/>
+                <outlet property="titleLabel" destination="iWb-2w-9ud" id="kxB-GK-WQD"/>
+            </connections>
+            <point key="canvasLocation" x="-412" y="-50"/>
+        </view>
+    </objects>
+</document>

@@ -1,0 +1,10 @@
+SUPPORTED_PLATFORMS = iphoneos iphonesimulator appletvos appletvsimulator;
+TARGETED_DEVICE_FAMILY = 1,2,3;
+
+APPLICATION_EXTENSION_API_ONLY = YES;
+
+ENABLE_BITCODE[sdk=iphone*] = YES;
+ENABLE_BITCODE[sdk=appletv*] = YES;
+
+LD_RUNPATH_SEARCH_PATHS[sdk=iphone*] = $(inherited) @executable_path/Frameworks @loader_path/Frameworks;
+LD_RUNPATH_SEARCH_PATHS[sdk=appletv*] = $(inherited) @executable_path/Frameworks @loader_path/Frameworks;

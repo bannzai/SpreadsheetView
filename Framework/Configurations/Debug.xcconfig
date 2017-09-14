@@ -1,0 +1,3 @@
+#include "Base.xcconfig"
+
+BITCODE_GENERATION_MODE = marker;
