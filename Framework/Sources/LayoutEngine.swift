@@ -9,35 +9,24 @@
 import UIKit
 
 final class LayoutEngine {
+    struct Layouter: ViewLayouter {
+        let scrollView: ScrollView
+
+        func layout(cell: Cell) {
+            scrollView.insertSubview(cell, at: 0)
+        }
+    }
+    var layouter: ViewLayouter
+
     private let spreadsheetView: SpreadsheetView
     private let scrollView: ScrollView
 
-    private let intercellSpacing: CGSize
-    private let defaultGridStyle: GridStyle
-    private let circularScrollingOptions: CircularScrolling.Configuration.Options
-    private let blankCellReuseIdentifier: String
-    private let highlightedIndexPaths: Set<IndexPath>
-    private let selectedIndexPaths: Set<IndexPath>
-
-    private let frozenColumns: Int
-    private let frozenRows: Int
-
-    private let columnWidthCache: [CGFloat]
-    private let rowHeightCache: [CGFloat]
+    private let spreadsheetViewConfiguration: SpreadsheetViewConfiguration
+    private let dataSourceSnapshot: DataSourceSnapshot
+    private let scrollViewConfiguration: ScrollViewConfiguration
 
     private let visibleRect: CGRect
     private var cellOrigin: CGPoint
-
-    private let startColumn: Int
-    private let startRow: Int
-    private let numberOfColumns: Int
-    private let numberOfRows: Int
-    private let columnCount: Int
-    private let rowCount: Int
-    private let insets: CGPoint
-
-    private let columnRecords: [CGFloat]
-    private let rowRecords: [CGFloat]
 
     private var mergedCellAddresses = Set<Address>()
     private var mergedCellRects = [Address: CGRect]()
@@ -54,41 +43,133 @@ final class LayoutEngine {
     init(spreadsheetView: SpreadsheetView, scrollView: ScrollView) {
         self.spreadsheetView = spreadsheetView
         self.scrollView = scrollView
+        self.layouter = Layouter(scrollView: scrollView)
 
-        intercellSpacing = spreadsheetView.intercellSpacing
-        defaultGridStyle = spreadsheetView.gridStyle
-        circularScrollingOptions = spreadsheetView.circularScrollingOptions
-        blankCellReuseIdentifier = spreadsheetView.blankCellReuseIdentifier
-        highlightedIndexPaths = spreadsheetView.highlightedIndexPaths
-        selectedIndexPaths = spreadsheetView.selectedIndexPaths
+        spreadsheetViewConfiguration = SpreadsheetViewConfiguration(intercellSpacing: spreadsheetView.intercellSpacing,
+                                                                    defaultGridStyle: spreadsheetView.gridStyle,
+                                                                    circularScrollingOptions: spreadsheetView.circularScrollingOptions,
+                                                                    circularScrollScalingFactor: spreadsheetView.circularScrollScalingFactor,
+                                                                    blankCellReuseIdentifier: spreadsheetView.blankCellReuseIdentifier,
+                                                                    highlightedIndexPaths: spreadsheetView.highlightedIndexPaths,
+                                                                    selectedIndexPaths: spreadsheetView.selectedIndexPaths)
+        dataSourceSnapshot = DataSourceSnapshot(frozenColumns: spreadsheetView.layoutProperties.frozenColumns, frozenRows: spreadsheetView.layoutProperties.frozenRows,
+                                                columnWidthCache: spreadsheetView.layoutProperties.columnWidthCache, rowHeightCache: spreadsheetView.layoutProperties.rowHeightCache)
 
-        frozenColumns = spreadsheetView.layoutProperties.frozenColumns
-        frozenRows = spreadsheetView.layoutProperties.frozenRows
-        columnWidthCache = spreadsheetView.layoutProperties.columnWidthCache
-        rowHeightCache = spreadsheetView.layoutProperties.rowHeightCache
+        scrollViewConfiguration = ScrollViewConfiguration(startColumn: scrollView.layoutAttributes.startColumn, startRow: scrollView.layoutAttributes.startRow,
+                                                          numberOfColumns: scrollView.layoutAttributes.numberOfColumns, numberOfRows: scrollView.layoutAttributes.numberOfRows,
+                                                          columnCount: scrollView.layoutAttributes.columnCount, rowCount: scrollView.layoutAttributes.rowCount,
+                                                          insets: scrollView.layoutAttributes.insets,
+                                                          columnRecords: scrollView.columnRecords, rowRecords: scrollView.rowRecords)
 
         visibleRect = CGRect(origin: scrollView.state.contentOffset, size: scrollView.state.frame.size)
         cellOrigin = .zero
+    }
 
-        startColumn = scrollView.layoutAttributes.startColumn
-        startRow = scrollView.layoutAttributes.startRow
-        numberOfColumns = scrollView.layoutAttributes.numberOfColumns
-        numberOfRows = scrollView.layoutAttributes.numberOfRows
-        columnCount = scrollView.layoutAttributes.columnCount
-        rowCount = scrollView.layoutAttributes.rowCount
-        insets = scrollView.layoutAttributes.insets
+    init(spreadsheetViewConfiguration: SpreadsheetViewConfiguration, dataSourceSnapshot: DataSourceSnapshot, scrollViewConfiguration: ScrollViewConfiguration, scrollViewState: ScrollView.State) {
+        class DataSource: SpreadsheetViewDataSource {
+            func numberOfColumns(in spreadsheetView: SpreadsheetView) -> Int {
+                return 0
+            }
 
-        columnRecords = scrollView.columnRecords
-        rowRecords = scrollView.rowRecords
+            func numberOfRows(in spreadsheetView: SpreadsheetView) -> Int {
+                return 0
+            }
+
+            func spreadsheetView(_ spreadsheetView: SpreadsheetView, widthForColumn column: Int) -> CGFloat {
+                return 0
+            }
+
+            func spreadsheetView(_ spreadsheetView: SpreadsheetView, heightForRow column: Int) -> CGFloat {
+                return 0
+            }
+        }
+        spreadsheetView = SpreadsheetView()
+        scrollView = ScrollView()
+        struct CellInfo {
+            let frame: CGRect
+            let indexPath: IndexPath
+        }
+
+        struct DebugLayouter: ViewLayouter, CustomStringConvertible {
+            let dataSource = DataSource()
+            var cells = [CellInfo]()
+
+            mutating func layout(cell: Cell) {
+                cells.append(CellInfo(frame: cell.frame, indexPath: cell.indexPath))
+            }
+
+            var description: String {
+                let sortedCells = cells.sorted { (lhs, rhs) -> Bool in
+                    if lhs.indexPath.row < rhs.indexPath.row {
+                        return true
+                    }
+                    if lhs.indexPath.row > rhs.indexPath.row {
+                        return false
+                    }
+                    return lhs.indexPath.column < rhs.indexPath.column
+                }
+                var string = ""
+                var previousRow = 0
+                if sortedCells.count > 0 {
+                    previousRow = sortedCells[0].indexPath.row
+                }
+                for cell in sortedCells {
+                    let indexPath = cell.indexPath
+                    if previousRow != indexPath.row {
+                        string += "|\n"
+                        previousRow = indexPath.row
+                    }
+                    string += "|"
+                    let location = "R\(indexPath.row)C\(indexPath.column)"
+                    string += String(repeating: " ", count: 6 - location.characters.count)
+                    string += location
+                    let frame = "\(cell.frame)"
+                    string += String(repeating: " ", count: 27 - frame.characters.count)
+                    string += frame
+                }
+                string += "|\n"
+                return string
+            }
+        }
+        let debugLayouter = DebugLayouter()
+        layouter = debugLayouter
+        spreadsheetView.dataSource = debugLayouter.dataSource
+
+        self.spreadsheetViewConfiguration = SpreadsheetViewConfiguration(intercellSpacing: spreadsheetViewConfiguration.intercellSpacing,
+                                                                         defaultGridStyle: spreadsheetViewConfiguration.defaultGridStyle,
+                                                                         circularScrollingOptions: spreadsheetViewConfiguration.circularScrollingOptions,
+                                                                         circularScrollScalingFactor: spreadsheetView.circularScrollScalingFactor,
+                                                                         blankCellReuseIdentifier: spreadsheetView.blankCellReuseIdentifier,
+                                                                         highlightedIndexPaths: spreadsheetViewConfiguration.highlightedIndexPaths,
+                                                                         selectedIndexPaths: spreadsheetViewConfiguration.selectedIndexPaths)
+        self.dataSourceSnapshot = dataSourceSnapshot
+        self.scrollViewConfiguration = scrollViewConfiguration
+
+        visibleRect = CGRect(origin: scrollViewState.contentOffset, size: scrollViewState.frame.size)
+        cellOrigin = .zero
     }
 
     func layout() {
+        let startColumn = scrollViewConfiguration.startColumn
+        let startRow = scrollViewConfiguration.startRow
+        let numberOfRows = scrollViewConfiguration.numberOfRows
+        let columnCount = scrollViewConfiguration.columnCount
+        let rowCount = scrollViewConfiguration.rowCount
+        let insets = scrollViewConfiguration.insets
+
+        let rowRecords = scrollViewConfiguration.rowRecords
+
         guard startColumn != columnCount && startRow != rowCount else {
             return
         }
 
-        let startRowIndex = spreadsheetView.findIndex(in: scrollView.rowRecords, for: visibleRect.origin.y - insets.y)
-        cellOrigin.y = insets.y + scrollView.rowRecords[startRowIndex] + intercellSpacing.height
+        let intercellSpacing = spreadsheetViewConfiguration.intercellSpacing
+        let circularScrollingOptions = spreadsheetViewConfiguration.circularScrollingOptions
+        let frozenRows = dataSourceSnapshot.frozenRows
+        let rowHeightCache = dataSourceSnapshot.rowHeightCache
+
+        let startRowIndex = spreadsheetView.findIndex(in: rowRecords, for: visibleRect.origin.y - insets.y)
+        cellOrigin.y = insets.y + rowRecords[startRowIndex] + intercellSpacing.height
 
         for rowIndex in (startRowIndex + startRow)..<rowCount {
             let row = rowIndex % numberOfRows
@@ -111,6 +192,20 @@ final class LayoutEngine {
     }
 
     private func enumerateColumns(currentRow row: Int, currentRowIndex rowIndex: Int) -> Bool {
+        let intercellSpacing = spreadsheetViewConfiguration.intercellSpacing
+        let circularScrollingOptions = spreadsheetViewConfiguration.circularScrollingOptions
+        let frozenColumns = dataSourceSnapshot.frozenColumns
+        let columnWidthCache = dataSourceSnapshot.columnWidthCache
+        let rowHeightCache = dataSourceSnapshot.rowHeightCache
+
+        let startColumn = scrollViewConfiguration.startColumn
+        let startRow = scrollViewConfiguration.startRow
+        let numberOfColumns = scrollViewConfiguration.numberOfColumns
+        let columnCount = scrollViewConfiguration.columnCount
+        let insets = scrollViewConfiguration.insets
+        let columnRecords = scrollViewConfiguration.columnRecords
+        let rowRecords = scrollViewConfiguration.rowRecords
+        
         let startColumnIndex = spreadsheetView.findIndex(in: columnRecords, for: visibleRect.origin.x - insets.x)
         cellOrigin.x = insets.x + columnRecords[startColumnIndex] + intercellSpacing.width
 
@@ -264,6 +359,10 @@ final class LayoutEngine {
             return
         }
 
+        let blankCellReuseIdentifier = spreadsheetViewConfiguration.blankCellReuseIdentifier
+        let highlightedIndexPaths = spreadsheetViewConfiguration.highlightedIndexPaths
+        let selectedIndexPaths = spreadsheetViewConfiguration.selectedIndexPaths
+
         let gridlines: Gridlines?
         let border: (borders: Borders?, hasBorders: Bool)
 
@@ -291,7 +390,7 @@ final class LayoutEngine {
             gridlines = cell.gridlines
             border = (cell.borders, cell.hasBorder)
 
-            scrollView.insertSubview(cell, at: 0)
+            layouter.layout(cell: cell)
             scrollView.visibleCells[address] = cell
         }
 
@@ -350,6 +449,8 @@ final class LayoutEngine {
     }
 
     private func renderHorizontalGridlines() {
+        let intercellSpacing = spreadsheetViewConfiguration.intercellSpacing
+
         for (address, gridLayout) in horizontalGridLayouts {
             var frame = CGRect.zero
             frame.origin = gridLayout.origin
@@ -385,6 +486,8 @@ final class LayoutEngine {
     }
 
     private func renderVerticalGridlines() {
+        let intercellSpacing = spreadsheetViewConfiguration.intercellSpacing
+
         for (address, gridLayout) in verticalGridLayouts {
             var frame = CGRect.zero
             frame.origin = gridLayout.origin
@@ -440,6 +543,8 @@ final class LayoutEngine {
     }
 
     private func extractGridStyle(style: GridStyle) -> (width: CGFloat, color: UIColor, priority: CGFloat) {
+        let defaultGridStyle = spreadsheetViewConfiguration.defaultGridStyle
+
         let gridWidth: CGFloat
         let gridColor: UIColor
         let priority: CGFloat
@@ -512,6 +617,35 @@ final class LayoutEngine {
     }
 }
 
+struct SpreadsheetViewConfiguration {
+    let intercellSpacing: CGSize
+    let defaultGridStyle: GridStyle
+    let circularScrollingOptions: CircularScrolling.Configuration.Options
+    var circularScrollScalingFactor: (horizontal: Int, vertical: Int)
+    let blankCellReuseIdentifier: String
+    let highlightedIndexPaths: Set<IndexPath>
+    let selectedIndexPaths: Set<IndexPath>
+}
+
+struct DataSourceSnapshot {
+    let frozenColumns: Int
+    let frozenRows: Int
+    let columnWidthCache: [CGFloat]
+    let rowHeightCache: [CGFloat]
+}
+
+struct ScrollViewConfiguration {
+    let startColumn: Int
+    let startRow: Int
+    let numberOfColumns: Int
+    let numberOfRows: Int
+    let columnCount: Int
+    let rowCount: Int
+    let insets: CGPoint
+    let columnRecords: [CGFloat]
+    let rowRecords: [CGFloat]
+}
+
 struct LayoutProperties {
     let numberOfColumns: Int
     let numberOfRows: Int
@@ -573,4 +707,8 @@ struct GridLayout {
     let length: CGFloat
     let edge: RectEdge
     let priority: CGFloat
+}
+
+protocol ViewLayouter {
+    mutating func layout(cell: Cell)
 }
