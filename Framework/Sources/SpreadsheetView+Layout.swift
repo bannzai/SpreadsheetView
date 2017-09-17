@@ -111,11 +111,11 @@ extension SpreadsheetView {
                                 numberOfRows: frozenRows,
                                 columnCount: frozenColumns,
                                 rowCount: frozenRows,
-                                insets: CGPoint.zero)
+                                insets: .zero)
     }
 
     func layoutAttributeForColumnHeaderView() -> LayoutAttributes {
-        let insets = circularScrollingOptions.headerStyle == .columnHeaderStartsFirstRow ? CGPoint(x: 0, y: layoutProperties.rowHeightCache.prefix(upTo: frozenRows).reduce(0) { $0 + $1 } + intercellSpacing.height * CGFloat(layoutProperties.frozenRows)) : CGPoint.zero
+        let insets = circularScrollingOptions.headerStyle == .columnHeaderStartsFirstRow ? CGPoint(x: 0, y: layoutProperties.rowHeightCache.prefix(upTo: frozenRows).reduce(0) { $0 + $1 } + intercellSpacing.height * CGFloat(layoutProperties.frozenRows)) : .zero
         return LayoutAttributes(startColumn: 0,
                                 startRow: layoutProperties.frozenRows,
                                 numberOfColumns: layoutProperties.frozenColumns,
@@ -126,7 +126,7 @@ extension SpreadsheetView {
     }
 
     func layoutAttributeForRowHeaderView() -> LayoutAttributes {
-        let insets = circularScrollingOptions.headerStyle == .rowHeaderStartsFirstColumn ? CGPoint(x: layoutProperties.columnWidthCache.prefix(upTo: frozenColumns).reduce(0) { $0 + $1 } + intercellSpacing.width * CGFloat(layoutProperties.frozenColumns), y: 0) : CGPoint.zero
+        let insets = circularScrollingOptions.headerStyle == .rowHeaderStartsFirstColumn ? CGPoint(x: layoutProperties.columnWidthCache.prefix(upTo: frozenColumns).reduce(0) { $0 + $1 } + intercellSpacing.width * CGFloat(layoutProperties.frozenColumns), y: 0) : .zero
         return LayoutAttributes(startColumn: layoutProperties.frozenColumns,
                                 startRow: 0,
                                 numberOfColumns: layoutProperties.numberOfColumns,
@@ -143,7 +143,7 @@ extension SpreadsheetView {
                                 numberOfRows: layoutProperties.numberOfRows,
                                 columnCount: layoutProperties.numberOfColumns * circularScrollScalingFactor.horizontal,
                                 rowCount: layoutProperties.numberOfRows * circularScrollScalingFactor.vertical,
-                                insets: CGPoint.zero)
+                                insets: .zero)
     }
 
     func resetLayoutProperties() -> LayoutProperties {

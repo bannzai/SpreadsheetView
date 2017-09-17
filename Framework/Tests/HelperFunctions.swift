@@ -41,7 +41,7 @@ func showViewController(viewController: UIViewController) {
     window.makeKeyAndVisible()
 }
 
-func numberOfVisibleColumns(in view: SpreadsheetView, contentOffset: CGPoint = CGPoint.zero, parameters: Parameters) -> Int {
+func numberOfVisibleColumns(in view: SpreadsheetView, contentOffset: CGPoint = .zero, parameters: Parameters) -> Int {
     let contentInset: UIEdgeInsets
     if #available(iOS 11.0, *) {
         #if swift(>=3.2)
@@ -71,7 +71,7 @@ func numberOfVisibleColumns(in view: SpreadsheetView, contentOffset: CGPoint = C
     return columnCount
 }
 
-func numberOfVisibleRows(in view: SpreadsheetView, contentOffset: CGPoint = CGPoint.zero, parameters: Parameters) -> Int {
+func numberOfVisibleRows(in view: SpreadsheetView, contentOffset: CGPoint = .zero, parameters: Parameters) -> Int {
     let contentInset: UIEdgeInsets
     if #available(iOS 11.0, *) {
         #if swift(>=3.2)

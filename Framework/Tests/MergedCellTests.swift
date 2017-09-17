@@ -342,7 +342,7 @@ class MergedCellTests: XCTestCase {
         }
     }
 
-    func numberOfVisibleColumns(in view: UIView, contentOffset: CGPoint = CGPoint.zero, parameters: Parameters) -> Int {
+    func numberOfVisibleColumns(in view: UIView, contentOffset: CGPoint = .zero, parameters: Parameters) -> Int {
         var columnCount = 0
         var width: CGFloat = 0
         for (index, columnWidth) in parameters.columns.enumerated() {
@@ -357,7 +357,7 @@ class MergedCellTests: XCTestCase {
         return columnCount
     }
 
-    func numberOfVisibleRows(in view: UIView, contentOffset: CGPoint = CGPoint.zero, parameters: Parameters) -> Int {
+    func numberOfVisibleRows(in view: UIView, contentOffset: CGPoint = .zero, parameters: Parameters) -> Int {
         var rowCount = 0
         var height: CGFloat = 0
         for (index, rowHeight) in parameters.rows.enumerated() {
