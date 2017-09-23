@@ -84,13 +84,13 @@ jobs:
   - stage: 'test (xcode8.3)'
     osx_image: xcode8.3
     script:
-    - bundle exec rake test:simulator DESTINATIONS="['name=iPhone 4s,OS=9.3']"
+    - bundle exec rake test:simulator DESTINATIONS="['name=iPhone 4s,OS=9.3']" SWIFT_VERSION=3.0
     after_success:
     - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
   - stage: 'test (xcode8.3)'
     osx_image: xcode8.3
     script:
-    - bundle exec rake test:simulator DESTINATIONS="['name=iPhone 7,OS=10.3.1']"
+    - bundle exec rake test:simulator DESTINATIONS="['name=iPhone 7,OS=10.3.1']" SWIFT_VERSION=3.0
     after_success:
     - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
   - stage: carthage
@@ -106,7 +106,8 @@ jobs:
     - brew update
     - brew outdated carthage || brew upgrade carthage
     script:
-    - carthage build --no-skip-current
+    - echo SWIFT_VERSION=\"3.0\" > swift3.xcconfig
+    - XCODE_XCCONFIG_FILE=`pwd`/swift3.xcconfig carthage build --no-skip-current
 env:
   global:
   - LANG=en_US.UTF-8
