@@ -38,7 +38,7 @@ end
 
 namespace 'build-for-testing' do
   desc 'build for testing'
-  XCJobs::Build.new("simulator") do |t|
+  XCJobs::BuildForTesting.new("simulator") do |t|
     configuration = ENV['CONFIGURATION'] || 'Release'
 
     t.workspace = 'SpreadsheetView'
@@ -49,13 +49,12 @@ namespace 'build-for-testing' do
     t.add_build_setting('ENABLE_TESTABILITY', 'YES')
     t.add_build_setting('ONLY_ACTIVE_ARCH', 'NO')
     t.build_dir = 'build'
-    t.for_testing = true
   end
 end
 
 namespace 'test-without-building' do
   desc 'test on simulator without building'
-  XCJobs::Test.new("simulator") do |t|
+  XCJobs::TestWithoutBuilding.new("simulator") do |t|
     configuration = ENV['CONFIGURATION'] || 'Release'
     destinations = eval(ENV['DESTINATIONS'] || '[]')
     testcase = ENV['TESTCASE']
@@ -68,7 +67,6 @@ namespace 'test-without-building' do
     t.add_only_testing("SpreadsheetViewTests/#{testcase}") if testcase
     t.add_build_option('-enableCodeCoverage', 'YES')
     t.build_dir = 'build'
-    t.without_building = true
     t.after_action do
       build_coverage_reports()
     end
