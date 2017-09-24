@@ -333,9 +333,13 @@ class MergedCellTests: XCTestCase {
                         }
                     }
                 }
-
+                #if swift(>=4)
+                XCTAssertEqual(actual.x, expected.x, accuracy: 1 / UIScreen.main.scale)
+                XCTAssertEqual(actual.y, expected.y, accuracy: 1 / UIScreen.main.scale)
+                #else
                 XCTAssertEqualWithAccuracy(actual.x, expected.x, accuracy: 1 / UIScreen.main.scale)
                 XCTAssertEqualWithAccuracy(actual.y, expected.y, accuracy: 1 / UIScreen.main.scale)
+                #endif
                 height += parameters.rows[row] + parameters.intercellSpacing.height + parameters.rows[row + 1] + parameters.intercellSpacing.height
             }
             width += parameters.columns[column] + parameters.intercellSpacing.width + parameters.columns[column + 1] + parameters.intercellSpacing.width
