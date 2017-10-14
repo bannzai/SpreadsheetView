@@ -1,0 +1,173 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 11,
+      "symbol": "SpreadsheetView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 33,
+      "symbol": "SpreadsheetView.gridStyle",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 101,
+      "symbol": "SpreadsheetView.circularScrolling",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 141,
+      "symbol": "SpreadsheetView.safeAreaInsetsDidChange()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 170,
+      "symbol": "SpreadsheetView.indexPathForSelectedItem",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 297,
+      "symbol": "SpreadsheetView.numberOfColumns",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 300,
+      "symbol": "SpreadsheetView.numberOfRows",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 303,
+      "symbol": "SpreadsheetView.frozenColumns",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 306,
+      "symbol": "SpreadsheetView.frozenRows",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 309,
+      "symbol": "SpreadsheetView.mergedCells",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 313,
+      "symbol": "SpreadsheetView.scrollView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 343,
+      "symbol": "SpreadsheetView.init(frame:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 348,
+      "symbol": "SpreadsheetView.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 412,
+      "symbol": "SpreadsheetView.register(_:forCellWithReuseIdentifier:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 417,
+      "symbol": "SpreadsheetView.register(_:forCellWithReuseIdentifier:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 421,
+      "symbol": "SpreadsheetView.reloadData()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 466,
+      "symbol": "SpreadsheetView.dequeueReusableCell(withReuseIdentifier:for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 515,
+      "symbol": "SpreadsheetView.scrollToItem(at:at:animated:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 608,
+      "symbol": "SpreadsheetView.selectItem(at:animated:scrollPosition:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 635,
+      "symbol": "SpreadsheetView.deselectItem(at:animated:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 646,
+      "symbol": "SpreadsheetView.indexPathForItem(at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 717,
+      "symbol": "SpreadsheetView.cellForItem(at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 745,
+      "symbol": "SpreadsheetView.cellsForItem(at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/misha/Desktop/SpreadsheetView-master/Framework/Sources/SpreadsheetView.swift",
+      "line": 770,
+      "symbol": "SpreadsheetView.rectForItem(at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/misha/Desktop/SpreadsheetView-master/Framework"
+}
