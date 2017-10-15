@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SpreadsheetViewDataSource Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/SpreadsheetViewDataSource" class="dashAnchor"></a>
+    <a title="SpreadsheetViewDataSource Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html"> Docs</a> (68% documented)</p>
+        <p class="header-right"><a href="https://github.com/kishikawakatsumi/SpreadsheetView"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html"> Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        SpreadsheetViewDataSource Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/SpreadsheetView.html">SpreadsheetView</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/SpreadsheetViewDataSource.html">SpreadsheetViewDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SpreadsheetViewDelegate.html">SpreadsheetViewDelegate</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>SpreadsheetViewDataSource</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">SpreadsheetViewDataSource</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+
+                </div>
+              </div>
+            <p>Implement this protocol to provide data to an <code><a href="../Classes/SpreadsheetView.html">SpreadsheetView</a></code>.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15SpreadsheetView0aB10DataSourceP15numberOfColumnsSiA2AC2in_tF"></a>
+                    <a name="//apple_ref/swift/Method/numberOfColumns(in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15SpreadsheetView0aB10DataSourceP15numberOfColumnsSiA2AC2in_tF">numberOfColumns(in:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Asks your data source object for the number of columns in the spreadsheet view.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">numberOfColumns</span><span class="p">(</span><span class="k">in</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt"><a href="../Classes/SpreadsheetView.html">SpreadsheetView</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spreadsheetView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The spreadsheet view requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The number of columns in <code>spreadsheetView</code>.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15SpreadsheetView0aB10DataSourceP12numberOfRowsSiA2AC2in_tF"></a>
+                    <a name="//apple_ref/swift/Method/numberOfRows(in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15SpreadsheetView0aB10DataSourceP12numberOfRowsSiA2AC2in_tF">numberOfRows(in:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Asks the number of rows in spreadsheet view.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">numberOfRows</span><span class="p">(</span><span class="k">in</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt"><a href="../Classes/SpreadsheetView.html">SpreadsheetView</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spreadsheetView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The spreadsheet view requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The number of rows in <code>spreadsheetView</code>.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15SpreadsheetView0aB10DataSourceP011spreadsheetB012CoreGraphics7CGFloatVA2AC_Si14widthForColumntF"></a>
+                    <a name="//apple_ref/swift/Method/spreadsheetView(_:widthForColumn:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15SpreadsheetView0aB10DataSourceP011spreadsheetB012CoreGraphics7CGFloatVA2AC_Si14widthForColumntF">spreadsheetView(_:widthForColumn:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Asks the data source for the width to use for a row in a specified location.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">spreadsheetView</span><span class="p">(</span><span class="n">_</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt"><a href="../Classes/SpreadsheetView.html">SpreadsheetView</a></span><span class="p">,</span> <span class="n">widthForColumn</span> <span class="nv">column</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spreadsheetView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The spreadsheet view requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>column</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the column.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A nonnegative floating-point value that specifies the width (in points) that column should be.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15SpreadsheetView0aB10DataSourceP011spreadsheetB012CoreGraphics7CGFloatVA2AC_Si12heightForRowtF"></a>
+                    <a name="//apple_ref/swift/Method/spreadsheetView(_:heightForRow:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15SpreadsheetView0aB10DataSourceP011spreadsheetB012CoreGraphics7CGFloatVA2AC_Si12heightForRowtF">spreadsheetView(_:heightForRow:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Asks the data source for the height to use for a row in a specified location.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">spreadsheetView</span><span class="p">(</span><span class="n">_</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt"><a href="../Classes/SpreadsheetView.html">SpreadsheetView</a></span><span class="p">,</span> <span class="n">heightForRow</span> <span class="nv">row</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spreadsheetView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The spreadsheet view requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>row</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the row.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A nonnegative floating-point value that specifies the height (in points) that row should be.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15SpreadsheetView0aB10DataSourceP011spreadsheetB0AA4CellCSgA2AC_10Foundation9IndexPathV13cellForItemAttF"></a>
+                    <a name="//apple_ref/swift/Method/spreadsheetView(_:cellForItemAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15SpreadsheetView0aB10DataSourceP011spreadsheetB0AA4CellCSgA2AC_10Foundation9IndexPathV13cellForItemAttF">spreadsheetView(_:cellForItemAt:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Asks your data source object for the view that corresponds to the specified cell in the spreadsheetView.
+The cell that is returned must be retrieved from a call to <code>dequeueReusableCell(withReuseIdentifier:for:)</code></p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">spreadsheetView</span><span class="p">(</span><span class="n">_</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt"><a href="../Classes/SpreadsheetView.html">SpreadsheetView</a></span><span class="p">,</span> <span class="n">cellForItemAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Cell</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spreadsheetView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The spreadsheet view requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>indexPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The location of the cell</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A cell object to be displayed at the location.
+If you return nil from this method, the blank cell will be displayed by default.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15SpreadsheetView0aB10DataSourceP11mergedCellsSayAA9CellRangeCGA2AC2in_tF"></a>
+                    <a name="//apple_ref/swift/Method/mergedCells(in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15SpreadsheetView0aB10DataSourceP11mergedCellsSayAA9CellRangeCGA2AC2in_tF">mergedCells(in:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Asks your data source object for the array of cell ranges that indicate the range of merged cells in the spreadsheetView.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">mergedCells</span><span class="p">(</span><span class="k">in</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt"><a href="../Classes/SpreadsheetView.html">SpreadsheetView</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">CellRange</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spreadsheetView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The spreadsheet view requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An array of the cell ranges indicating the range of merged cells.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15SpreadsheetView0aB10DataSourceP13frozenColumnsSiA2AC2in_tF"></a>
+                    <a name="//apple_ref/swift/Method/frozenColumns(in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15SpreadsheetView0aB10DataSourceP13frozenColumnsSiA2AC2in_tF">frozenColumns(in:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Asks your data source object for the number of columns to be frozen as a fixed column header in the spreadsheetView.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">frozenColumns</span><span class="p">(</span><span class="k">in</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt"><a href="../Classes/SpreadsheetView.html">SpreadsheetView</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spreadsheetView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The spreadsheet view requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The number of columns to be frozen</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15SpreadsheetView0aB10DataSourceP10frozenRowsSiA2AC2in_tF"></a>
+                    <a name="//apple_ref/swift/Method/frozenRows(in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15SpreadsheetView0aB10DataSourceP10frozenRowsSiA2AC2in_tF">frozenRows(in:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Asks your data source object for the number of rows to be frozen as a fixed row header in the spreadsheetView.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">frozenRows</span><span class="p">(</span><span class="k">in</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt"><a href="../Classes/SpreadsheetView.html">SpreadsheetView</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>spreadsheetView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The spreadsheet view requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The number of rows to be frozen</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017 <a class="link" href="https://kishikawakatsumi.com/" target="_blank" rel="external">kishikawakatsumi</a>. All rights reserved. (Last updated: 2017-10-14)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.4</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

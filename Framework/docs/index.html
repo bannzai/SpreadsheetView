@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html"> Docs</a> (68% documented)</p>
+        <p class="header-right"><a href="https://github.com/kishikawakatsumi/SpreadsheetView"><img src="img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html"> Reference</a>
+        <img id="carat" src="img/carat.png" />
+          Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/SpreadsheetView.html">SpreadsheetView</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/SpreadsheetViewDataSource.html">SpreadsheetViewDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SpreadsheetViewDelegate.html">SpreadsheetViewDelegate</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <p align="center">
+  <img src="Resources/Logo.png"  style="width: 400px;" width="400" />
+</p>
+
+<p align="center">
+    <a href="https://travis-ci.org/kishikawakatsumi/SpreadsheetView">
+        <img src="https://travis-ci.org/kishikawakatsumi/SpreadsheetView.svg?branch=master&style=flat"
+             alt="Build Status">
+    </a>
+    <a href="https://codecov.io/gh/kishikawakatsumi/SpreadsheetView">
+        <img src="https://codecov.io/gh/kishikawakatsumi/SpreadsheetView/branch/master/graph/badge.svg" alt="Codecov" />
+    </a>
+    <a href="https://cocoapods.org/pods/SpreadsheetView">
+        <img src="https://img.shields.io/cocoapods/v/SpreadsheetView.svg?style=flat"
+             alt="Pods Version">
+    </a>
+    <a href="http://cocoapods.org/pods/SpreadsheetView/">
+        <img src="https://img.shields.io/cocoapods/p/SpreadsheetView.svg?style=flat"
+             alt="Platforms">
+    </a>
+    <a href="https://github.com/Carthage/Carthage">
+        <img src="https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?style=flat"
+             alt="Carthage Compatible">
+    </a>
+</p>
+
+<hr>
+
+<p>Full configurable spreadsheet view user interfaces for iOS applications. With this framework, you can easily create complex layouts like schedule, Gantt chart, timetable as if you are using Excel.</p>
+
+<p><img src="Resources/DailySchedule_portrait.png" style="width: 300px; height: 534px;" width="300" height="534"></img>&nbsp;<img src="Resources/DailySchedule_landscape.png" style="width: 534px; height: 300px;" width="534" height="300"></img><br>
+<img src="Resources/Timetable.png" style="width: 300px; height: 534px;" width="300" height="534"></img>&nbsp;
+<img src="Resources/GanttChart.png" style="width: 534px; height: 300px;" width="534" height="300"></img></p>
+<h2 id='features' class='heading'>Features</h2>
+
+<ul>
+<li>[x] Fixed column and row headers</li>
+<li>[x] Merge cells</li>
+<li>[x] Circular infinite scrolling automatically</li>
+<li>[x] Customize gridlines and borders for each cell</li>
+<li>[x] Customize inter cell spacing vertically and horizontally</li>
+<li>[x] Fast scrolling, memory efficient</li>
+<li>[x] <code>UICollectionView</code> like API</li>
+<li>[x] Well unit tested</li>
+</ul>
+<h5 id='find-the-above-displayed-examples-in-the-a-href-https-github-com-kishikawakatsumi-spreadsheetview-tree-master-examples-code-examples-code-a-folder' class='heading'>Find the above displayed examples in the <a href="https://github.com/kishikawakatsumi/SpreadsheetView/tree/master/Examples"><code>Examples</code></a> folder.</h5>
+<h2 id='requirements' class='heading'>Requirements</h2>
+
+<p>SpreadsheetView is written in Swift 3. Compatible with iOS 8.0+</p>
+<h2 id='installation' class='heading'>Installation</h2>
+<h3 id='cocoapods' class='heading'>CocoaPods</h3>
+
+<p>SpreadsheetView is available through <a href="https://cocoapods.org">CocoaPods</a>. To install
+it, simply add the following line to your Podfile:</p>
+<pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'SpreadsheetView'</span>
+</code></pre>
+<h3 id='carthage' class='heading'>Carthage</h3>
+
+<p>For <a href="https://github.com/Carthage/Carthage">Carthage</a>, add the following to your <code>Cartfile</code>:</p>
+<pre class="highlight plaintext"><code>github "kishikawakatsumi/SpreadsheetView"
+</code></pre>
+<h2 id='getting-started' class='heading'>Getting Started</h2>
+
+<p>The minimum requirement is connecting a data source to return the number of columns/rows, and each column width/row height.</p>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">UIKit</span>
+<span class="kd">import</span> <span class="kt">SpreadsheetView</span>
+
+<span class="kd">class</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="kt">SpreadsheetViewDataSource</span> <span class="p">{</span>
+    <span class="kd">@IBOutlet</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt">SpreadsheetView</span><span class="o">!</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">super</span><span class="o">.</span><span class="nf">viewDidLoad</span><span class="p">()</span>
+        <span class="n">spreadsheetView</span><span class="o">.</span><span class="n">dataSource</span> <span class="o">=</span> <span class="k">self</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">numberOfColumns</span><span class="p">(</span><span class="k">in</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt">SpreadsheetView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">200</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">numberOfRows</span><span class="p">(</span><span class="k">in</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt">SpreadsheetView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">400</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">spreadsheetView</span><span class="p">(</span><span class="n">_</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt">SpreadsheetView</span><span class="p">,</span> <span class="n">widthForColumn</span> <span class="nv">column</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="mi">80</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">spreadsheetView</span><span class="p">(</span><span class="n">_</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt">SpreadsheetView</span><span class="p">,</span> <span class="n">heightForRow</span> <span class="nv">row</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="mi">40</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h2 id='usage' class='heading'>Usage</h2>
+<h3 id='freeze-column-and-row-headers' class='heading'>Freeze column and row headers</h3>
+
+<p>Freezing a column or row behaves as a fixed column/row header.</p>
+<h4 id='column-header' class='heading'>Column Header</h4>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">frozenColumns</span><span class="p">(</span><span class="k">in</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt">SpreadsheetView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">2</span>
+<span class="p">}</span>
+</code></pre>
+
+<p><img src="Resources/ColumnHeader.gif" style="width: 200px;" width="200"></img></p>
+<h4 id='row-header' class='heading'>Row Header</h4>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">frozenRows</span><span class="p">(</span><span class="k">in</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt">SpreadsheetView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">2</span>
+<span class="p">}</span>
+</code></pre>
+
+<p><img src="Resources/RowHeader.gif" style="width: 200px;" width="200"></img></p>
+<h4 id='both' class='heading'>both</h4>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">frozenColumns</span><span class="p">(</span><span class="k">in</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt">SpreadsheetView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">2</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">frozenRows</span><span class="p">(</span><span class="k">in</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt">SpreadsheetView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">2</span>
+<span class="p">}</span>
+</code></pre>
+
+<p><img src="Resources/BothHeaders.gif" style="width: 200px;" width="200"></img></p>
+<h3 id='merge-cells' class='heading'>Merge cells</h3>
+
+<p>Multiple cells can be merged and then they are treated as one cell. It is used for grouping cells.</p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">mergedCells</span><span class="p">(</span><span class="k">in</span> <span class="nv">spreadsheetView</span><span class="p">:</span> <span class="kt">SpreadsheetView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">CellRange</span><span class="p">]</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">[</span><span class="kt">CellRange</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="p">(</span><span class="nv">row</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">column</span><span class="p">:</span> <span class="mi">1</span><span class="p">),</span> <span class="nv">to</span><span class="p">:</span> <span class="p">(</span><span class="nv">row</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nv">column</span><span class="p">:</span> <span class="mi">2</span><span class="p">)),</span>
+            <span class="kt">CellRange</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="p">(</span><span class="nv">row</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nv">column</span><span class="p">:</span> <span class="mi">3</span><span class="p">),</span> <span class="nv">to</span><span class="p">:</span> <span class="p">(</span><span class="nv">row</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="nv">column</span><span class="p">:</span> <span class="mi">3</span><span class="p">)),</span>
+            <span class="kt">CellRange</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="p">(</span><span class="nv">row</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nv">column</span><span class="p">:</span> <span class="mi">0</span><span class="p">),</span> <span class="nv">to</span><span class="p">:</span> <span class="p">(</span><span class="nv">row</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="nv">column</span><span class="p">:</span> <span class="mi">2</span><span class="p">)),</span>
+            <span class="kt">CellRange</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="p">(</span><span class="nv">row</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nv">column</span><span class="p">:</span> <span class="mi">4</span><span class="p">),</span> <span class="nv">to</span><span class="p">:</span> <span class="p">(</span><span class="nv">row</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="nv">column</span><span class="p">:</span> <span class="mi">8</span><span class="p">)),</span>
+            <span class="kt">CellRange</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="p">(</span><span class="nv">row</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="nv">column</span><span class="p">:</span> <span class="mi">0</span><span class="p">),</span> <span class="nv">to</span><span class="p">:</span> <span class="p">(</span><span class="nv">row</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nv">column</span><span class="p">:</span> <span class="mi">5</span><span class="p">)),</span>
+            <span class="kt">CellRange</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="p">(</span><span class="nv">row</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span> <span class="nv">column</span><span class="p">:</span> <span class="mi">2</span><span class="p">),</span> <span class="nv">to</span><span class="p">:</span> <span class="p">(</span><span class="nv">row</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="nv">column</span><span class="p">:</span> <span class="mi">4</span><span class="p">))]</span>
+<span class="p">}</span>
+</code></pre>
+
+<p><img src="Resources/MergedCells.png" style="width: 200px;" width="200"></img></p>
+<h3 id='circular-scrolling' class='heading'>Circular Scrolling</h3>
+
+<p>Your table acquires infinite scroll just set <code>circularScrolling</code> property.</p>
+<h4 id='enable-horizontal-circular-scrolling' class='heading'>Enable horizontal circular scrolling</h4>
+<pre class="highlight swift"><code><span class="n">spreadsheetView</span><span class="o">.</span><span class="n">circularScrolling</span> <span class="o">=</span> <span class="kt">CircularScrolling</span><span class="o">.</span><span class="kt">Configuration</span><span class="o">.</span><span class="n">horizontally</span>
+</code></pre>
+<h4 id='enable-vertical-circular-scrolling' class='heading'>Enable vertical circular scrolling</h4>
+<pre class="highlight swift"><code><span class="n">spreadsheetView</span><span class="o">.</span><span class="n">circularScrolling</span> <span class="o">=</span> <span class="kt">CircularScrolling</span><span class="o">.</span><span class="kt">Configuration</span><span class="o">.</span><span class="n">vertically</span>
+</code></pre>
+<h4 id='both' class='heading'>Both</h4>
+<pre class="highlight swift"><code><span class="n">spreadsheetView</span><span class="o">.</span><span class="n">circularScrolling</span> <span class="o">=</span> <span class="kt">CircularScrolling</span><span class="o">.</span><span class="kt">Configuration</span><span class="o">.</span><span class="n">both</span>
+</code></pre>
+
+<p><img src="Resources/CircularScrolling.gif" style="width: 200px;" width="200"></img></p>
+
+<p>If circular scrolling is enabled, you can set additional parameters that the option not to repeat column/row header and to extend column/row header to the left/top edges. <code>CircularScrolling.Configuration</code> is a builder pattern,  can easily select the appropriate combination by chaining properties.</p>
+
+<p><strong>e.g.</strong></p>
+<pre class="highlight swift"><code><span class="n">spreadsheetView</span><span class="o">.</span><span class="n">circularScrolling</span> <span class="o">=</span> 
+    <span class="kt">CircularScrolling</span><span class="o">.</span><span class="kt">Configuration</span><span class="o">.</span><span class="n">horizontally</span><span class="o">.</span><span class="n">columnHeaderNotRepeated</span>
+</code></pre>
+<pre class="highlight swift"><code><span class="n">spreadsheetView</span><span class="o">.</span><span class="n">circularScrolling</span> <span class="o">=</span> 
+    <span class="kt">CircularScrolling</span><span class="o">.</span><span class="kt">Configuration</span><span class="o">.</span><span class="n">both</span><span class="o">.</span><span class="n">columnHeaderStartsFirstRow</span>
+</code></pre>
+<h3 id='customize-gridlines-borders-and-cell-spacing' class='heading'>Customize gridlines, borders and cell spacing</h3>
+
+<p>You can customize the appearance of grid lines and borders of the cell. You can specify whether a cell has a grid line or border. Grid lines and borders can be displayed on the left, right, top, or bottom, or around all four sides of the cell.</p>
+
+<p>The difference between gridlines and borders is that the gridlines are drawn at the center of the inter-cell spacing, but the borders are drawn to fit around the cell.</p>
+<h4 id='cell-spacing' class='heading'>Cell spacing</h4>
+
+<p><img src="Resources/IntercellSpacing.png" style="width: 200px;" width="200"></img></p>
+<pre class="highlight swift"><code><span class="n">spreadsheetView</span><span class="o">.</span><span class="n">intercellSpacing</span> <span class="o">=</span> <span class="kt">CGSize</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre>
+<h4 id='gridlines' class='heading'>Gridlines</h4>
+
+<p><img src="Resources/Grid.png" style="width: 200px;" width="200"></img></p>
+
+<p><code><a href="Classes/SpreadsheetView.html">SpreadsheetView</a></code>&lsquo;s <code>gridStyle</code> property is applied to the entire table.</p>
+<pre class="highlight swift"><code><span class="n">spreadsheetView</span><span class="o">.</span><span class="n">gridStyle</span> <span class="o">=</span> <span class="o">.</span><span class="nf">solid</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="o">.</span><span class="n">lightGray</span><span class="p">)</span>
+</code></pre>
+
+<p>You can set different <code>gridStyle</code> for each cell and each side of the cell. If you set cell&rsquo;s <code>gridStyle</code> property to<code>default</code>, <code>SpreadsheetView</code>&rsquo;s<code>gridStyle</code> property will be applied. Specify <code>none</code> means the grid will not be drawn.</p>
+<pre class="highlight swift"><code><span class="n">cell</span><span class="o">.</span><span class="n">gridlines</span><span class="o">.</span><span class="n">top</span> <span class="o">=</span> <span class="o">.</span><span class="nf">solid</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="o">.</span><span class="n">blue</span><span class="p">)</span>
+<span class="n">cell</span><span class="o">.</span><span class="n">gridlines</span><span class="o">.</span><span class="k">left</span> <span class="o">=</span> <span class="o">.</span><span class="nf">solid</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="o">.</span><span class="n">blue</span><span class="p">)</span>
+<span class="n">cell</span><span class="o">.</span><span class="n">gridlines</span><span class="o">.</span><span class="n">bottom</span> <span class="o">=</span> <span class="o">.</span><span class="k">none</span>
+<span class="n">cell</span><span class="o">.</span><span class="n">gridlines</span><span class="o">.</span><span class="k">right</span> <span class="o">=</span> <span class="o">.</span><span class="k">none</span>
+</code></pre>
+<h4 id='border' class='heading'>Border</h4>
+
+<p><img src="Resources/Border.png" style="width: 200px;" width="200"></img></p>
+
+<p>You can set different <code>borderStyle</code> for each cell as well.</p>
+<pre class="highlight swift"><code><span class="n">cell</span><span class="o">.</span><span class="n">borders</span><span class="o">.</span><span class="n">top</span> <span class="o">=</span> <span class="o">.</span><span class="nf">solid</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="o">.</span><span class="n">red</span><span class="p">)</span>
+<span class="n">cell</span><span class="o">.</span><span class="n">borders</span><span class="o">.</span><span class="k">left</span> <span class="o">=</span> <span class="o">.</span><span class="nf">solid</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="o">.</span><span class="n">red</span><span class="p">)</span>
+<span class="n">cell</span><span class="o">.</span><span class="n">borders</span><span class="o">.</span><span class="n">bottom</span> <span class="o">=</span> <span class="o">.</span><span class="nf">solid</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="o">.</span><span class="n">red</span><span class="p">)</span>
+<span class="n">cell</span><span class="o">.</span><span class="n">borders</span><span class="o">.</span><span class="k">right</span> <span class="o">=</span> <span class="o">.</span><span class="nf">solid</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="o">.</span><span class="n">red</span><span class="p">)</span>
+</code></pre>
+<h2 id='author' class='heading'>Author</h2>
+
+<p>Kishikawa Katsumi, <a href="mailto:kishikawakatsumi@mac.com">kishikawakatsumi@mac.com</a></p>
+<h2 id='license' class='heading'>License</h2>
+
+<p>SpreadsheetView is available under the MIT license. See the LICENSE file for more info.</p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017 <a class="link" href="https://kishikawakatsumi.com/" target="_blank" rel="external">kishikawakatsumi</a>. All rights reserved. (Last updated: 2017-10-14)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.4</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
