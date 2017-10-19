@@ -80,6 +80,22 @@ public protocol SpreadsheetViewDelegate: class {
     ///   - spreadsheetView: The spreadsheet view object that is notifying you of the selection change.
     ///   - indexPath: The index path of the cell that was deselected.
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, didDeselectItemAt indexPath: IndexPath)
+    
+    /// 1:1 Mapping of the underlying UIScrollView delegate
+    /// scrollViewWillBeginDragging(_ scrollView: UIScrollView)
+    /// for UIScrollView 'tableView'.
+    func scrollViewWillBeginDragging(_ spreadsheetView: SpreadsheetView, scrollView: UIScrollView)
+
+    /// 1:1 Mapping of the underlying UIScrollView delegate
+    /// scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
+    /// for UIScrollView 'tableView'.
+    func scrollViewWillEndDragging(_ spreadsheetView: SpreadsheetView, scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>)
+    
+    /// 1:1 Mapping of the underlying UIScrollView delegate
+    /// scrollViewDidScroll(_ scrollView: UIScrollView)
+    /// for UIScrollView 'tableView'.
+    func scrollViewDidScroll(_ spreadsheetView: SpreadsheetView, scrollView: UIScrollView)
+
 }
 
 extension SpreadsheetViewDelegate {
@@ -90,4 +106,8 @@ extension SpreadsheetViewDelegate {
     public func spreadsheetView(_ spreadsheetView: SpreadsheetView, shouldDeselectItemAt indexPath: IndexPath) -> Bool { return true }
     public func spreadsheetView(_ spreadsheetView: SpreadsheetView, didSelectItemAt indexPath: IndexPath) {}
     public func spreadsheetView(_ spreadsheetView: SpreadsheetView, didDeselectItemAt indexPath: IndexPath) {}
+    
+    public func scrollViewWillBeginDragging(_ spreadsheetView: SpreadsheetView, scrollView: UIScrollView) {}
+    public func scrollViewWillEndDragging(_ spreadsheetView: SpreadsheetView, scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {}
+    public func scrollViewDidScroll(_ spreadsheetView: SpreadsheetView, scrollView: UIScrollView) {}
 }
