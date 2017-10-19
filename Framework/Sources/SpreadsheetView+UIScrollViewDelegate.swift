@@ -9,7 +9,29 @@
 import UIKit
 
 extension SpreadsheetView: UIScrollViewDelegate {
+    
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        
+        if scrollView == tableView {
+            delegate?.scrollViewWillBeginDragging(self, scrollView: scrollView)
+        }
+        
+    }
+    
+    public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        if scrollView == tableView {
+            delegate?.scrollViewWillEndDragging(self, scrollView: scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
+        }
+        
+    }
+    
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        if scrollView == tableView {
+            delegate?.scrollViewDidScroll(self, scrollView: scrollView)
+        }
+        
         rowHeaderView.delegate = nil
         columnHeaderView.delegate = nil
         tableView.delegate = nil

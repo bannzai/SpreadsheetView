@@ -112,4 +112,18 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
             spreadsheetView.reloadData()
         }
     }
+    
+    
+    public func scrollViewWillBeginDragging(_ spreadsheetView: SpreadsheetView, scrollView: UIScrollView) {
+        print("WillBeginDragging")
+    }
+    
+    public func scrollViewWillEndDragging(_ spreadsheetView: SpreadsheetView, scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        print("WillEndDragging")
+    }
+    
+    public func scrollViewDidScroll(_ spreadsheetView: SpreadsheetView, scrollView: UIScrollView) {
+        print("DidScroll")
+    }
+    
 }
