@@ -5,6 +5,7 @@ cache:
   - vendor
   - /usr/local/Homebrew
   - $HOME/Library/Caches/Homebrew
+  timeout: 600
 jobs:
   include:
   - stage: build
