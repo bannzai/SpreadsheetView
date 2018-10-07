@@ -29,6 +29,14 @@ extension SpreadsheetView {
         overlayView.insertSubview(view, aboveSubview: siblingSubview)
     }
 
+    #if swift(>=4.2)
+    public override func bringSubviewToFront(_ view: UIView) {
+        overlayView.bringSubviewToFront(view)
+    }
+    public override func sendSubviewToBack(_ view: UIView) {
+        overlayView.sendSubviewToBack(view)
+    }
+    #else
     public override func bringSubview(toFront view: UIView) {
         overlayView.bringSubview(toFront: view)
     }
@@ -36,4 +44,5 @@ extension SpreadsheetView {
     public override func sendSubview(toBack view: UIView) {
         overlayView.sendSubview(toBack: view)
     }
+    #endif
 }

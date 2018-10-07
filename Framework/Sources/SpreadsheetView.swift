@@ -274,6 +274,16 @@ public class SpreadsheetView: UIView {
 
     /// The style of the scroll indicators.
     /// - Note: The default style is `default`. See `UIScrollViewIndicatorStyle` for descriptions of these constants.
+    #if swift(>=4.2)
+    public var indicatorStyle: UIScrollView.IndicatorStyle {
+        get {
+            return overlayView.indicatorStyle
+        }
+        set {
+            overlayView.indicatorStyle = newValue
+        }
+    }
+    #else
     public var indicatorStyle: UIScrollViewIndicatorStyle {
         get {
             return overlayView.indicatorStyle
@@ -282,9 +292,20 @@ public class SpreadsheetView: UIView {
             overlayView.indicatorStyle = newValue
         }
     }
+    #endif
 
     /// A floating-point value that determines the rate of deceleration after the user lifts their finger.
     /// - Note: Your application can use the `UIScrollViewDecelerationRateNormal` and UIScrollViewDecelerationRateFast` constants as reference points for reasonable deceleration rates.
+    #if swift(>=4.2)
+    public var decelerationRate: UIScrollView.DecelerationRate {
+        get {
+            return tableView.decelerationRate
+        }
+        set {
+            tableView.decelerationRate = newValue
+        }
+    }
+    #else
     public var decelerationRate: CGFloat {
         get {
             return tableView.decelerationRate
@@ -293,6 +314,7 @@ public class SpreadsheetView: UIView {
             tableView.decelerationRate = newValue
         }
     }
+    #endif
 
     public var numberOfColumns: Int {
         return layoutProperties.numberOfColumns
