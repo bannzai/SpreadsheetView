@@ -3,8 +3,6 @@ cache:
   directories:
   - build
   - vendor
-  - /usr/local/Homebrew
-  - $HOME/Library/Caches/Homebrew
 jobs:
   include:
   - stage: build
@@ -95,16 +93,10 @@ jobs:
     - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
   - stage: carthage
     osx_image: xcode9
-    install:
-    - brew update
-    - brew outdated carthage || brew upgrade carthage
     script:
     - carthage build --no-skip-current
   - stage: carthage
     osx_image: xcode8.3
-    install:
-    - brew update
-    - brew outdated carthage || brew upgrade carthage
     script:
     - echo SWIFT_VERSION=\"3.0\" > swift3.xcconfig
     - XCODE_XCCONFIG_FILE=`pwd`/swift3.xcconfig carthage build --no-skip-current
