@@ -141,7 +141,7 @@ class ViewTests: XCTestCase {
                            UIApplication.shared.statusBarFrame.height + viewController.navigationController!.navigationBar.frame.height)
             XCTAssertEqual(spreadsheetView.adjustedContentInset.left, 0)
             XCTAssertEqual(spreadsheetView.adjustedContentInset.right, 0)
-            XCTAssertEqual(spreadsheetView.adjustedContentInset.bottom, 0)
+            XCTAssertEqual(spreadsheetView.adjustedContentInset.bottom, viewController.view.safeAreaInsets.bottom)
             #endif
 
             XCTAssertEqual(spreadsheetView.contentInset, .zero)
