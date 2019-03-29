@@ -26,4 +26,5 @@ Pod::Spec.new do |s|
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Kishikawa Katsumi' => 'kishikawakatsumi@mac.com' }
   s.social_media_url = 'https://twitter.com/k_katsumi'
+  s.swift_version = '5.0'
 end
