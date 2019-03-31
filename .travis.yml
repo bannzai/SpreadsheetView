@@ -26,7 +26,11 @@ jobs:
   - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
-      DESTINATIONS="['name=iPhone 6s,OS=10.3.1', 'name=iPhone 7 Plus,OS=10.3.1']"
+      DESTINATIONS="['name=iPhone 6s,OS=10.3.1']"
+  - <<: *test
+    script:
+    - bundle exec rake test-without-building:simulator
+      DESTINATIONS="['name=iPhone 7 Plus,OS=10.3.1']"
   - <<: *test
     script:
     - bundle exec rake test-without-building:simulator

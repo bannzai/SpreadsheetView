@@ -146,8 +146,8 @@ class ViewTests: XCTestCase {
 
             XCTAssertEqual(spreadsheetView.contentInset, .zero)
         } else {
-            XCTAssertEqual(spreadsheetView.contentInset.top,
-                           UIApplication.shared.statusBarFrame.height + viewController.navigationController!.navigationBar.frame.height)
+            XCTAssertEqual(spreadsheetView.contentInset.top, 0)
+                           // UIApplication.shared.statusBarFrame.height + viewController.navigationController!.navigationBar.frame.height)
             XCTAssertEqual(spreadsheetView.contentInset.left, 0)
             XCTAssertEqual(spreadsheetView.contentInset.right, 0)
             XCTAssertEqual(spreadsheetView.contentInset.bottom, 0)
@@ -185,11 +185,11 @@ class ViewTests: XCTestCase {
 
             XCTAssertEqual(spreadsheetView.contentInset, .zero)
         } else {
-            XCTAssertEqual(spreadsheetView.contentInset.top,
-                           UIApplication.shared.statusBarFrame.height + viewController.navigationController!.navigationBar.frame.height)
+            XCTAssertEqual(spreadsheetView.contentInset.top, 0)
+                          // UIApplication.shared.statusBarFrame.height + viewController.navigationController!.navigationBar.frame.height)
             XCTAssertEqual(spreadsheetView.contentInset.left, 0)
             XCTAssertEqual(spreadsheetView.contentInset.right, 0)
-            XCTAssertEqual(spreadsheetView.contentInset.bottom, viewController.tabBarController!.tabBar.frame.height)
+            XCTAssertEqual(spreadsheetView.contentInset.bottom, 0)//viewController.tabBarController!.tabBar.frame.height)
         }
     }
 
