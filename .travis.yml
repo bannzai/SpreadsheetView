@@ -16,7 +16,7 @@ jobs:
     osx_image: xcode10.2
     script:
     - bundle exec rake test-without-building:simulator
-      DESTINATIONS="['name=iPhone 4s,OS=9.3']"
+      DESTINATIONS="['name=iPhone Xʀ,OS=12.2']"
     after_success:
     - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
   - <<: *test
@@ -70,10 +70,6 @@ jobs:
   - <<: *test
     script:
     - bundle exec rake test-without-building:simulator
-      DESTINATIONS="['name=iPhone Xʀ,OS=12.2']"
-  - <<: *test
-    script:
-    - bundle exec rake test-without-building:simulator
       DESTINATIONS="['name=iPad Pro (12.9-inch),OS=12.0']"
   - <<: *test
     script:
@@ -104,8 +100,8 @@ jobs:
     - bundle exec rake test-without-building:simulator
       DESTINATIONS="['name=iPad 2,OS=11.4']" TESTCASE='SelectionTests'
   - &test94
-    stage: 'test (xcode9)'
-    osx_image: xcode9.4
+    stage: 'test (xcode10.1)'
+    osx_image: xcode10.1
     script:
     - bundle exec rake test-without-building:simulator
       DESTINATIONS="['name=iPhone 4s,OS=9.3']" SWIFT_VERSION=4.1
