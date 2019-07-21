@@ -73,7 +73,7 @@ open class Cell: UIView {
 
     public internal(set) var reuseIdentifier: String?
 
-    var indexPath: IndexPath!
+    public var indexPath: IndexPath!
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
