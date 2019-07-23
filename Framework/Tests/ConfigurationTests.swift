@@ -281,10 +281,10 @@ class ConfigurationTests: XCTestCase {
         XCTAssertEqual(spreadsheetView.indicatorStyle, spreadsheetView.overlayView.indicatorStyle)
         spreadsheetView.indicatorStyle = .black
         XCTAssertEqual(spreadsheetView.indicatorStyle, spreadsheetView.overlayView.indicatorStyle)
-
-        XCTAssertEqual(spreadsheetView.decelerationRate, UIScrollViewDecelerationRateNormal)
+        
+        XCTAssertEqual(spreadsheetView.decelerationRate, UIScrollView.DecelerationRate.normal)
         XCTAssertEqual(spreadsheetView.decelerationRate, spreadsheetView.tableView.decelerationRate)
-        spreadsheetView.decelerationRate = UIScrollViewDecelerationRateFast
+        spreadsheetView.decelerationRate = .fast
         XCTAssertEqual(spreadsheetView.decelerationRate, spreadsheetView.tableView.decelerationRate)
     }
 }

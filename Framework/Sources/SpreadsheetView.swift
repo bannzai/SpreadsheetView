@@ -284,7 +284,7 @@ public class SpreadsheetView: UIView {
     }
 
     /// A floating-point value that determines the rate of deceleration after the user lifts their finger.
-    /// - Note: Your application can use the `UIScrollView.DecelerationRate.Normal` and UIScrollView.DecelerationRate.Fast` constants as reference points for reasonable deceleration rates.
+    /// - Note: Your application can use the `UIScrollView.DecelerationRate.normal` and UIScrollView.DecelerationRate.fast` constants as reference points for reasonable deceleration rates.
     public var decelerationRate: UIScrollView.DecelerationRate {
         get {
             return tableView.decelerationRate
