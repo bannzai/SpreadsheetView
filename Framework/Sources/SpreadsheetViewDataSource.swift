@@ -61,11 +61,17 @@ public protocol SpreadsheetViewDataSource: class {
     /// - Parameter spreadsheetView: The spreadsheet view requesting this information.
     /// - Returns: The number of rows to be frozen
     func frozenRows(in spreadsheetView: SpreadsheetView) -> Int
+    /// Asks your data source object for the number of columns to be frozen as a fixed column header in the spreadsheetView.
+    ///
+    /// - Parameter spreadsheetView: The spreadsheet view requesting this information.
+    /// - Returns: The number of columns to be frozen
+    func frozenColumnsRight(in spreadsheetView: SpreadsheetView) -> Int
 }
 
 extension SpreadsheetViewDataSource {
     public func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? { return nil }
     public func mergedCells(in spreadsheetView: SpreadsheetView) -> [CellRange] { return [] }
     public func frozenColumns(in spreadsheetView: SpreadsheetView) -> Int { return 0 }
+    public func frozenColumnsRight(in spreadsheetView: SpreadsheetView) -> Int { return 0 }
     public func frozenRows(in spreadsheetView: SpreadsheetView) -> Int { return 0 }
 }

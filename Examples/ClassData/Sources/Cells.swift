@@ -10,44 +10,16 @@ import UIKit
 import SpreadsheetView
 
 class HeaderCell: Cell {
-    let label = UILabel()
-    let sortArrow = UILabel()
-
-    override var frame: CGRect {
-        didSet {
-            label.frame = bounds.insetBy(dx: 4, dy: 2)
-        }
-    }
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        label.frame = bounds
-        label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.textAlignment = .left
-        label.numberOfLines = 2
-        contentView.addSubview(label)
-
-        sortArrow.text = ""
-        sortArrow.font = UIFont.boldSystemFont(ofSize: 14)
-        sortArrow.textAlignment = .center
-        contentView.addSubview(sortArrow)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        sortArrow.sizeToFit()
-        sortArrow.frame.origin.x = frame.width - sortArrow.frame.width - 8
-        sortArrow.frame.origin.y = (frame.height - sortArrow.frame.height) / 2
-    }
+  
+  @IBOutlet weak var label: UILabel?
+  
+  @IBOutlet weak var sortArrow: UIImageView?
+  
+  @IBOutlet weak var labelTrailingConstraint: NSLayoutConstraint?
 }
 
 class TextCell: Cell {
+  
     let label = UILabel()
 
     override var frame: CGRect {
@@ -65,7 +37,7 @@ class TextCell: Cell {
 
         label.frame = bounds
         label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 13)
         label.textAlignment = .left
 
         contentView.addSubview(label)

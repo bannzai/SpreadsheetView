@@ -12,13 +12,23 @@ extension SpreadsheetView: UIScrollViewDelegate {
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         rowHeaderView.delegate = nil
         columnHeaderView.delegate = nil
+        columnHeaderViewRight.delegate = nil
         tableView.delegate = nil
         defer {
             rowHeaderView.delegate = self
             columnHeaderView.delegate = self
+            columnHeaderViewRight.delegate = self
             tableView.delegate = self
         }
 
+        if tableView.contentOffset.x > 0 && !stickyColumnHeader {
+          let offset = tableView.contentOffset.x * 1
+          cornerViewRight.frame.origin.x = self.frame.size.width - offset
+          columnHeaderViewRight.frame.origin.x = self.frame.size.width - offset
+        } else {
+          cornerViewRight.frame.origin.x = (self.frame.size.width - layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 })
+          columnHeaderViewRight.frame.origin.x = (self.frame.size.width - layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 })
+        }
         if tableView.contentOffset.x < 0 && !stickyColumnHeader {
             let offset = tableView.contentOffset.x * -1
             cornerView.frame.origin.x = offset
@@ -30,14 +40,17 @@ extension SpreadsheetView: UIScrollViewDelegate {
         if tableView.contentOffset.y < 0 && !stickyRowHeader {
             let offset = tableView.contentOffset.y * -1
             cornerView.frame.origin.y = offset
+            cornerViewRight.frame.origin.y = offset
             rowHeaderView.frame.origin.y = offset
         } else {
             cornerView.frame.origin.y = 0
+            cornerViewRight.frame.origin.y = 0
             rowHeaderView.frame.origin.y = 0
         }
 
         rowHeaderView.contentOffset.x = tableView.contentOffset.x
         columnHeaderView.contentOffset.y = tableView.contentOffset.y
+        columnHeaderViewRight.contentOffset.y = tableView.contentOffset.y
 
         setNeedsLayout()
     }

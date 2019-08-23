@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="HeaderCell" customModule="ClassData" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="130" height="45"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" image="sortUp" translatesAutoresizingMaskIntoConstraints="NO" id="wbZ-3G-sYq">
+                    <rect key="frame" x="100" y="10" width="28" height="28"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Isin" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zMh-xg-XIt">
+                    <rect key="frame" x="20" y="15" width="78" height="15.5"/>
+                    <color key="tintColor" red="0.23137254900000001" green="0.47843137250000001" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
+                    <accessibility key="accessibilityConfiguration" identifier="TableTopCollectionViewStaticText"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="BDT-wX-EcS"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SFUIDisplay-Semibold" family="SF UI Display" pointSize="13"/>
+                    <color key="textColor" red="0.23137254900000001" green="0.47843137250000001" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="BDT-wX-EcS"/>
+                        </mask>
+                    </variation>
+                </label>
+            </subviews>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="zMh-xg-XIt" secondAttribute="trailing" priority="750" constant="32" id="4mI-jq-IYU"/>
+                <constraint firstItem="zMh-xg-XIt" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="SgR-qP-l0s"/>
+                <constraint firstItem="wbZ-3G-sYq" firstAttribute="top" secondItem="zMh-xg-XIt" secondAttribute="top" constant="-5" id="ZfC-rM-i44"/>
+                <constraint firstItem="zMh-xg-XIt" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="bfo-D8-5ax"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="wbZ-3G-sYq" secondAttribute="trailing" constant="2" id="nHI-l9-p0q"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="label" destination="zMh-xg-XIt" id="vdn-8E-qC9"/>
+                <outlet property="labelTrailingConstraint" destination="4mI-jq-IYU" id="kDY-P1-FTU"/>
+                <outlet property="sortArrow" destination="wbZ-3G-sYq" id="7S6-nB-N1j"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="sortUp" width="28" height="28"/>
+    </resources>
+</document>

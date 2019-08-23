@@ -15,7 +15,7 @@ public class SpreadsheetView: UIView {
     ///   The spreadsheet view maintains a weak reference to the data source object.
     public weak var dataSource: SpreadsheetViewDataSource? {
         didSet {
-            resetTouchHandlers(to: [tableView, columnHeaderView, rowHeaderView, cornerView])
+            resetTouchHandlers(to: [tableView, columnHeaderView, columnHeaderViewRight, rowHeaderView, cornerView, cornerViewRight])
             setNeedsReload()
         }
     }
@@ -152,9 +152,9 @@ public class SpreadsheetView: UIView {
     ///
     /// - Returns: An array of `Cell` objects. If no cells are visible, this method returns an empty array.
     public var visibleCells: [Cell] {
-        let cells: [Cell] = Array(columnHeaderView.visibleCells) + Array(rowHeaderView.visibleCells)
-            + Array(cornerView.visibleCells) + Array(tableView.visibleCells)
-        return cells.sorted()
+        let cells: [Cell] = Array(columnHeaderView.visibleCells) + Array(columnHeaderViewRight.visibleCells) + Array(rowHeaderView.visibleCells)
+        let cells_: [Cell] = cells + Array(cornerView.visibleCells) + Array(cornerViewRight.visibleCells) + Array(tableView.visibleCells)
+        return cells_.sorted()
     }
 
 
@@ -303,6 +303,9 @@ public class SpreadsheetView: UIView {
     public var frozenColumns: Int {
         return layoutProperties.frozenColumns
     }
+    public var frozenColumnsRight: Int {
+      return layoutProperties.frozenColumnsRight
+    }
     public var frozenRows: Int {
         return layoutProperties.frozenRows
     }
@@ -320,8 +323,10 @@ public class SpreadsheetView: UIView {
     let overlayView = UIScrollView()
 
     let columnHeaderView = ScrollView()
+    let columnHeaderViewRight = ScrollView()
     let rowHeaderView = ScrollView()
     let cornerView = ScrollView()
+    let cornerViewRight = ScrollView()
     let tableView = ScrollView()
 
     private var cellClasses = [String: Cell.Type]()
@@ -373,6 +378,15 @@ public class SpreadsheetView: UIView {
         columnHeaderView.showsVerticalScrollIndicator = false
         columnHeaderView.isHidden = true
         columnHeaderView.delegate = self
+      
+        columnHeaderViewRight.frame = bounds
+        columnHeaderViewRight.frame.size.width = 0
+        columnHeaderViewRight.autoresizingMask = [.flexibleHeight]
+        columnHeaderViewRight.autoresizesSubviews = false
+        columnHeaderViewRight.showsHorizontalScrollIndicator = false
+        columnHeaderViewRight.showsVerticalScrollIndicator = false
+        columnHeaderViewRight.isHidden = true
+        columnHeaderViewRight.delegate = self
 
         rowHeaderView.frame = bounds
         rowHeaderView.frame.size.height = 0
@@ -382,10 +396,14 @@ public class SpreadsheetView: UIView {
         rowHeaderView.showsVerticalScrollIndicator = false
         rowHeaderView.isHidden = true
         rowHeaderView.delegate = self
-
+    
         cornerView.autoresizesSubviews = false
         cornerView.isHidden = true
         cornerView.delegate = self
+      
+        cornerViewRight.autoresizesSubviews = false
+        cornerViewRight.isHidden = true
+        cornerViewRight.delegate = self
 
         overlayView.frame = bounds
         overlayView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -394,11 +412,13 @@ public class SpreadsheetView: UIView {
 
         rootView.addSubview(tableView)
         rootView.addSubview(columnHeaderView)
+        rootView.addSubview(columnHeaderViewRight)
         rootView.addSubview(rowHeaderView)
         rootView.addSubview(cornerView)
+        rootView.addSubview(cornerViewRight)
         super.addSubview(overlayView)
 
-        [tableView, columnHeaderView, rowHeaderView, cornerView, overlayView].forEach {
+        [tableView, columnHeaderView, columnHeaderViewRight, rowHeaderView, cornerView, cornerViewRight, overlayView].forEach {
             addGestureRecognizer($0.panGestureRecognizer)
             #if swift(>=3.2)
             if #available(iOS 11.0, *) {
@@ -424,17 +444,27 @@ public class SpreadsheetView: UIView {
         centerOffset = calculateCenterOffset()
 
         cornerView.layoutAttributes = layoutAttributeForCornerView()
+        cornerViewRight.layoutAttributes = layoutAttributeForCornerViewRight()
+      
         columnHeaderView.layoutAttributes = layoutAttributeForColumnHeaderView()
+        columnHeaderViewRight.layoutAttributes = layoutAttributeForColumnHeaderViewRight()
+      
         rowHeaderView.layoutAttributes = layoutAttributeForRowHeaderView()
         tableView.layoutAttributes = layoutAttributeForTableView()
 
         cornerView.resetReusableObjects()
+        cornerViewRight.resetReusableObjects()
+      
         columnHeaderView.resetReusableObjects()
+        columnHeaderViewRight.resetReusableObjects()
+      
         rowHeaderView.resetReusableObjects()
         tableView.resetReusableObjects()
 
         resetContentSize(of: cornerView)
+        resetContentSize(of: cornerViewRight)
         resetContentSize(of: columnHeaderView)
+        resetContentSize(of: columnHeaderViewRight)
         resetContentSize(of: rowHeaderView)
         resetContentSize(of: tableView)
 
@@ -523,7 +553,7 @@ public class SpreadsheetView: UIView {
             fatalError("attempt to scroll to invalid index path: {column = \(column), row = \(row)}")
         }
 
-        let columnRecords = columnHeaderView.columnRecords + tableView.columnRecords
+        let columnRecords = columnHeaderView.columnRecords + tableView.columnRecords + columnHeaderViewRight.columnRecords
         let rowRecords = rowHeaderView.rowRecords + tableView.rowRecords
         var contentOffset = CGPoint(x: columnRecords[column], y: rowRecords[row])
 
@@ -652,7 +682,11 @@ public class SpreadsheetView: UIView {
             (row, column) = (indexPath.row, indexPath.column + frozenColumns)
         } else if columnHeaderView.convert(columnHeaderView.bounds, to: self).contains(point), let indexPath = indexPathForItem(at: point, in: columnHeaderView) {
             (row, column) = (indexPath.row + frozenRows, indexPath.column)
+        }  else if columnHeaderViewRight.convert(columnHeaderViewRight.bounds, to: self).contains(point), let indexPath = indexPathForItem(at: point, in: columnHeaderViewRight) {
+            (row, column) = (indexPath.row + frozenRows, indexPath.column)
         } else if cornerView.convert(cornerView.bounds, to: self).contains(point), let indexPath = indexPathForItem(at: point, in: cornerView) {
+            (row, column) = (indexPath.row, indexPath.column)
+        } else if cornerViewRight.convert(cornerViewRight.bounds, to: self).contains(point), let indexPath = indexPathForItem(at: point, in: cornerViewRight) {
             (row, column) = (indexPath.row, indexPath.column)
         } else {
             return nil
@@ -733,11 +767,23 @@ public class SpreadsheetView: UIView {
             .first {
             return cell
         }
+        if let cell = columnHeaderViewRight.visibleCells.pairs
+          .filter({ $0.key.row == indexPath.row && $0.key.column == indexPath.column })
+          .map({ return $1 })
+          .first {
+          return cell
+        }
         if let cell = cornerView.visibleCells.pairs
             .filter({ $0.key.row == indexPath.row && $0.key.column == indexPath.column })
             .map({ return $1 })
             .first {
             return cell
+        }
+        if let cell = cornerViewRight.visibleCells.pairs
+          .filter({ $0.key.row == indexPath.row && $0.key.column == indexPath.column })
+          .map({ return $1 })
+          .first {
+          return cell
         }
         return nil
     }
@@ -760,9 +806,19 @@ public class SpreadsheetView: UIView {
                 .map { return $1 }
         )
         cells.append(contentsOf:
+          columnHeaderViewRight.visibleCells.pairs
+            .filter { $0.key.row == indexPath.row && $0.key.column == indexPath.column }
+            .map { return $1 }
+        )
+        cells.append(contentsOf:
             cornerView.visibleCells.pairs
                 .filter { $0.key.row == indexPath.row && $0.key.column == indexPath.column }
                 .map { return $1 }
+        )
+        cells.append(contentsOf:
+          cornerViewRight.visibleCells.pairs
+            .filter { $0.key.row == indexPath.row && $0.key.column == indexPath.column }
+            .map { return $1 }
         )
         return cells
     }
@@ -773,13 +829,18 @@ public class SpreadsheetView: UIView {
             return .zero
         }
 
-        let columnRecords = columnHeaderView.columnRecords + tableView.columnRecords
+        let columnRecords = columnHeaderView.columnRecords + tableView.columnRecords + columnHeaderViewRight.columnRecords
         let rowRecords = rowHeaderView.rowRecords + tableView.rowRecords
 
         let origin: CGPoint
         let size: CGSize
         func originFor(column: Int, row: Int) -> CGPoint {
-            let x = columnRecords[column] + (column >= frozenColumns ? tableView.frame.origin.x : 0) + intercellSpacing.width
+            var x = CGFloat(columnRecords[column]) + intercellSpacing.width
+            if column >= layoutProperties.numberOfColumns - frozenColumns {
+              x = columnRecords[column] + (self.frame.size.width - layoutProperties.columnWidthCache.suffix(from: column).reduce(0) { $0 + $1 }) + intercellSpacing.width
+            } else if column >= frozenColumns && column < layoutProperties.numberOfColumns - frozenColumns {
+              x = columnRecords[column] + tableView.frame.origin.x + intercellSpacing.width
+            }
             let y = rowRecords[row] + (row >= frozenRows ? tableView.frame.origin.y : 0) + intercellSpacing.height
             return CGPoint(x: x, y: y)
         }
