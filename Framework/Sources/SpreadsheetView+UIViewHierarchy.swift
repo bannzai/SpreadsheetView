@@ -9,31 +9,31 @@
 import UIKit
 
 extension SpreadsheetView {
-    public override func insertSubview(_ view: UIView, at index: Int) {
+  open override func insertSubview(_ view: UIView, at index: Int) {
         overlayView.insertSubview(view, at: index)
     }
 
-    public override func exchangeSubview(at index1: Int, withSubviewAt index2: Int) {
+  open override func exchangeSubview(at index1: Int, withSubviewAt index2: Int) {
         overlayView.exchangeSubview(at: index1, withSubviewAt: index2)
     }
 
-    public override func addSubview(_ view: UIView) {
+  open override func addSubview(_ view: UIView) {
         overlayView.addSubview(view)
     }
 
-    public override func insertSubview(_ view: UIView, belowSubview siblingSubview: UIView) {
+  open override func insertSubview(_ view: UIView, belowSubview siblingSubview: UIView) {
         overlayView.insertSubview(view, belowSubview: siblingSubview)
     }
 
-    public override func insertSubview(_ view: UIView, aboveSubview siblingSubview: UIView) {
+  open override func insertSubview(_ view: UIView, aboveSubview siblingSubview: UIView) {
         overlayView.insertSubview(view, aboveSubview: siblingSubview)
     }
 
-    public override func bringSubviewToFront(_ view: UIView) {
+  open override func bringSubviewToFront(_ view: UIView) {
         overlayView.bringSubviewToFront(view)
     }
 
-    public override func sendSubviewToBack(_ view: UIView) {
+  open override func sendSubviewToBack(_ view: UIView) {
         overlayView.sendSubviewToBack(view)
     }
 }

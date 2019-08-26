@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class SpreadsheetView: UIView {
+open class SpreadsheetView: UIView {
     /// The object that provides the data for the collection view.
     ///
     /// - Note: The data source must adopt the `SpreadsheetViewDataSource` protocol.
@@ -138,7 +138,7 @@ public class SpreadsheetView: UIView {
 
     #if swift(>=3.2)
     @available(iOS 11.0, *)
-    public override func safeAreaInsetsDidChange() {
+    open override func safeAreaInsetsDidChange() {
         if let backgroundView = backgroundView {
             backgroundView.removeFromSuperview()
             super.insertSubview(backgroundView, at: 0)
@@ -319,8 +319,8 @@ public class SpreadsheetView: UIView {
 
     var layoutProperties = LayoutProperties()
 
-    let rootView = UIScrollView()
-    let overlayView = UIScrollView()
+    public let rootView = UIScrollView()
+    public let overlayView = UIScrollView()
 
     let columnHeaderView = ScrollView()
     let columnHeaderViewRight = ScrollView()
@@ -436,6 +436,10 @@ public class SpreadsheetView: UIView {
     @objc(registerNib:forCellWithReuseIdentifier:)
     public func register(_ nib: UINib, forCellWithReuseIdentifier identifier: String) {
         cellNibs[identifier] = nib
+    }
+  
+    public var spreadSheetTableView: UIScrollView {
+      return self.tableView
     }
 
     public func reloadData() {
