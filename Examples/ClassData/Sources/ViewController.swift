@@ -16,20 +16,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
     var header = [String]()
     var data = [[String]]()
 
-    enum Sorting {
-      
-        case ascending
-        case descending
-
-        var icon: UIImage? {
-            switch self {
-            case .ascending:
-                return UIImage(named: "sortUp")
-            case .descending:
-                return UIImage(named: "sortDown")
-            }
-        }
-    }
+    
   
     var sortedColumn = (column: 0, sorting: Sorting.ascending)
 
@@ -119,12 +106,10 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         cell.label?.text = header[indexPath.column]
         
         if case indexPath.column = sortedColumn.column {
-          cell.sortArrow?.image = sortedColumn.sorting.icon
-          cell.labelTrailingConstraint?.constant = 32
+          cell.sorting = sortedColumn.sorting
           cell.label?.textColor = UIColor(red: 74.0 / 255.0, green: 144.0 / 255.0, blue: 226.0 / 255.0, alpha: 1.0)
         } else {
-          cell.labelTrailingConstraint?.constant = 8
-          cell.sortArrow?.image = nil
+          cell.sorting = .none
           cell.label?.textColor = UIColor.black
         }
         

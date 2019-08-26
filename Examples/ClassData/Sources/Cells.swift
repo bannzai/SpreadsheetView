@@ -9,7 +9,52 @@
 import UIKit
 import SpreadsheetView
 
+enum Gravity: String {
+  
+  case left
+  case right
+  
+}
+
+enum Sorting {
+  
+  case ascending
+  case descending
+  case none
+  
+  var icon: UIImage? {
+    switch self {
+    case .ascending:
+      return UIImage(named: "sortUp")
+    case .descending:
+      return UIImage(named: "sortDown")
+    default:
+      return nil
+    }
+  }
+}
+
 class HeaderCell: Cell {
+  
+  var sorting: Sorting = .none {
+    didSet {
+      sortArrow?.image = sorting.icon
+      if labelGravity == .right && sorting == .none {
+        labelTrailingConstraint?.constant = 8
+      }
+      if labelGravity == .right && sorting != .none {
+        labelTrailingConstraint?.constant = 32
+      }
+    }
+  }
+  
+  var labelGravity: Gravity = .left
+  
+  @IBInspectable var labelGravityString: String = Gravity.left.rawValue {
+    didSet {
+      labelGravity = Gravity(rawValue: labelGravityString) ?? .left
+    }
+  }
   
   @IBOutlet weak var label: UILabel?
   

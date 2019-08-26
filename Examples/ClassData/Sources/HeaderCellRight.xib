@@ -45,6 +45,9 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="string" keyPath="labelGravityString" value="right"/>
+            </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="label" destination="zMh-xg-XIt" id="vdn-8E-qC9"/>
                 <outlet property="labelTrailingConstraint" destination="4mI-jq-IYU" id="kZC-Hw-OP1"/>
