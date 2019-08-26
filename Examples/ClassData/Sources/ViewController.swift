@@ -65,7 +65,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
       case 0:
         return 200
       case header.count - 1, header.count - 2:
-        return 100
+        return 200
       default:
         return 160
       }
@@ -85,7 +85,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
     }
   
     func frozenColumns(in spreadsheetView: SpreadsheetView) -> Int {
-      return 1
+      return 0
     }
   
     func frozenColumnsRight(in spreadsheetView: SpreadsheetView) -> Int {
