@@ -274,7 +274,7 @@ public class SpreadsheetView: UIView {
 
     /// The style of the scroll indicators.
     /// - Note: The default style is `default`. See `UIScrollViewIndicatorStyle` for descriptions of these constants.
-    public var indicatorStyle: UIScrollViewIndicatorStyle {
+    public var indicatorStyle: UIScrollView.IndicatorStyle {
         get {
             return overlayView.indicatorStyle
         }
@@ -287,10 +287,10 @@ public class SpreadsheetView: UIView {
     /// - Note: Your application can use the `UIScrollViewDecelerationRateNormal` and UIScrollViewDecelerationRateFast` constants as reference points for reasonable deceleration rates.
     public var decelerationRate: CGFloat {
         get {
-            return tableView.decelerationRate
+            return tableView.decelerationRate.rawValue
         }
         set {
-            tableView.decelerationRate = newValue
+            tableView.decelerationRate = UIScrollView.DecelerationRate(rawValue: newValue)
         }
     }
 

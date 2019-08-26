@@ -26,9 +26,9 @@ extension SpreadsheetView: UIScrollViewDelegate {
       
         let tableContentDiff = layoutProperties.columnWidthCache.prefix(upTo: frozenColumns).reduce(0) { $0 + $1 }
       
-        print("SpreadsheetView.tableView.contentOffset.x is \(tableView.contentOffset.x)")
-        print("SpreadsheetView.rightColumnsWidth is \(rightColumnsWidth)")
-        print("SpreadsheetView.tableContentDiff is \(tableContentDiff)")
+        //print("SpreadsheetView.tableView.contentOffset.x is \(tableView.contentOffset.x)")
+        //print("SpreadsheetView.rightColumnsWidth is \(rightColumnsWidth)")
+        //print("SpreadsheetView.tableContentDiff is \(tableContentDiff)")
       
         if (tableView.contentOffset.x > tableContentDiff) && !stickyColumnHeader {
           let offset = tableView.contentOffset.x * 1
