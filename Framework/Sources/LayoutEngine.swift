@@ -20,6 +20,7 @@ final class LayoutEngine {
     private let selectedIndexPaths: Set<IndexPath>
 
     private let frozenColumns: Int
+    private let frozenColumnsRight: Int
     private let frozenRows: Int
 
     private let columnWidthCache: [CGFloat]
@@ -63,6 +64,7 @@ final class LayoutEngine {
         selectedIndexPaths = spreadsheetView.selectedIndexPaths
 
         frozenColumns = spreadsheetView.layoutProperties.frozenColumns
+        frozenColumnsRight = spreadsheetView.layoutProperties.frozenColumnsRight
         frozenRows = spreadsheetView.layoutProperties.frozenRows
         columnWidthCache = spreadsheetView.layoutProperties.columnWidthCache
         rowHeightCache = spreadsheetView.layoutProperties.rowHeightCache
@@ -127,7 +129,7 @@ final class LayoutEngine {
                 continue
             }
 
-            let columnWidth = columnWidthCache[column]
+            let columnWidth = columnWidthCache[columnIndex]
 
             if let mergedCell = spreadsheetView.mergedCell(for: Location(row: row, column: column)) {
                 var cellWidth: CGFloat = 0
@@ -277,7 +279,7 @@ final class LayoutEngine {
                 border = (nil, false)
             }
         } else {
-            let indexPath = IndexPath(row: address.row, column: address.column)
+            let indexPath = IndexPath(row: address.rowIndex, column: address.columnIndex)
 
             let cell = dataSource.spreadsheetView(spreadsheetView, cellForItemAt: indexPath) ?? spreadsheetView.dequeueReusableCell(withReuseIdentifier: blankCellReuseIdentifier, for: indexPath)
             guard let _ = cell.reuseIdentifier else {
@@ -516,6 +518,7 @@ struct LayoutProperties {
     let numberOfColumns: Int
     let numberOfRows: Int
     let frozenColumns: Int
+    let frozenColumnsRight: Int
     let frozenRows: Int
 
     let frozenColumnWidth: CGFloat
@@ -529,7 +532,7 @@ struct LayoutProperties {
     let mergedCellLayouts: [Location: CellRange]
 
     init(numberOfColumns: Int = 0, numberOfRows: Int = 0,
-         frozenColumns: Int = 0, frozenRows: Int = 0,
+         frozenColumns: Int = 0, frozenColumnsRight: Int = 0, frozenRows: Int = 0,
          frozenColumnWidth: CGFloat = 0, frozenRowHeight: CGFloat = 0,
          columnWidth: CGFloat = 0, rowHeight: CGFloat = 0,
          columnWidthCache: [CGFloat] = [], rowHeightCache: [CGFloat] = [],
@@ -537,6 +540,7 @@ struct LayoutProperties {
         self.numberOfColumns = numberOfColumns
         self.numberOfRows = numberOfRows
         self.frozenColumns = frozenColumns
+        self.frozenColumnsRight = frozenColumnsRight
         self.frozenRows = frozenRows
         self.frozenColumnWidth = frozenColumnWidth
         self.frozenRowHeight = frozenRowHeight

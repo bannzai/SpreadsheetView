@@ -9,44 +9,58 @@
 import UIKit
 
 extension SpreadsheetView {
-    public override func layoutSubviews() {
+  open override func layoutSubviews() {
         super.layoutSubviews()
 
         tableView.delegate = nil
         columnHeaderView.delegate = nil
+        columnHeaderViewRight.delegate = nil
         rowHeaderView.delegate = nil
         cornerView.delegate = nil
+        cornerViewRight.delegate = nil
 
         cornerView.state.frame = cornerView.frame
+        cornerViewRight.state.frame = cornerViewRight.frame
         columnHeaderView.state.frame = columnHeaderView.frame
+        columnHeaderViewRight.state.frame = columnHeaderViewRight.frame
         rowHeaderView.state.frame = rowHeaderView.frame
         tableView.state.frame = tableView.frame
 
         cornerView.state.contentSize = cornerView.contentSize
+        cornerViewRight.state.contentSize = cornerViewRight.contentSize
         columnHeaderView.state.contentSize = columnHeaderView.contentSize
+        columnHeaderViewRight.state.contentSize = columnHeaderViewRight.contentSize
         rowHeaderView.state.contentSize = rowHeaderView.contentSize
         tableView.state.contentSize = tableView.contentSize
 
         cornerView.state.contentOffset = cornerView.contentOffset
+        cornerViewRight.state.contentOffset = cornerViewRight.contentOffset
         columnHeaderView.state.contentOffset = columnHeaderView.contentOffset
+        columnHeaderViewRight.state.contentOffset = columnHeaderViewRight.contentOffset
         rowHeaderView.state.contentOffset = rowHeaderView.contentOffset
         tableView.state.contentOffset = tableView.contentOffset
 
         defer {
             cornerView.contentSize = cornerView.state.contentSize
+            cornerViewRight.contentSize = cornerViewRight.state.contentSize
             columnHeaderView.contentSize = columnHeaderView.state.contentSize
+            columnHeaderViewRight.contentSize = columnHeaderViewRight.state.contentSize
             rowHeaderView.contentSize = rowHeaderView.state.contentSize
             tableView.contentSize = tableView.state.contentSize
 
             cornerView.contentOffset = cornerView.state.contentOffset
+            cornerViewRight.contentOffset = cornerViewRight.state.contentOffset
             columnHeaderView.contentOffset = columnHeaderView.state.contentOffset
+            columnHeaderViewRight.contentOffset = columnHeaderViewRight.state.contentOffset
             rowHeaderView.contentOffset = rowHeaderView.state.contentOffset
             tableView.contentOffset = tableView.state.contentOffset
 
             tableView.delegate = self
             columnHeaderView.delegate = self
+            columnHeaderViewRight.delegate = self
             rowHeaderView.delegate = self
             cornerView.delegate = self
+            cornerViewRight.delegate = self
         }
 
         reloadDataIfNeeded()
@@ -74,21 +88,51 @@ extension SpreadsheetView {
     }
 
     private func layoutCornerView() {
-        guard frozenColumns > 0 && frozenRows > 0 && circularScrolling.options.headerStyle == .none else {
-            cornerView.isHidden = true
-            return
+        if frozenColumns < 1 && frozenRows < 1 && circularScrolling.options.headerStyle != .none {
+          cornerView.isHidden = true
+        } else {
+          cornerView.isHidden = false
+          layout(scrollView: cornerView)
         }
-        cornerView.isHidden = false
-        layout(scrollView: cornerView)
+      
+        if frozenColumnsRight < 1 && frozenRows < 1 && circularScrolling.options.headerStyle != .none {
+          cornerViewRight.isHidden = true
+        } else {
+          cornerViewRight.isHidden = false
+          layout(scrollView: cornerViewRight)
+        }
+      
+//        guard frozenColumns > 0 && frozenRows > 0 && circularScrolling.options.headerStyle == .none else {
+//            cornerView.isHidden = true
+//            return
+//        }
+//
+//        cornerView.isHidden = false
+//        layout(scrollView: cornerView)
     }
 
     private func layoutColumnHeaderView() {
-        guard frozenColumns > 0 else {
-            columnHeaderView.isHidden = true
-            return
+        if frozenColumns < 1 {
+          columnHeaderView.isHidden = true
+        } else {
+          columnHeaderView.isHidden = false
+          layout(scrollView: columnHeaderView)
         }
-        columnHeaderView.isHidden = false
-        layout(scrollView: columnHeaderView)
+      
+        if frozenColumnsRight < 1 {
+          columnHeaderViewRight.isHidden = true
+        } else {
+          columnHeaderViewRight.isHidden = false
+          layout(scrollView: columnHeaderViewRight)
+        }
+      
+//        guard frozenColumns > 0 else {
+//            columnHeaderView.isHidden = true
+//            return
+//        }
+//
+//        columnHeaderView.isHidden = false
+//        layout(scrollView: columnHeaderView)
     }
 
     private func layoutRowHeaderView() {
@@ -113,6 +157,16 @@ extension SpreadsheetView {
                                 rowCount: frozenRows,
                                 insets: .zero)
     }
+  
+    func layoutAttributeForCornerViewRight() -> LayoutAttributes {
+      return LayoutAttributes(startColumn: layoutProperties.numberOfColumns - frozenColumnsRight,
+                              startRow: 0,
+                              numberOfColumns: frozenColumnsRight,
+                              numberOfRows: frozenRows,
+                              columnCount: layoutProperties.numberOfColumns,
+                              rowCount: frozenRows,
+                              insets: .zero)
+    }
 
     func layoutAttributeForColumnHeaderView() -> LayoutAttributes {
         let insets = circularScrollingOptions.headerStyle == .columnHeaderStartsFirstRow ? CGPoint(x: 0, y: layoutProperties.rowHeightCache.prefix(upTo: frozenRows).reduce(0) { $0 + $1 } + intercellSpacing.height * CGFloat(layoutProperties.frozenRows)) : .zero
@@ -123,6 +177,17 @@ extension SpreadsheetView {
                                 columnCount: layoutProperties.frozenColumns,
                                 rowCount: layoutProperties.numberOfRows * circularScrollScalingFactor.vertical,
                                 insets: insets)
+    }
+  
+    func layoutAttributeForColumnHeaderViewRight() -> LayoutAttributes {
+      let insets = circularScrollingOptions.headerStyle == .columnHeaderStartsFirstRow ? CGPoint(x: 0, y: layoutProperties.rowHeightCache.prefix(upTo: frozenRows).reduce(0) { $0 + $1 } + intercellSpacing.height * CGFloat(layoutProperties.frozenRows)) : .zero
+      return LayoutAttributes(startColumn: layoutProperties.numberOfColumns - frozenColumnsRight,
+                              startRow: layoutProperties.frozenRows,
+                              numberOfColumns: layoutProperties.frozenColumnsRight,
+                              numberOfRows: layoutProperties.numberOfRows,
+                              columnCount: layoutProperties.numberOfColumns,
+                              rowCount: layoutProperties.numberOfRows * circularScrollScalingFactor.vertical,
+                              insets: insets)
     }
 
     func layoutAttributeForRowHeaderView() -> LayoutAttributes {
@@ -155,6 +220,7 @@ extension SpreadsheetView {
         let numberOfRows = dataSource.numberOfRows(in: self)
 
         let frozenColumns = dataSource.frozenColumns(in: self)
+        let frozenColumnsRight = dataSource.frozenColumnsRight(in: self)
         let frozenRows = dataSource.frozenRows(in: self)
 
         guard numberOfColumns >= 0 else {
@@ -165,6 +231,9 @@ extension SpreadsheetView {
         }
         guard frozenColumns <= numberOfColumns else {
             fatalError("`frozenColumns(in:) must return a value less than or equal to `numberOfColumns(in:)`")
+        }
+        guard frozenColumnsRight <= numberOfColumns else {
+          fatalError("`frozenColumnsRight(in:) must return a value less than or equal to `numberOfColumns(in:)`")
         }
         guard frozenRows <= numberOfRows else {
             fatalError("`frozenRows(in:) must return a value less than or equal to `numberOfRows(in:)`")
@@ -210,12 +279,18 @@ extension SpreadsheetView {
             frozenColumnWidth += width
         }
         var tableWidth: CGFloat = 0
-        for column in frozenColumns..<numberOfColumns {
+        for column in frozenColumns..<(numberOfColumns - frozenColumnsRight) {
             let width = dataSource.spreadsheetView(self, widthForColumn: column)
             columnWidthCache.append(width)
             tableWidth += width
         }
-        let columnWidth = frozenColumnWidth + tableWidth
+        var frozenColumnWidthRight: CGFloat = 0
+        for column in (numberOfColumns - frozenColumnsRight)..<numberOfColumns {
+          let width = dataSource.spreadsheetView(self, widthForColumn: column)
+          columnWidthCache.append(width)
+          frozenColumnWidthRight += width
+        }
+        let columnWidth = frozenColumnWidth + tableWidth + frozenColumnWidthRight
 
         var rowHeightCache = [CGFloat]()
         var frozenRowHeight: CGFloat = 0
@@ -233,7 +308,7 @@ extension SpreadsheetView {
         let rowHeight = frozenRowHeight + tableHeight
 
         return LayoutProperties(numberOfColumns: numberOfColumns, numberOfRows: numberOfRows,
-                                frozenColumns: frozenColumns, frozenRows: frozenRows,
+                                frozenColumns: frozenColumns, frozenColumnsRight: frozenColumnsRight, frozenRows: frozenRows,
                                 frozenColumnWidth: frozenColumnWidth, frozenRowHeight: frozenRowHeight,
                                 columnWidth: columnWidth, rowHeight: rowHeight,
                                 columnWidthCache: columnWidthCache, rowHeightCache: rowHeightCache,
@@ -276,7 +351,9 @@ extension SpreadsheetView {
     func resetScrollViewFrame() {
         defer {
             cornerView.frame = cornerView.state.frame
+            cornerViewRight.frame = cornerViewRight.state.frame
             columnHeaderView.frame = columnHeaderView.state.frame
+            columnHeaderViewRight.frame = columnHeaderViewRight.state.frame
             rowHeaderView.frame = rowHeaderView.state.frame
             tableView.frame = tableView.state.frame
         }
@@ -293,20 +370,48 @@ extension SpreadsheetView {
         }
         let horizontalInset = contentInset.left + contentInset.right
         let verticalInset = contentInset.top + contentInset.bottom
+      
+        let rightColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 }
+        let rightColumnsOriginX = (self.frame.size.width - rightColumnsWidth)
 
         cornerView.state.frame = CGRect(origin: .zero, size: cornerView.state.contentSize)
+        cornerViewRight.state.frame = CGRect(origin: CGPoint(x: rightColumnsOriginX, y: 0), size: cornerViewRight.state.contentSize)
         columnHeaderView.state.frame = CGRect(x: 0, y: 0, width: columnHeaderView.state.contentSize.width, height: frame.height)
+        columnHeaderViewRight.state.frame = CGRect(x: rightColumnsOriginX, y: 0, width: columnHeaderViewRight.state.contentSize.width, height: frame.height)
         rowHeaderView.state.frame = CGRect(x: 0, y: 0, width: frame.width, height: rowHeaderView.state.contentSize.height)
         tableView.state.frame = CGRect(origin: .zero, size: frame.size)
 
-        if frozenColumns > 0 {
+        if frozenColumns > 0 || frozenColumnsRight > 0 {
+          switch (frozenColumns > 0, frozenColumnsRight > 0) {
+          case (true, true):
             tableView.state.frame.origin.x = columnHeaderView.state.frame.width - intercellSpacing.width
             tableView.state.frame.size.width = (frame.width - horizontalInset) - (columnHeaderView.state.frame.width - intercellSpacing.width)
-
+            
             if circularScrollingOptions.headerStyle != .rowHeaderStartsFirstColumn {
-                rowHeaderView.state.frame.origin.x = tableView.state.frame.origin.x
-                rowHeaderView.state.frame.size.width = tableView.state.frame.size.width
+              rowHeaderView.state.frame.origin.x = tableView.state.frame.origin.x
+              rowHeaderView.state.frame.size.width = tableView.state.frame.size.width
             }
+            break
+          case (false, true):
+            tableView.state.frame.size.width = (frame.width - horizontalInset)
+            
+            if circularScrollingOptions.headerStyle != .rowHeaderStartsFirstColumn {
+              rowHeaderView.state.frame.origin.x = tableView.state.frame.origin.x
+              rowHeaderView.state.frame.size.width = tableView.state.frame.size.width
+            }
+            break
+          case (true, false):
+            tableView.state.frame.origin.x = columnHeaderView.state.frame.width - intercellSpacing.width
+            tableView.state.frame.size.width = (frame.width - horizontalInset) - (columnHeaderView.state.frame.width - intercellSpacing.width)
+            
+            if circularScrollingOptions.headerStyle != .rowHeaderStartsFirstColumn {
+              rowHeaderView.state.frame.origin.x = tableView.state.frame.origin.x
+              rowHeaderView.state.frame.size.width = tableView.state.frame.size.width
+            }
+            break
+          default:
+            break
+          }
         } else {
             tableView.state.frame.size.width = frame.width - horizontalInset
         }
@@ -317,6 +422,9 @@ extension SpreadsheetView {
             if circularScrollingOptions.headerStyle != .columnHeaderStartsFirstRow {
                 columnHeaderView.state.frame.origin.y = tableView.state.frame.origin.y
                 columnHeaderView.state.frame.size.height = tableView.state.frame.size.height
+              
+                columnHeaderViewRight.state.frame.origin.y = tableView.state.frame.origin.y
+                columnHeaderViewRight.state.frame.size.height = tableView.state.frame.size.height
             }
         } else {
             tableView.state.frame.size.height = frame.height - verticalInset
@@ -336,18 +444,24 @@ extension SpreadsheetView {
     func resetScrollViewArrangement() {
         tableView.removeFromSuperview()
         columnHeaderView.removeFromSuperview()
+        columnHeaderViewRight.removeFromSuperview()
         rowHeaderView.removeFromSuperview()
         cornerView.removeFromSuperview()
+        cornerViewRight.removeFromSuperview()
         if circularScrollingOptions.headerStyle == .columnHeaderStartsFirstRow {
             rootView.addSubview(tableView)
             rootView.addSubview(rowHeaderView)
             rootView.addSubview(columnHeaderView)
+            rootView.addSubview(columnHeaderViewRight)
             rootView.addSubview(cornerView)
+            rootView.addSubview(cornerViewRight)
         } else {
             rootView.addSubview(tableView)
             rootView.addSubview(columnHeaderView)
+            rootView.addSubview(columnHeaderViewRight)
             rootView.addSubview(rowHeaderView)
             rootView.addSubview(cornerView)
+            rootView.addSubview(cornerViewRight)
         }
     }
 

@@ -12,13 +12,33 @@ extension SpreadsheetView: UIScrollViewDelegate {
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         rowHeaderView.delegate = nil
         columnHeaderView.delegate = nil
+        columnHeaderViewRight.delegate = nil
         tableView.delegate = nil
         defer {
             rowHeaderView.delegate = self
             columnHeaderView.delegate = self
+            columnHeaderViewRight.delegate = self
             tableView.delegate = self
         }
 
+        let rightColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 }
+        let rightColumnsOriginX = (self.frame.size.width - rightColumnsWidth)
+      
+        let tableContentDiff = layoutProperties.columnWidthCache.prefix(upTo: frozenColumns).reduce(0) { $0 + $1 }
+      
+        //print("SpreadsheetView.tableView.contentOffset.x is \(tableView.contentOffset.x)")
+        //print("SpreadsheetView.rightColumnsWidth is \(rightColumnsWidth)")
+        //print("SpreadsheetView.tableContentDiff is \(tableContentDiff)")
+      
+        if (tableView.contentOffset.x > tableContentDiff) && !stickyColumnHeader {
+          let offset = tableView.contentOffset.x * 1
+          cornerViewRight.frame.origin.x = (self.frame.size.width + tableContentDiff) - offset
+          columnHeaderViewRight.frame.origin.x = (self.frame.size.width + tableContentDiff) - offset
+        } else {
+          cornerViewRight.frame.origin.x = rightColumnsOriginX
+          columnHeaderViewRight.frame.origin.x = rightColumnsOriginX
+        }
+      
         if tableView.contentOffset.x < 0 && !stickyColumnHeader {
             let offset = tableView.contentOffset.x * -1
             cornerView.frame.origin.x = offset
@@ -30,14 +50,17 @@ extension SpreadsheetView: UIScrollViewDelegate {
         if tableView.contentOffset.y < 0 && !stickyRowHeader {
             let offset = tableView.contentOffset.y * -1
             cornerView.frame.origin.y = offset
+            cornerViewRight.frame.origin.y = offset
             rowHeaderView.frame.origin.y = offset
         } else {
             cornerView.frame.origin.y = 0
+            cornerViewRight.frame.origin.y = 0
             rowHeaderView.frame.origin.y = 0
         }
 
         rowHeaderView.contentOffset.x = tableView.contentOffset.x
         columnHeaderView.contentOffset.y = tableView.contentOffset.y
+        columnHeaderViewRight.contentOffset.y = tableView.contentOffset.y
 
         setNeedsLayout()
     }

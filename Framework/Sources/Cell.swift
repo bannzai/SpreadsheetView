@@ -55,7 +55,7 @@ open class Cell: UIView {
     }
 
     public var gridlines = Gridlines(top: .default, bottom: .default, left: .default, right: .default)
-    @available(*, deprecated: 0.6.3, renamed: "gridlines")
+    @available(*, deprecated, renamed: "gridlines")
     public var grids: Gridlines {
         get {
             return gridlines

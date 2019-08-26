@@ -1,0 +1,12 @@
+{
+  "info" : {
+    "author" : "zeplin",
+    "version" : 1
+  },
+  "images" : [
+    {
+      "idiom" : "universal",
+      "filename" : "sortDown.pdf"
+    }
+  ]
+}

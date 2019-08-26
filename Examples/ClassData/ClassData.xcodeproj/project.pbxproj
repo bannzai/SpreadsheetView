@@ -16,6 +16,12 @@
 		149DC9431ECDB05200297E38 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 149DC9411ECDB05200297E38 /* Main.storyboard */; };
 		149DC9451ECDB05200297E38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 149DC9441ECDB05200297E38 /* Assets.xcassets */; };
 		149DC9481ECDB05200297E38 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 149DC9461ECDB05200297E38 /* LaunchScreen.storyboard */; };
+		5E12FE85230D307F00B89A5B /* HeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E12FE84230D307F00B89A5B /* HeaderCell.xib */; };
+		5E12FE87230EF80400B89A5B /* HeaderCellRight.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E12FE86230EF80400B89A5B /* HeaderCellRight.xib */; };
+		5E23692F23138F4100857A08 /* DataCellRight.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E23692D23138F4100857A08 /* DataCellRight.xib */; };
+		5E23693023138F4100857A08 /* DataCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E23692E23138F4100857A08 /* DataCell.xib */; };
+		5E2369332313934400857A08 /* TotalCellRight.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E2369312313934400857A08 /* TotalCellRight.xib */; };
+		5E2369342313934400857A08 /* TotalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E2369322313934400857A08 /* TotalCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +49,12 @@
 		149DC9441ECDB05200297E38 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		149DC9471ECDB05200297E38 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		149DC9491ECDB05200297E38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5E12FE84230D307F00B89A5B /* HeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderCell.xib; sourceTree = "<group>"; };
+		5E12FE86230EF80400B89A5B /* HeaderCellRight.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderCellRight.xib; sourceTree = "<group>"; };
+		5E23692D23138F4100857A08 /* DataCellRight.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataCellRight.xib; sourceTree = "<group>"; };
+		5E23692E23138F4100857A08 /* DataCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataCell.xib; sourceTree = "<group>"; };
+		5E2369312313934400857A08 /* TotalCellRight.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TotalCellRight.xib; sourceTree = "<group>"; };
+		5E2369322313934400857A08 /* TotalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TotalCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,11 +116,17 @@
 		149DC93C1ECDB05200297E38 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				5E2369322313934400857A08 /* TotalCell.xib */,
+				5E2369312313934400857A08 /* TotalCellRight.xib */,
+				5E23692E23138F4100857A08 /* DataCell.xib */,
+				5E23692D23138F4100857A08 /* DataCellRight.xib */,
+				5E12FE86230EF80400B89A5B /* HeaderCellRight.xib */,
 				149DC93D1ECDB05200297E38 /* AppDelegate.swift */,
 				149DC93F1ECDB05200297E38 /* ViewController.swift */,
 				1426CED61ECDBDBC00153836 /* Cells.swift */,
 				146AE6631ECDB0D60084118F /* Assets */,
 				146AE6641ECDB0DD0084118F /* Supporting Files */,
+				5E12FE84230D307F00B89A5B /* HeaderCell.xib */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -156,6 +174,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -176,8 +195,14 @@
 			files = (
 				146AE6661ECDB14D0084118F /* data.tsv in Resources */,
 				149DC9481ECDB05200297E38 /* LaunchScreen.storyboard in Resources */,
+				5E2369342313934400857A08 /* TotalCell.xib in Resources */,
 				149DC9451ECDB05200297E38 /* Assets.xcassets in Resources */,
+				5E12FE87230EF80400B89A5B /* HeaderCellRight.xib in Resources */,
+				5E12FE85230D307F00B89A5B /* HeaderCell.xib in Resources */,
+				5E23692F23138F4100857A08 /* DataCellRight.xib in Resources */,
 				149DC9431ECDB05200297E38 /* Main.storyboard in Resources */,
+				5E2369332313934400857A08 /* TotalCellRight.xib in Resources */,
+				5E23693023138F4100857A08 /* DataCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,7 +357,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kishikawakatsumi.ClassData;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -345,7 +370,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kishikawakatsumi.ClassData;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

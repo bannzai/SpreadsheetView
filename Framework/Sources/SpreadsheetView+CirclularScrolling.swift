@@ -16,6 +16,7 @@ extension SpreadsheetView {
 
     func scrollToVerticalCenter() {
         columnHeaderView.state.contentOffset.y = centerOffset.y
+        columnHeaderViewRight.state.contentOffset.y = centerOffset.y
         tableView.state.contentOffset.y = centerOffset.y
     }
 
@@ -42,10 +43,12 @@ extension SpreadsheetView {
         if abs(distance) > threshold {
             if distance > 0 {
                 columnHeaderView.state.contentOffset.y = distance
+                columnHeaderViewRight.state.contentOffset.y = distance
                 tableView.state.contentOffset.y = distance
             } else {
                 let offset = centerOffset.y + (centerOffset.y - threshold)
                 columnHeaderView.state.contentOffset.y = offset
+                columnHeaderViewRight.state.contentOffset.y = offset
                 tableView.state.contentOffset.y = offset
             }
         }

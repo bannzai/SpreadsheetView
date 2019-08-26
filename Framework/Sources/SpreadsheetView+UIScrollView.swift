@@ -68,7 +68,7 @@ extension SpreadsheetView {
         resetScrollViewFrame()
     }
     
-    public override func isKind(of aClass: AnyClass) -> Bool {
+  open override func isKind(of aClass: AnyClass) -> Bool {
         if #available(iOS 11.0, *) {
             return super.isKind(of: aClass)
         } else {
@@ -76,7 +76,7 @@ extension SpreadsheetView {
         }
     }
 
-    public override func forwardingTarget(for aSelector: Selector!) -> Any? {
+  open override func forwardingTarget(for aSelector: Selector!) -> Any? {
         if #available(iOS 11.0, *) {
             return super.forwardingTarget(for: aSelector)
         } else {
