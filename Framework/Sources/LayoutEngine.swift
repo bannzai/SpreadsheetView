@@ -129,7 +129,7 @@ final class LayoutEngine {
                 continue
             }
 
-            let columnWidth = columnWidthCache[column]
+            let columnWidth = columnWidthCache[columnIndex]
 
             if let mergedCell = spreadsheetView.mergedCell(for: Location(row: row, column: column)) {
                 var cellWidth: CGFloat = 0

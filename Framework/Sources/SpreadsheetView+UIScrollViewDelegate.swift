@@ -21,14 +21,24 @@ extension SpreadsheetView: UIScrollViewDelegate {
             tableView.delegate = self
         }
 
-        if tableView.contentOffset.x > 0 && !stickyColumnHeader {
+        let rightColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 }
+        let rightColumnsOriginX = (self.frame.size.width - rightColumnsWidth)
+      
+        let tableContentDiff = layoutProperties.columnWidthCache.prefix(upTo: frozenColumns).reduce(0) { $0 + $1 }
+      
+        print("SpreadsheetView.tableView.contentOffset.x is \(tableView.contentOffset.x)")
+        print("SpreadsheetView.rightColumnsWidth is \(rightColumnsWidth)")
+        print("SpreadsheetView.tableContentDiff is \(tableContentDiff)")
+      
+        if (tableView.contentOffset.x > tableContentDiff) && !stickyColumnHeader {
           let offset = tableView.contentOffset.x * 1
-          cornerViewRight.frame.origin.x = self.frame.size.width - offset
-          columnHeaderViewRight.frame.origin.x = self.frame.size.width - offset
+          cornerViewRight.frame.origin.x = (self.frame.size.width + tableContentDiff) - offset
+          columnHeaderViewRight.frame.origin.x = (self.frame.size.width + tableContentDiff) - offset
         } else {
-          cornerViewRight.frame.origin.x = (self.frame.size.width - layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 })
-          columnHeaderViewRight.frame.origin.x = (self.frame.size.width - layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 })
+          cornerViewRight.frame.origin.x = rightColumnsOriginX
+          columnHeaderViewRight.frame.origin.x = rightColumnsOriginX
         }
+      
         if tableView.contentOffset.x < 0 && !stickyColumnHeader {
             let offset = tableView.contentOffset.x * -1
             cornerView.frame.origin.x = offset

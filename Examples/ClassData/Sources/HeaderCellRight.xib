@@ -13,7 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="HeaderCell" customModule="ClassData" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="130" height="45"/>
+            <rect key="frame" x="0.0" y="0.0" width="130" height="60"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" image="sortUp" translatesAutoresizingMaskIntoConstraints="NO" id="wbZ-3G-sYq">
@@ -47,7 +47,7 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="label" destination="zMh-xg-XIt" id="vdn-8E-qC9"/>
-                <outlet property="labelTrailingConstraint" destination="4mI-jq-IYU" id="kDY-P1-FTU"/>
+                <outlet property="labelTrailingConstraint" destination="4mI-jq-IYU" id="kZC-Hw-OP1"/>
                 <outlet property="sortArrow" destination="wbZ-3G-sYq" id="7S6-nB-N1j"/>
             </connections>
         </view>

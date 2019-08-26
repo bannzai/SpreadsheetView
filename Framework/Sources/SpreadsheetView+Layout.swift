@@ -371,12 +371,13 @@ extension SpreadsheetView {
         let horizontalInset = contentInset.left + contentInset.right
         let verticalInset = contentInset.top + contentInset.bottom
       
-        let xRight = (self.frame.size.width - layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 })
+        let rightColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 }
+        let rightColumnsOriginX = (self.frame.size.width - rightColumnsWidth)
 
         cornerView.state.frame = CGRect(origin: .zero, size: cornerView.state.contentSize)
-        cornerViewRight.state.frame = CGRect(origin: CGPoint(x: xRight, y: 0), size: cornerViewRight.state.contentSize)
+        cornerViewRight.state.frame = CGRect(origin: CGPoint(x: rightColumnsOriginX, y: 0), size: cornerViewRight.state.contentSize)
         columnHeaderView.state.frame = CGRect(x: 0, y: 0, width: columnHeaderView.state.contentSize.width, height: frame.height)
-        columnHeaderViewRight.state.frame = CGRect(x: xRight, y: 0, width: columnHeaderViewRight.state.contentSize.width, height: frame.height)
+        columnHeaderViewRight.state.frame = CGRect(x: rightColumnsOriginX, y: 0, width: columnHeaderViewRight.state.contentSize.width, height: frame.height)
         rowHeaderView.state.frame = CGRect(x: 0, y: 0, width: frame.width, height: rowHeaderView.state.contentSize.height)
         tableView.state.frame = CGRect(origin: .zero, size: frame.size)
 

@@ -40,7 +40,10 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         spreadsheetView.dataSource = self
         spreadsheetView.delegate = self
 
-        spreadsheetView.register(TextCell.self, forCellWithReuseIdentifier: String(describing: TextCell.self))
+        spreadsheetView.register(UINib(nibName: "TotalCell", bundle: nil), forCellWithReuseIdentifier: "TotalCell")
+        spreadsheetView.register(UINib(nibName: "TotalCellRight", bundle: nil), forCellWithReuseIdentifier: "TotalCellRight")
+        spreadsheetView.register(UINib(nibName: "DataCell", bundle: nil), forCellWithReuseIdentifier: "DataCell")
+        spreadsheetView.register(UINib(nibName: "DataCellRight", bundle: nil), forCellWithReuseIdentifier: "DataCellRight")
         spreadsheetView.register(UINib(nibName: "HeaderCell", bundle: nil), forCellWithReuseIdentifier: "HeaderCell")
         spreadsheetView.register(UINib(nibName: "HeaderCellRight", bundle: nil), forCellWithReuseIdentifier: "HeaderCellRight")
 
@@ -71,19 +74,27 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
     }
 
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, widthForColumn column: Int) -> CGFloat {
+      switch column {
+      case 0:
+        return 200
+      case header.count - 1, header.count - 2:
+        return 100
+      default:
         return 160
+      }
     }
 
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, heightForRow row: Int) -> CGFloat {
-        if case 0 = row {
-            return 60
-        } else {
-            return 44
-        }
+      switch row {
+      case 0, 1:
+        return 60
+      default:
+        return 48
+      }
     }
 
     func frozenRows(in spreadsheetView: SpreadsheetView) -> Int {
-        return 1
+        return 2
     }
   
     func frozenColumns(in spreadsheetView: SpreadsheetView) -> Int {
@@ -95,48 +106,69 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
     }
 
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
-        if case 0 = indexPath.row {
-          
-            var identifier = "HeaderCell"
-          
-            if indexPath.column > 0 {
-              identifier = "HeaderCellRight"
-            }
-          
-            let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! HeaderCell
-          
-            cell.label?.text = header[indexPath.column]
-
-            if case indexPath.column = sortedColumn.column {
-                cell.sortArrow?.image = sortedColumn.sorting.icon
-                cell.labelTrailingConstraint?.constant = 32
-                cell.label?.textColor = UIColor(red: 74.0 / 255.0, green: 144.0 / 255.0, blue: 226.0 / 255.0, alpha: 1.0)
-            } else {
-               cell.labelTrailingConstraint?.constant = 8
-               cell.sortArrow?.image = nil
-               cell.label?.textColor = UIColor.black
-            }
-          
-            cell.gridlines.top = .solid(width: CGFloat(1), color: UIColor.white)
-            cell.gridlines.left = .solid(width: CGFloat(1), color: UIColor.white)
-            cell.gridlines.bottom = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
-            cell.gridlines.right = .solid(width: CGFloat(1), color: UIColor.white)
-          
-            cell.setNeedsLayout()
-            
-            return cell
-        } else {
-            let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: TextCell.self), for: indexPath) as! TextCell
-            cell.label.text = data[indexPath.row - 1][indexPath.column]
-          
-            cell.gridlines.top = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
-            cell.gridlines.left = .solid(width: CGFloat(1), color: UIColor.white)
-            cell.gridlines.bottom = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
-            cell.gridlines.right = .solid(width: CGFloat(1), color: UIColor.white)
-          
-          
-            return cell
+      switch indexPath.row {
+      case 0:
+        var identifier = "HeaderCell"
+        
+        if indexPath.column > 0 {
+          identifier = "HeaderCellRight"
         }
+        
+        let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! HeaderCell
+        
+        cell.label?.text = header[indexPath.column]
+        
+        if case indexPath.column = sortedColumn.column {
+          cell.sortArrow?.image = sortedColumn.sorting.icon
+          cell.labelTrailingConstraint?.constant = 32
+          cell.label?.textColor = UIColor(red: 74.0 / 255.0, green: 144.0 / 255.0, blue: 226.0 / 255.0, alpha: 1.0)
+        } else {
+          cell.labelTrailingConstraint?.constant = 8
+          cell.sortArrow?.image = nil
+          cell.label?.textColor = UIColor.black
+        }
+        
+        cell.gridlines.top = .solid(width: CGFloat(1), color: UIColor.white)
+        cell.gridlines.left = .solid(width: CGFloat(1), color: UIColor.white)
+        cell.gridlines.bottom = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
+        cell.gridlines.right = .solid(width: CGFloat(1), color: UIColor.white)
+        
+        cell.setNeedsLayout()
+        
+        return cell
+      case 1:
+        var identifier = "TotalCell"
+        
+        if indexPath.column > 0 {
+          identifier = "TotalCellRight"
+        }
+        
+        let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! TotalCell
+        cell.label?.text = data[indexPath.row - 1][indexPath.column]
+        
+        cell.gridlines.top = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
+        cell.gridlines.left = .solid(width: CGFloat(1), color: UIColor(red: 246.0/255.0, green: 246.0/255.0, blue: 246.0/255.0, alpha: 1))
+        cell.gridlines.bottom = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
+        cell.gridlines.right = .solid(width: CGFloat(1), color: UIColor(red: 246.0/255.0, green: 246.0/255.0, blue: 246.0/255.0, alpha: 1))
+        
+        return cell
+      default:
+        var identifier = "DataCell"
+        
+        if indexPath.column > 0 {
+          identifier = "DataCellRight"
+        }
+        
+        let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! DataCell
+        cell.label?.text = data[indexPath.row - 1][indexPath.column]
+        
+        cell.gridlines.top = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
+        cell.gridlines.left = .solid(width: CGFloat(1), color: UIColor.white)
+        cell.gridlines.bottom = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
+        cell.gridlines.right = .solid(width: CGFloat(1), color: UIColor.white)
+        
+        return cell
+      }
     }
 
     /// Delegate
