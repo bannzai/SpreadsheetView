@@ -441,6 +441,14 @@ open class SpreadsheetView: UIView {
     public var spreadSheetTableView: UIScrollView {
       return self.tableView
     }
+  
+    public var spreadSheetColumnViews: [UIScrollView] {
+      return [self.columnHeaderView, self.columnHeaderViewRight]
+    }
+  
+    public var spreadSheetRowViews: [UIScrollView] {
+      return [self.rowHeaderView]
+    }
 
     public func reloadData() {
         layoutProperties = resetLayoutProperties()
