@@ -26,7 +26,7 @@ extension SpreadsheetView: UIScrollViewDelegate {
         let rightFoldedColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 }
         let leftFoldedColumnsWidth = layoutProperties.columnWidthCache.prefix(upTo: frozenColumns).reduce(0) { $0 + $1 }
       
-      print ("tableView.contentOffset.x is \(tableView.contentOffset.x)")
+      //print ("tableView.contentOffset.x is \(tableView.contentOffset.x)")
       
         if tableView.contentOffset.x > leftFoldedColumnsWidth && !stickyColumnHeader {
           let offset = tableView.contentOffset.x * 1
@@ -41,16 +41,16 @@ extension SpreadsheetView: UIScrollViewDelegate {
           cornerViewRight.leftBorder?.backgroundColor = self.dividerColor.cgColor
           columnHeaderViewRight.leftBorder?.backgroundColor = self.dividerColor.cgColor
         } else {
-          cornerViewRight.leftBorder?.backgroundColor = self.transparentColor.cgColor
-          columnHeaderViewRight.leftBorder?.backgroundColor = self.transparentColor.cgColor
+          cornerViewRight.leftBorder?.backgroundColor = UIColor.clear.cgColor
+          columnHeaderViewRight.leftBorder?.backgroundColor = UIColor.clear.cgColor
         }
       
         if tableView.contentOffset.x > 0 && !stickyColumnHeader {
           cornerView.rightBorder?.backgroundColor = self.dividerColor.cgColor
           columnHeaderView.rightBorder?.backgroundColor = self.dividerColor.cgColor
         } else {
-          cornerView.rightBorder?.backgroundColor = self.transparentColor.cgColor
-          columnHeaderView.rightBorder?.backgroundColor = self.transparentColor.cgColor
+          cornerView.rightBorder?.backgroundColor = UIColor.clear.cgColor
+          columnHeaderView.rightBorder?.backgroundColor = UIColor.clear.cgColor
         }
       
         if tableView.contentOffset.x < 0 && !stickyColumnHeader {

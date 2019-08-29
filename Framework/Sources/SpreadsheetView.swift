@@ -325,9 +325,6 @@ open class SpreadsheetView: UIView {
     let columnHeaderView = ScrollView()
     let columnHeaderViewRight = ScrollView()
   
-    let columnHeaderDividerView = VerticalDividerView()
-    let columnHeaderDividerViewRight = VerticalDividerView()
-  
     let rowHeaderView = ScrollView()
   
     let cornerView = ScrollView()
@@ -350,8 +347,8 @@ open class SpreadsheetView: UIView {
     var currentTouch: UITouch?
 
     private var needsReload = true
+  
     var dividerColor = UIColor(red: 229/255.0, green: 229/255.0, blue: 229/255.0, alpha: 1)
-    var transparentColor = UIColor(red: 229/255.0, green: 229/255.0, blue: 229/255.0, alpha: 0)
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -387,10 +384,6 @@ open class SpreadsheetView: UIView {
         columnHeaderView.isHidden = true
         columnHeaderView.delegate = self
       
-        columnHeaderDividerView.frame = columnHeaderView.frame
-        columnHeaderDividerView.frame.size.width = 1
-        columnHeaderDividerView.isHidden = true
-      
         columnHeaderViewRight.frame = bounds
         columnHeaderViewRight.frame.size.width = 0
         columnHeaderViewRight.autoresizingMask = [.flexibleHeight]
@@ -399,10 +392,6 @@ open class SpreadsheetView: UIView {
         columnHeaderViewRight.showsVerticalScrollIndicator = false
         columnHeaderViewRight.isHidden = true
         columnHeaderViewRight.delegate = self
-      
-        columnHeaderDividerViewRight.frame = columnHeaderViewRight.frame
-        columnHeaderDividerViewRight.frame.size.width = 1
-        columnHeaderDividerViewRight.isHidden = true
 
         rowHeaderView.frame = bounds
         rowHeaderView.frame.size.height = 0
@@ -435,9 +424,6 @@ open class SpreadsheetView: UIView {
       
         rootView.addSubview(cornerView)
         rootView.addSubview(cornerViewRight)
-      
-        rootView.addSubview(columnHeaderDividerView)
-        rootView.addSubview(columnHeaderDividerViewRight)
       
         super.addSubview(overlayView)
 

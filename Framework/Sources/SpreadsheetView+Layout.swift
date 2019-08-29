@@ -87,7 +87,7 @@ extension SpreadsheetView {
       if frozenColumns < 1 {
         columnHeaderView.removeRightBorder()
       } else {
-        columnHeaderView.addRightBorder(color: self.transparentColor, thickness: 1)
+        columnHeaderView.addRightBorder(color: UIColor.clear, thickness: 1)
       }
       
       if frozenColumnsRight < 1 {
@@ -99,7 +99,7 @@ extension SpreadsheetView {
       if frozenColumns < 1 && frozenRows < 1 && circularScrolling.options.headerStyle != .none {
         cornerView.removeRightBorder()
       } else {
-        cornerView.addRightBorder(color: self.transparentColor, thickness: 1)
+        cornerView.addRightBorder(color: UIColor.clear, thickness: 1)
       }
       
       if frozenColumnsRight < 1 && frozenRows < 1 && circularScrolling.options.headerStyle != .none {

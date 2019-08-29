@@ -114,9 +114,9 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         }
         
         cell.gridlines.top = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
-        cell.gridlines.left = .solid(width: CGFloat(1), color: UIColor.white)
+        cell.gridlines.left = indexPath.section > 0 ? .solid(width: CGFloat(1), color: UIColor.white) : .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
         cell.gridlines.bottom = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
-        cell.gridlines.right = .solid(width: CGFloat(1), color: UIColor.white)
+        cell.gridlines.right = indexPath.section < header.count ? .solid(width: CGFloat(1), color: UIColor.white) : .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
         
         cell.setNeedsLayout()
         
@@ -148,9 +148,9 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         cell.label?.text = data[indexPath.row - 1][indexPath.column]
         
         cell.gridlines.top = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
-        cell.gridlines.left = .solid(width: CGFloat(1), color: UIColor.white)
+        cell.gridlines.left = indexPath.section > 0 ? .solid(width: CGFloat(1), color: UIColor.white) : .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
         cell.gridlines.bottom = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
-        cell.gridlines.right = .solid(width: CGFloat(1), color: UIColor.white)
+        cell.gridlines.right = indexPath.section < header.count - 1 ? .solid(width: CGFloat(1), color: UIColor.white) : .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
         
         cell.setNeedsLayout()
         
