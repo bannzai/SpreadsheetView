@@ -85,11 +85,11 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
     }
   
     func frozenColumns(in spreadsheetView: SpreadsheetView) -> Int {
-      return 0
+      return 1
     }
   
     func frozenColumnsRight(in spreadsheetView: SpreadsheetView) -> Int {
-      return 2
+      return 1
     }
 
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
@@ -113,7 +113,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
           cell.label?.textColor = UIColor.black
         }
         
-        cell.gridlines.top = .solid(width: CGFloat(1), color: UIColor.white)
+        cell.gridlines.top = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
         cell.gridlines.left = .solid(width: CGFloat(1), color: UIColor.white)
         cell.gridlines.bottom = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
         cell.gridlines.right = .solid(width: CGFloat(1), color: UIColor.white)
@@ -151,6 +151,8 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         cell.gridlines.left = .solid(width: CGFloat(1), color: UIColor.white)
         cell.gridlines.bottom = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
         cell.gridlines.right = .solid(width: CGFloat(1), color: UIColor.white)
+        
+        cell.setNeedsLayout()
         
         return cell
       }

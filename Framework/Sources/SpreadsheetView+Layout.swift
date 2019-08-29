@@ -80,6 +80,33 @@ extension SpreadsheetView {
         layoutRowHeaderView()
         layoutColumnHeaderView()
         layoutTableView()
+        layoutDividerViews()
+    }
+  
+    private func layoutDividerViews() {
+      if frozenColumns < 1 {
+        columnHeaderView.removeRightBorder()
+      } else {
+        columnHeaderView.addRightBorder(color: self.transparentColor, thickness: 1)
+      }
+      
+      if frozenColumnsRight < 1 {
+        columnHeaderViewRight.removeLeftBorder()
+      } else {
+        columnHeaderViewRight.addLeftBorder(color: self.dividerColor, thickness: 1)
+      }
+      
+      if frozenColumns < 1 && frozenRows < 1 && circularScrolling.options.headerStyle != .none {
+        cornerView.removeRightBorder()
+      } else {
+        cornerView.addRightBorder(color: self.transparentColor, thickness: 1)
+      }
+      
+      if frozenColumnsRight < 1 && frozenRows < 1 && circularScrolling.options.headerStyle != .none {
+        cornerViewRight.removeLeftBorder()
+      } else {
+        cornerViewRight.addLeftBorder(color: self.dividerColor, thickness: 1)
+      }
     }
 
     private func layout(scrollView: ScrollView) {
@@ -371,13 +398,13 @@ extension SpreadsheetView {
         let horizontalInset = contentInset.left + contentInset.right
         let verticalInset = contentInset.top + contentInset.bottom
       
-        let rightColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 }
-        let rightColumnsOriginX = (self.frame.size.width - rightColumnsWidth)
+        let rightFoldedColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 }
+        let rightFoldedColumnsOriginX = (self.frame.size.width - rightFoldedColumnsWidth)
 
         cornerView.state.frame = CGRect(origin: .zero, size: cornerView.state.contentSize)
-        cornerViewRight.state.frame = CGRect(origin: CGPoint(x: rightColumnsOriginX, y: 0), size: cornerViewRight.state.contentSize)
+        cornerViewRight.state.frame = CGRect(origin: CGPoint(x: rightFoldedColumnsOriginX, y: 0), size: cornerViewRight.state.contentSize)
         columnHeaderView.state.frame = CGRect(x: 0, y: 0, width: columnHeaderView.state.contentSize.width, height: frame.height)
-        columnHeaderViewRight.state.frame = CGRect(x: rightColumnsOriginX, y: 0, width: columnHeaderViewRight.state.contentSize.width, height: frame.height)
+        columnHeaderViewRight.state.frame = CGRect(x: rightFoldedColumnsOriginX, y: 0, width: columnHeaderViewRight.state.contentSize.width, height: frame.height)
         rowHeaderView.state.frame = CGRect(x: 0, y: 0, width: frame.width, height: rowHeaderView.state.contentSize.height)
         tableView.state.frame = CGRect(origin: .zero, size: frame.size)
 

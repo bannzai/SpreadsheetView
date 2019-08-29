@@ -23,7 +23,9 @@ final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
     var touchesCancelled: TouchHandler?
 
     var layoutAttributes = LayoutAttributes(startColumn: 0, startRow: 0, numberOfColumns: 0, numberOfRows: 0, columnCount: 0, rowCount: 0, insets: .zero)
+  
     var state = State()
+  
     struct State {
         var frame = CGRect.zero
         var contentSize = CGSize.zero
@@ -81,4 +83,81 @@ final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
         }
         touchesCancelled?(touches, event)
     }
+  
+    var topBorder: CALayer? = nil
+    var bottomBorder: CALayer? = nil
+    var leftBorder: CALayer? = nil
+    var rightBorder: CALayer? = nil
+  
+    func removeTopBorder() {
+      topBorder?.removeFromSuperlayer()
+    }
+  
+    func removeBottomBorder() {
+      bottomBorder?.removeFromSuperlayer()
+    }
+  
+    func removeLeftBorder() {
+      leftBorder?.removeFromSuperlayer()
+    }
+    
+    func removeRightBorder() {
+      rightBorder?.removeFromSuperlayer()
+    }
+  
+    func addTopBorder(color: UIColor, thickness: CGFloat) {
+      guard topBorder == nil else {
+        return
+      }
+      topBorder = self.layer.addBorder(edge: .top, color: color, thickness: thickness, length: self.state.contentSize.width)
+    }
+  
+    func addBottomBorder(color: UIColor, thickness: CGFloat) {
+      guard bottomBorder == nil else {
+        return
+      }
+      bottomBorder = self.layer.addBorder(edge: .bottom, color: color, thickness: thickness, length: self.state.contentSize.width)
+    }
+  
+    func addLeftBorder(color: UIColor, thickness: CGFloat) {
+      guard leftBorder == nil else {
+        return
+      }
+      leftBorder = self.layer.addBorder(edge: .left, color: color, thickness: thickness, length: self.state.contentSize.height)
+    }
+  
+    func addRightBorder(color: UIColor, thickness: CGFloat) {
+      guard rightBorder == nil else {
+        return
+      }
+      rightBorder = self.layer.addBorder(edge: .right, color: color, thickness: thickness, length: self.state.contentSize.height)
+    }
+}
+
+extension CALayer {
+  
+  func addBorder(edge: UIRectEdge, color: UIColor, thickness: CGFloat, length: CGFloat) -> CALayer {
+    
+    let border = CALayer()
+    
+    switch edge {
+    case .top:
+      border.frame = CGRect(x: 0, y: 0, width: length, height: thickness)
+    case .bottom:
+      border.frame = CGRect(x: 0, y: frame.height - thickness, width: length, height: thickness)
+    case .left:
+      border.frame = CGRect(x: 0, y: 0, width: thickness, height: length)
+    case .right:
+      border.frame = CGRect(x: frame.width - thickness, y: 0, width: thickness, height: length)
+    default:
+      break
+    }
+    
+    border.backgroundColor = color.cgColor
+    border.zPosition = 300
+    
+    addSublayer(border)
+    
+    return border
+  }
 }

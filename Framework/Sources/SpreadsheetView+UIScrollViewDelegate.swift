@@ -9,11 +9,13 @@
 import UIKit
 
 extension SpreadsheetView: UIScrollViewDelegate {
+  
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         rowHeaderView.delegate = nil
         columnHeaderView.delegate = nil
         columnHeaderViewRight.delegate = nil
         tableView.delegate = nil
+      
         defer {
             rowHeaderView.delegate = self
             columnHeaderView.delegate = self
@@ -21,22 +23,34 @@ extension SpreadsheetView: UIScrollViewDelegate {
             tableView.delegate = self
         }
 
-        let rightColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 }
-        let rightColumnsOriginX = (self.frame.size.width - rightColumnsWidth)
+        let rightFoldedColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 }
+        let leftFoldedColumnsWidth = layoutProperties.columnWidthCache.prefix(upTo: frozenColumns).reduce(0) { $0 + $1 }
       
-        let tableContentDiff = layoutProperties.columnWidthCache.prefix(upTo: frozenColumns).reduce(0) { $0 + $1 }
+      print ("tableView.contentOffset.x is \(tableView.contentOffset.x)")
       
-        //print("SpreadsheetView.tableView.contentOffset.x is \(tableView.contentOffset.x)")
-        //print("SpreadsheetView.rightColumnsWidth is \(rightColumnsWidth)")
-        //print("SpreadsheetView.tableContentDiff is \(tableContentDiff)")
-      
-        if (tableView.contentOffset.x > tableContentDiff) && !stickyColumnHeader {
+        if tableView.contentOffset.x > leftFoldedColumnsWidth && !stickyColumnHeader {
           let offset = tableView.contentOffset.x * 1
-          cornerViewRight.frame.origin.x = (self.frame.size.width + tableContentDiff) - offset
-          columnHeaderViewRight.frame.origin.x = (self.frame.size.width + tableContentDiff) - offset
+          cornerViewRight.frame.origin.x = self.frame.size.width - offset
+          columnHeaderViewRight.frame.origin.x = self.frame.size.width - offset
         } else {
-          cornerViewRight.frame.origin.x = rightColumnsOriginX
-          columnHeaderViewRight.frame.origin.x = rightColumnsOriginX
+          cornerViewRight.frame.origin.x = self.frame.size.width - rightFoldedColumnsWidth
+          columnHeaderViewRight.frame.origin.x = self.frame.size.width - rightFoldedColumnsWidth
+        }
+      
+        if tableView.contentOffset.x < leftFoldedColumnsWidth && !stickyColumnHeader {
+          cornerViewRight.leftBorder?.backgroundColor = self.dividerColor.cgColor
+          columnHeaderViewRight.leftBorder?.backgroundColor = self.dividerColor.cgColor
+        } else {
+          cornerViewRight.leftBorder?.backgroundColor = self.transparentColor.cgColor
+          columnHeaderViewRight.leftBorder?.backgroundColor = self.transparentColor.cgColor
+        }
+      
+        if tableView.contentOffset.x > 0 && !stickyColumnHeader {
+          cornerView.rightBorder?.backgroundColor = self.dividerColor.cgColor
+          columnHeaderView.rightBorder?.backgroundColor = self.dividerColor.cgColor
+        } else {
+          cornerView.rightBorder?.backgroundColor = self.transparentColor.cgColor
+          columnHeaderView.rightBorder?.backgroundColor = self.transparentColor.cgColor
         }
       
         if tableView.contentOffset.x < 0 && !stickyColumnHeader {
@@ -47,6 +61,7 @@ extension SpreadsheetView: UIScrollViewDelegate {
             cornerView.frame.origin.x = 0
             columnHeaderView.frame.origin.x = 0
         }
+      
         if tableView.contentOffset.y < 0 && !stickyRowHeader {
             let offset = tableView.contentOffset.y * -1
             cornerView.frame.origin.y = offset
