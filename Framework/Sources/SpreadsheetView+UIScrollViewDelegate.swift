@@ -23,8 +23,7 @@ extension SpreadsheetView: UIScrollViewDelegate {
             tableView.delegate = self
         }
       
-        let rightFoldedColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 + intercellSpacing.width}
-        let leftFoldedColumnsWidth = layoutProperties.columnWidthCache.prefix(upTo: frozenColumns).reduce(0) { $0 + $1 }
+        let rightFoldedColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 + intercellSpacing.width }
       
         if tableView.contentOffset.x > (tableView.contentSize.width - self.frame.width) && !stickyColumnHeader {
           let offset = tableView.contentOffset.x
@@ -35,7 +34,7 @@ extension SpreadsheetView: UIScrollViewDelegate {
           columnHeaderViewRight.frame.origin.x = self.frame.size.width - rightFoldedColumnsWidth
         }
       
-        if tableView.contentOffset.x < leftFoldedColumnsWidth && !stickyColumnHeader {
+        if tableView.contentOffset.x < (tableView.contentSize.width - self.frame.width) && !stickyColumnHeader {
           cornerViewRight.leftBorder?.backgroundColor = self.dividerColor.cgColor
           columnHeaderViewRight.leftBorder?.backgroundColor = self.dividerColor.cgColor
         } else {
