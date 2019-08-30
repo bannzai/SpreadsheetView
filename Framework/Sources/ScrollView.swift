@@ -84,52 +84,40 @@ final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
         touchesCancelled?(touches, event)
     }
   
-    var topBorder: CALayer? = nil
-    var bottomBorder: CALayer? = nil
-    var leftBorder: CALayer? = nil
-    var rightBorder: CALayer? = nil
-  
-    func removeTopBorder() {
-      topBorder?.removeFromSuperlayer()
-    }
-  
-    func removeBottomBorder() {
-      bottomBorder?.removeFromSuperlayer()
-    }
-  
-    func removeLeftBorder() {
-      leftBorder?.removeFromSuperlayer()
-    }
-    
-    func removeRightBorder() {
-      rightBorder?.removeFromSuperlayer()
-    }
+    public var topBorder: CALayer? = nil
+    public var bottomBorder: CALayer? = nil
+    public var leftBorder: CALayer? = nil
+    public var rightBorder: CALayer? = nil
   
     func addTopBorder(color: UIColor, thickness: CGFloat) {
-      guard topBorder == nil else {
+      if topBorder != nil && topBorder!.bounds.width == self.state.contentSize.width {
         return
       }
+      topBorder?.removeFromSuperlayer()
       topBorder = self.layer.addBorder(edge: .top, color: color, thickness: thickness, length: self.state.contentSize.width)
     }
   
     func addBottomBorder(color: UIColor, thickness: CGFloat) {
-      guard bottomBorder == nil else {
+      if bottomBorder != nil && bottomBorder!.bounds.width == self.state.contentSize.width {
         return
       }
+      bottomBorder?.removeFromSuperlayer()
       bottomBorder = self.layer.addBorder(edge: .bottom, color: color, thickness: thickness, length: self.state.contentSize.width)
     }
   
     func addLeftBorder(color: UIColor, thickness: CGFloat) {
-      guard leftBorder == nil else {
+      if leftBorder != nil && leftBorder!.bounds.height == self.state.contentSize.height {
         return
       }
+      leftBorder?.removeFromSuperlayer()
       leftBorder = self.layer.addBorder(edge: .left, color: color, thickness: thickness, length: self.state.contentSize.height)
     }
   
     func addRightBorder(color: UIColor, thickness: CGFloat) {
-      guard rightBorder == nil else {
+      if rightBorder != nil && rightBorder!.bounds.height == self.state.contentSize.height {
         return
       }
+      rightBorder?.removeFromSuperlayer()
       rightBorder = self.layer.addBorder(edge: .right, color: color, thickness: thickness, length: self.state.contentSize.height)
     }
 }

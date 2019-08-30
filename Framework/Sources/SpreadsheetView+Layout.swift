@@ -85,27 +85,27 @@ extension SpreadsheetView {
   
     private func layoutDividerViews() {
       if frozenColumns < 1 {
-        columnHeaderView.removeRightBorder()
+        columnHeaderView.rightBorder?.removeFromSuperlayer()
       } else {
-        columnHeaderView.addRightBorder(color: UIColor.clear, thickness: 1)
+        columnHeaderView.addRightBorder(color: UIColor.clear, thickness: self.dividerThickness)
       }
       
       if frozenColumnsRight < 1 {
-        columnHeaderViewRight.removeLeftBorder()
+        columnHeaderViewRight.leftBorder?.removeFromSuperlayer()
       } else {
-        columnHeaderViewRight.addLeftBorder(color: self.dividerColor, thickness: 1)
+        columnHeaderViewRight.addLeftBorder(color: self.dividerColor, thickness: self.dividerThickness)
       }
       
       if frozenColumns < 1 && frozenRows < 1 && circularScrolling.options.headerStyle != .none {
-        cornerView.removeRightBorder()
+        cornerView.rightBorder?.removeFromSuperlayer()
       } else {
-        cornerView.addRightBorder(color: UIColor.clear, thickness: 1)
+        cornerView.addRightBorder(color: UIColor.clear, thickness: self.dividerThickness)
       }
       
       if frozenColumnsRight < 1 && frozenRows < 1 && circularScrolling.options.headerStyle != .none {
-        cornerViewRight.removeLeftBorder()
+        cornerViewRight.leftBorder?.removeFromSuperlayer()
       } else {
-        cornerViewRight.addLeftBorder(color: self.dividerColor, thickness: 1)
+        cornerViewRight.addLeftBorder(color: self.dividerColor, thickness: self.dividerThickness)
       }
     }
 
@@ -398,7 +398,7 @@ extension SpreadsheetView {
         let horizontalInset = contentInset.left + contentInset.right
         let verticalInset = contentInset.top + contentInset.bottom
       
-        let rightFoldedColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 }
+        let rightFoldedColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 + intercellSpacing.width}
         let rightFoldedColumnsOriginX = (self.frame.size.width - rightFoldedColumnsWidth)
 
         cornerView.state.frame = CGRect(origin: .zero, size: cornerView.state.contentSize)

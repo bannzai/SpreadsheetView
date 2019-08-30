@@ -22,16 +22,14 @@ extension SpreadsheetView: UIScrollViewDelegate {
             columnHeaderViewRight.delegate = self
             tableView.delegate = self
         }
-
-        let rightFoldedColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 }
+      
+        let rightFoldedColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 + intercellSpacing.width}
         let leftFoldedColumnsWidth = layoutProperties.columnWidthCache.prefix(upTo: frozenColumns).reduce(0) { $0 + $1 }
       
-      //print ("tableView.contentOffset.x is \(tableView.contentOffset.x)")
-      
-        if tableView.contentOffset.x > leftFoldedColumnsWidth && !stickyColumnHeader {
-          let offset = tableView.contentOffset.x * 1
-          cornerViewRight.frame.origin.x = self.frame.size.width - offset
-          columnHeaderViewRight.frame.origin.x = self.frame.size.width - offset
+        if tableView.contentOffset.x > (tableView.contentSize.width - self.frame.width) && !stickyColumnHeader {
+          let offset = tableView.contentOffset.x
+          cornerViewRight.frame.origin.x = tableView.contentSize.width - rightFoldedColumnsWidth - offset
+          columnHeaderViewRight.frame.origin.x = tableView.contentSize.width - rightFoldedColumnsWidth - offset
         } else {
           cornerViewRight.frame.origin.x = self.frame.size.width - rightFoldedColumnsWidth
           columnHeaderViewRight.frame.origin.x = self.frame.size.width - rightFoldedColumnsWidth

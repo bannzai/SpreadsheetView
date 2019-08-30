@@ -348,7 +348,8 @@ open class SpreadsheetView: UIView {
 
     private var needsReload = true
   
-    var dividerColor = UIColor(red: 229/255.0, green: 229/255.0, blue: 229/255.0, alpha: 1)
+    open var dividerColor: UIColor = UIColor(red: 229/255.0, green: 229/255.0, blue: 229/255.0, alpha: 1)
+    open var dividerThickness: CGFloat = 0.5
 
     public override init(frame: CGRect) {
         super.init(frame: frame)

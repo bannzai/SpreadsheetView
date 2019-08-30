@@ -64,10 +64,12 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
       switch column {
       case 0:
         return 200
-      case header.count - 1, header.count - 2:
-        return 200
+      case header.count - 1:
+        return 220
+      case header.count - 2:
+        return 240
       default:
-        return 160
+        return 180
       }
     }
 
@@ -81,15 +83,15 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
     }
 
     func frozenRows(in spreadsheetView: SpreadsheetView) -> Int {
-        return 2
+        return 1
     }
   
     func frozenColumns(in spreadsheetView: SpreadsheetView) -> Int {
-      return 1
+      return 0
     }
   
     func frozenColumnsRight(in spreadsheetView: SpreadsheetView) -> Int {
-      return 1
+      return 2
     }
 
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
@@ -104,6 +106,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! HeaderCell
         
         cell.label?.text = header[indexPath.column]
+        //cell.backgroundColor = UIColor.clear
         
         if case indexPath.column = sortedColumn.column {
           cell.sorting = sortedColumn.sorting
@@ -114,9 +117,9 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         }
         
         cell.gridlines.top = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
-        cell.gridlines.left = indexPath.section > 0 ? .solid(width: CGFloat(1), color: UIColor.white) : .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
+        cell.gridlines.left = .solid(width: CGFloat(1), color: UIColor.white)
         cell.gridlines.bottom = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
-        cell.gridlines.right = indexPath.section < header.count ? .solid(width: CGFloat(1), color: UIColor.white) : .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
+        cell.gridlines.right = .solid(width: CGFloat(1), color: UIColor.white)
         
         cell.setNeedsLayout()
         
@@ -130,11 +133,12 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         
         let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! TotalCell
         cell.label?.text = data[indexPath.row - 1][indexPath.column]
+        //cell.backgroundColor = UIColor.clear
         
         cell.gridlines.top = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
-        cell.gridlines.left = .solid(width: CGFloat(1), color: UIColor(red: 246.0/255.0, green: 246.0/255.0, blue: 246.0/255.0, alpha: 1))
+        cell.gridlines.left = .solid(width: CGFloat(1), color: UIColor.white)
         cell.gridlines.bottom = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
-        cell.gridlines.right = .solid(width: CGFloat(1), color: UIColor(red: 246.0/255.0, green: 246.0/255.0, blue: 246.0/255.0, alpha: 1))
+        cell.gridlines.right = .solid(width: CGFloat(1), color: UIColor.white)
         
         return cell
       default:
@@ -146,11 +150,12 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         
         let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! DataCell
         cell.label?.text = data[indexPath.row - 1][indexPath.column]
+        //cell.backgroundColor = UIColor.clear
         
         cell.gridlines.top = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
-        cell.gridlines.left = indexPath.section > 0 ? .solid(width: CGFloat(1), color: UIColor.white) : .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
+        cell.gridlines.left = .solid(width: CGFloat(1), color: UIColor.white)
         cell.gridlines.bottom = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
-        cell.gridlines.right = indexPath.section < header.count - 1 ? .solid(width: CGFloat(1), color: UIColor.white) : .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
+        cell.gridlines.right = .solid(width: CGFloat(1), color: UIColor.white)
         
         cell.setNeedsLayout()
         
