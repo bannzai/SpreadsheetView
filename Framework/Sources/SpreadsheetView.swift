@@ -8,6 +8,10 @@
 
 import UIKit
 
+public protocol SpreadsheetViewScrollDelegate {
+  func scrollViewDidScroll(_ scrollView: UIScrollView)
+}
+
 open class SpreadsheetView: UIView {
     /// The object that provides the data for the collection view.
     ///
@@ -350,6 +354,8 @@ open class SpreadsheetView: UIView {
   
     open var dividerColor: UIColor = UIColor(red: 229/255.0, green: 229/255.0, blue: 229/255.0, alpha: 1)
     open var dividerThickness: CGFloat = 0.5
+  
+    open var scrollDelegate: SpreadsheetViewScrollDelegate? = nil
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -452,12 +458,24 @@ open class SpreadsheetView: UIView {
       return self.tableView
     }
   
+    public var spreadSheetRootView: UIScrollView {
+      return self.rootView
+    }
+  
+    public var spreadSheetOverlayView: UIScrollView {
+      return self.overlayView
+    }
+  
     public var spreadSheetColumnViews: [UIScrollView] {
       return [self.columnHeaderView, self.columnHeaderViewRight]
     }
   
     public var spreadSheetRowViews: [UIScrollView] {
       return [self.rowHeaderView]
+    }
+  
+    public var spreadSheetCornerViews: [UIScrollView] {
+      return [self.cornerView, self.cornerViewRight]
     }
 
     public func reloadData() {

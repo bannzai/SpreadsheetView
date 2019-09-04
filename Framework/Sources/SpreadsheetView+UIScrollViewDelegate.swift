@@ -11,6 +11,8 @@ import UIKit
 extension SpreadsheetView: UIScrollViewDelegate {
   
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollDelegate?.scrollViewDidScroll(scrollView)
+      
         rowHeaderView.delegate = nil
         columnHeaderView.delegate = nil
         columnHeaderViewRight.delegate = nil
