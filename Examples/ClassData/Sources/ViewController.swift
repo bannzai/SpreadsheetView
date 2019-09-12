@@ -9,15 +9,99 @@
 import UIKit
 import SpreadsheetView
 
-class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetViewDelegate {
+class Data {
+  var columnTitles = [String]()
+  var items = [Data]()
+  var isExpanded = false
   
-    @IBOutlet weak var spreadsheetView: SpreadsheetView!
+  init(columnTitles: [String] = [], items:[Data] = []) {
+    self.columnTitles = columnTitles
+    self.items = items
+  }
+}
+
+class ViewController: UIViewController, SpreadsheetExpandableViewDataSource, SpreadsheetExpandableViewDelegate {
+  
+    func spreadsheetView(_ spreadsheetView: SpreadsheetExpandableView, didSelectItemAt indexPath: IndexPath, for subrow: Int) {
+      print("didSelectItemAt indexPath:\(indexPath) for subrow:\(subrow)")
+    }
+ 
+    func spreadsheetView(_ spreadsheetView: SpreadsheetExpandableView, heightForSubrow subrow: Int, in row: Int) -> CGFloat {
+      return 48
+    }
+  
+    func numberOfSubrows(in spreadsheetView: SpreadsheetExpandableView, for row: Int) -> Int {
+      switch row {
+      case 0:
+        return 0
+      case 1:
+        return 2
+      case 2:
+        return 3
+      default:
+        return 1
+      }
+      
+    }
+  
+    func spreadsheetView(_ spreadsheetView: SpreadsheetExpandableView, isItemExpandedAt row: Int) -> Bool {
+      return data[row - 1].isExpanded
+    }
+  
+    func spreadsheetView(_ spreadsheetView: SpreadsheetExpandableView, cellForItemIn subrow: Int, at indexPath: IndexPath) -> Cell? {
+      var identifier = "DataCell"
+      
+      if indexPath.column > 0 {
+        identifier = "DataCellRight"
+      }
+      
+      let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! DataCell
+      cell.label?.text = data[indexPath.row - 1].items[0].columnTitles[indexPath.column]
+      //cell.backgroundColor = UIColor.clear
+      
+      cell.gridlines.top = subrow > 0 ? .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1)) : .solid(width: CGFloat(1), color: UIColor.white)
+      cell.gridlines.left = .solid(width: CGFloat(1), color: UIColor.white)
+      cell.gridlines.bottom = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
+      cell.gridlines.right = .solid(width: CGFloat(1), color: UIColor.white)
+      
+      cell.setNeedsLayout()
+      
+      return cell
+    }
+  
+  // MARK: - index methods
+  
+  func data(for rowIndex: Int) -> Data {
+    var rowArray: [Data] = []
+    for dataRow in data {
+      rowArray.append(dataRow)
+      if dataRow.isExpanded {
+        rowArray.append(contentsOf: dataRow.items)
+      }
+    }
+    
+    //print("data for rowIndex \(rowIndex) = \(rowArray[rowIndex].columnTitles)")
+    return rowArray[rowIndex]
+  }
+  
+  var dataRowsCount: Int {
+    var count = data.count
+    for row in data {
+      if row.isExpanded {
+        count += row.items.count
+      }
+    }
+    //print("dataRowsCount \(count)")
+    
+    return count
+  }
+  
+  
+    @IBOutlet weak var spreadsheetView: SpreadsheetExpandableView!
   
     var header = [String]()
-    var data = [[String]]()
+    var data = [Data]()
 
-    
-  
     var sortedColumn = (column: 0, sorting: Sorting.ascending)
 
     override func viewDidLoad() {
@@ -34,14 +118,21 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         spreadsheetView.register(UINib(nibName: "HeaderCell", bundle: nil), forCellWithReuseIdentifier: "HeaderCell")
         spreadsheetView.register(UINib(nibName: "HeaderCellRight", bundle: nil), forCellWithReuseIdentifier: "HeaderCellRight")
 
-        let data = try! String(contentsOf: Bundle.main.url(forResource: "data", withExtension: "tsv")!, encoding: .utf8)
+        var raw = try! String(contentsOf: Bundle.main.url(forResource: "data", withExtension: "tsv")!, encoding: .utf8)
             .components(separatedBy: "\r\n")
             .map { $0.components(separatedBy: "\t") }
-        header = data[0]
+        header = raw[0]
       
         header[1] = "Gender,\nyrs"
       
-        self.data = Array(data.dropFirst())
+      raw = Array(raw.dropFirst())
+      
+      data = [Data]()
+      for item in raw {
+        let items = [Data(columnTitles: item.map({ "sub \($0)" }), items: [])]
+        self.data.append(Data(columnTitles: item, items: items))
+      }
+      
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -64,10 +155,6 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
       switch column {
       case 0:
         return 200
-      case header.count - 1:
-        return 220
-      case header.count - 2:
-        return 240
       default:
         return 180
       }
@@ -75,7 +162,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
 
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, heightForRow row: Int) -> CGFloat {
       switch row {
-      case 0, 1:
+      case 0:
         return 60
       default:
         return 48
@@ -87,11 +174,11 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
     }
   
     func frozenColumns(in spreadsheetView: SpreadsheetView) -> Int {
-      return 0
+      return 1
     }
   
     func frozenColumnsRight(in spreadsheetView: SpreadsheetView) -> Int {
-      return 2
+      return 1
     }
 
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
@@ -106,7 +193,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! HeaderCell
         
         cell.label?.text = header[indexPath.column]
-        //cell.backgroundColor = UIColor.clear
+        //cell.backgroundColor = UIColor.clear  
         
         if case indexPath.column = sortedColumn.column {
           cell.sorting = sortedColumn.sorting
@@ -124,23 +211,6 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         cell.setNeedsLayout()
         
         return cell
-      case 1:
-        var identifier = "TotalCell"
-        
-        if indexPath.column > 0 {
-          identifier = "TotalCellRight"
-        }
-        
-        let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! TotalCell
-        cell.label?.text = data[indexPath.row - 1][indexPath.column]
-        //cell.backgroundColor = UIColor.clear
-        
-        cell.gridlines.top = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
-        cell.gridlines.left = .solid(width: CGFloat(1), color: UIColor.white)
-        cell.gridlines.bottom = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
-        cell.gridlines.right = .solid(width: CGFloat(1), color: UIColor.white)
-        
-        return cell
       default:
         var identifier = "DataCell"
         
@@ -149,7 +219,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         }
         
         let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! DataCell
-        cell.label?.text = data[indexPath.row - 1][indexPath.column]
+        cell.label?.text = data[indexPath.row - 1].columnTitles[indexPath.column]
         //cell.backgroundColor = UIColor.clear
         
         cell.gridlines.top = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
@@ -163,8 +233,6 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
       }
     }
 
-    /// Delegate
-
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, didSelectItemAt indexPath: IndexPath) {
         if case 0 = indexPath.row {
             if sortedColumn.column == indexPath.column {
@@ -173,10 +241,15 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
                 sortedColumn = (indexPath.column, .ascending)
             }
             data.sort {
-                let ascending = $0[sortedColumn.column] < $1[sortedColumn.column]
+                let ascending = $0.columnTitles[sortedColumn.column] < $1.columnTitles[sortedColumn.column]
                 return sortedColumn.sorting == .ascending ? ascending : !ascending
             }
             spreadsheetView.reloadData()
-        }
+        } else {
+          ///expand/collapse
+          let rowData = data[indexPath.row - 1]
+          rowData.isExpanded = !rowData.isExpanded
+          spreadsheetView.reloadData()
+      }
     }
 }

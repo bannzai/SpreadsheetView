@@ -9,6 +9,7 @@
 import Foundation
 
 final class ReuseQueue<Reusable> where Reusable: NSObject {
+  
     var reusableObjects = Set<Reusable>()
 
     func enqueue(_ reusableObject: Reusable) {
@@ -31,6 +32,7 @@ final class ReuseQueue<Reusable> where Reusable: NSObject {
 }
 
 final class ReusableCollection<Reusable>: Sequence where Reusable: NSObject {
+  
     var pairs = [Address: Reusable]()
     var addresses = Set<Address>()
 
@@ -59,4 +61,36 @@ final class ReusableCollection<Reusable>: Sequence where Reusable: NSObject {
     func makeIterator() -> AnyIterator<Reusable> {
         return AnyIterator(pairs.values.makeIterator())
     }
+}
+
+final class SubrowReusableCollection<Reusable>: Sequence where Reusable: NSObject {
+  
+  var pairs = [SubrowAddress: Reusable]()
+  var addresses = Set<SubrowAddress>()
+  
+  func contains(_ member: SubrowAddress) -> Bool {
+    return addresses.contains(member)
+  }
+  
+  @discardableResult
+  func insert(_ newMember: SubrowAddress) -> (inserted: Bool, memberAfterInsert: SubrowAddress) {
+    return addresses.insert(newMember)
+  }
+  
+  func subtract(_ other: Set<SubrowAddress>) {
+    addresses.subtract(other)
+  }
+  
+  subscript(key: SubrowAddress) -> Reusable? {
+    get {
+      return pairs[key]
+    }
+    set(newValue) {
+      pairs[key] = newValue
+    }
+  }
+  
+  func makeIterator() -> AnyIterator<Reusable> {
+    return AnyIterator(pairs.values.makeIterator())
+  }
 }

@@ -8,7 +8,42 @@
 
 import UIKit
 
+open class CellIndex: Comparable {
+  
+  public static func < (lhs: CellIndex, rhs: CellIndex) -> Bool {
+    return lhs.indexPath < rhs.indexPath
+  }
+  
+  public static func == (lhs: CellIndex, rhs: CellIndex) -> Bool {
+    return lhs.indexPath == rhs.indexPath
+  }
+
+  let indexPath: IndexPath
+  
+  init(indexPath: IndexPath = IndexPath(row: 0, column: 0)) {
+    self.indexPath = indexPath
+  }
+}
+
+open class SubCellIndex: Comparable {
+  
+  public static func < (lhs: SubCellIndex, rhs: SubCellIndex) -> Bool {
+    return lhs.indexPath < rhs.indexPath
+  }
+  
+  public static func == (lhs: SubCellIndex, rhs: SubCellIndex) -> Bool {
+    return lhs.indexPath == rhs.indexPath
+  }
+  
+  let indexPath: SubrowIndexPath
+  
+  init(indexPath: SubrowIndexPath = SubrowIndexPath(indexPath: IndexPath(row: 0, column: 0), subrow: 0)) {
+    self.indexPath = indexPath
+  }
+}
+
 open class Cell: UIView {
+  
     public let contentView = UIView()
 
     public var backgroundView: UIView? {
@@ -74,6 +109,8 @@ open class Cell: UIView {
     public internal(set) var reuseIdentifier: String?
 
     var indexPath: IndexPath!
+  
+    var subrow = -1
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
