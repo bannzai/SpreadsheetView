@@ -41,7 +41,6 @@ class ViewController: UIViewController, SpreadsheetExpandableViewDataSource, Spr
       default:
         return 1
       }
-      
     }
   
     func spreadsheetView(_ spreadsheetView: SpreadsheetExpandableView, isItemExpandedAt row: Int) -> Bool {

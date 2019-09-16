@@ -62,7 +62,7 @@ final class LayoutEngineExpandable: LayoutEngine {
 
       cellOrigin.y += rowHeightCache[row] + intercellSpacing.height + (subrowsInRowHeightCache[row]?.reduce(0, { (result, height) -> CGFloat in
         var r = result
-        r += height + intercellSpacing.height
+        r += height > 0 ? height + intercellSpacing.height : 0
         return r
       }) ?? 0)
     }
@@ -247,9 +247,9 @@ final class LayoutEngineExpandable: LayoutEngine {
         if subrowHeight > 0 {
           let cellSize = CGSize(width: columnWidth, height: subrowHeight)
           layoutSubcell(address: address, frame: CGRect(origin: subcellOrigin, size: cellSize))
+          
+          subcellOrigin.y += subrowHeight + intercellSpacing.width
         }
-        
-        subcellOrigin.y += subrowHeight + intercellSpacing.width
       }
       
       //cellOrigin.y += intercellSpacing.width

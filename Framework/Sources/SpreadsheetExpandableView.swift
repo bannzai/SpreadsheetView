@@ -155,14 +155,15 @@ open class SpreadsheetExpandableView: SpreadsheetView {
     var tableHeight: CGFloat = 0
     for row in frozenRows..<numberOfRows {
       let height = dataSource.spreadsheetView(self, heightForRow: row)
-      let subrowsCount = numberOfSubrowsInRow[row] ?? 0
-      for subrow in 0...subrowsCount - 1 {
-        let isRowExpanded = expandableDelegate.spreadsheetView(self, isItemExpandedAt: row)
-        var subrowsHeightCache = subrowsInRowHeightCache[row] ?? [CGFloat]()
-        let subrowheight = isRowExpanded ? expandableDataSource.spreadsheetView(self, heightForSubrow: subrow, in: row) : 0
-        subrowsHeightCache.append(subrowheight)
-        subrowsInRowHeightCache[row] = subrowsHeightCache
-        tableHeight += subrowheight
+      if let subrowsCount = numberOfSubrowsInRow[row], subrowsCount > 0 {
+        for subrow in 0...subrowsCount - 1 {
+          let isRowExpanded = expandableDelegate.spreadsheetView(self, isItemExpandedAt: row)
+          var subrowsHeightCache = subrowsInRowHeightCache[row] ?? [CGFloat]()
+          let subrowheight = isRowExpanded ? expandableDataSource.spreadsheetView(self, heightForSubrow: subrow, in: row) : 0
+          subrowsHeightCache.append(subrowheight)
+          subrowsInRowHeightCache[row] = subrowsHeightCache
+          tableHeight += subrowheight
+        }
       }
       rowHeightCache.append(height)
       tableHeight += height
