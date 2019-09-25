@@ -55,6 +55,7 @@ class ViewController: UIViewController, SpreadsheetExpandableViewDataSource, Spr
       }
       
       let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! DataCell
+      cell.label?.textColor = UIColor.black
       cell.label?.text = data[indexPath.row - 1].items[0].columnTitles[indexPath.column]
       //cell.backgroundColor = UIColor.clear
       
@@ -190,7 +191,7 @@ class ViewController: UIViewController, SpreadsheetExpandableViewDataSource, Spr
         }
         
         let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! HeaderCell
-        
+        cell.label?.textColor = UIColor.black
         cell.label?.text = header[indexPath.column]
         //cell.backgroundColor = UIColor.clear  
         
@@ -218,8 +219,8 @@ class ViewController: UIViewController, SpreadsheetExpandableViewDataSource, Spr
         }
         
         let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! DataCell
+        cell.label?.textColor = UIColor.black
         cell.label?.text = data[indexPath.row - 1].columnTitles[indexPath.column]
-        //cell.backgroundColor = UIColor.clear
         
         cell.gridlines.top = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
         cell.gridlines.left = .solid(width: CGFloat(1), color: UIColor.white)

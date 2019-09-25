@@ -25,21 +25,24 @@ extension SpreadsheetView: UIScrollViewDelegate {
       tableView.delegate = self
     }
     
+    let leftFoldedColumnsWidth = layoutProperties.columnWidthCache.prefix(upTo: frozenColumns).reduce(0) { $0 + $1 + intercellSpacing.width }
     let rightFoldedColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 + intercellSpacing.width }
     
-    if tableView.contentOffset.x > (tableView.contentSize.width - self.frame.width) && !stickyColumnHeader {
+    if tableView.contentOffset.x > (tableView.contentSize.width - self.frame.width + leftFoldedColumnsWidth) && !stickyColumnHeader {
       let offset = tableView.contentOffset.x
-      cornerViewRight.frame.origin.x = tableView.contentSize.width - rightFoldedColumnsWidth - offset
-      columnHeaderViewRight.frame.origin.x = tableView.contentSize.width - rightFoldedColumnsWidth - offset
+      cornerViewRight.frame.origin.x = tableView.contentSize.width - rightFoldedColumnsWidth - offset + leftFoldedColumnsWidth
+      columnHeaderViewRight.frame.origin.x = tableView.contentSize.width - rightFoldedColumnsWidth - offset + leftFoldedColumnsWidth
     } else {
       cornerViewRight.frame.origin.x = self.frame.size.width - rightFoldedColumnsWidth
       columnHeaderViewRight.frame.origin.x = self.frame.size.width - rightFoldedColumnsWidth
     }
     
-    if tableView.contentOffset.x < (tableView.contentSize.width - self.frame.width) && !stickyColumnHeader {
+    if (tableView.contentOffset.x) < (tableView.contentSize.width - self.frame.width + leftFoldedColumnsWidth) && !stickyColumnHeader {
+      print("cornerViewRight gray divider")
       cornerViewRight.leftBorder?.backgroundColor = self.dividerColor.cgColor
       columnHeaderViewRight.leftBorder?.backgroundColor = self.dividerColor.cgColor
     } else {
+       print("cornerViewRight transparent divider")
       cornerViewRight.leftBorder?.backgroundColor = UIColor.clear.cgColor
       columnHeaderViewRight.leftBorder?.backgroundColor = UIColor.clear.cgColor
     }
