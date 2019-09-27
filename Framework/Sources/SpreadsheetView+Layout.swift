@@ -397,6 +397,10 @@ extension SpreadsheetView {
   //        scrollView.state.contentSize = CGSize(width: width + intercellSpacing.width, height: height + intercellSpacing.height)
   //    }
   
+  public func resetViewFrame() {
+    resetScrollViewFrame()
+  }
+  
   func resetScrollViewFrame() {
     defer {
       cornerView.frame = cornerView.state.frame
