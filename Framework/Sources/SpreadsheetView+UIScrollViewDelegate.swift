@@ -38,11 +38,9 @@ extension SpreadsheetView: UIScrollViewDelegate {
     }
     
     if (tableView.contentOffset.x) < (tableView.contentSize.width - self.frame.width + leftFoldedColumnsWidth) && !stickyColumnHeader {
-      print("cornerViewRight gray divider")
       cornerViewRight.leftBorder?.backgroundColor = self.dividerColor.cgColor
       columnHeaderViewRight.leftBorder?.backgroundColor = self.dividerColor.cgColor
     } else {
-       print("cornerViewRight transparent divider")
       cornerViewRight.leftBorder?.backgroundColor = UIColor.clear.cgColor
       columnHeaderViewRight.leftBorder?.backgroundColor = UIColor.clear.cgColor
     }
@@ -82,14 +80,14 @@ extension SpreadsheetView: UIScrollViewDelegate {
     setNeedsLayout()
   }
   
-  public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-    guard let indexPath = pendingSelectionIndexPath else {
-      return
-    }
-    cellsForItem(at: indexPath).forEach { $0.setSelected(true, animated: true) }
-    delegate?.spreadsheetView(self, didSelectItemAt: indexPath)
-    pendingSelectionIndexPath = nil
-  }
+//  public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+//    guard let indexPath = pendingSelectionIndexPath else {
+//      return
+//    }
+//    cellsForItem(at: indexPath).forEach { $0.setSelected(true, animated: true) }
+//    delegate?.spreadsheetView(self, didSelectItemAt: indexPath)
+//    pendingSelectionIndexPath = nil
+//  }
   
   @available(iOS 11.0, *)
   public func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {

@@ -17,6 +17,10 @@ open class SpreadsheetExpandableView: SpreadsheetView {
   var highlightedSubIndexPaths = Set<SubrowIndexPath>()
   var pendingSelectionSubIndexPath: SubrowIndexPath?
   
+  var expandedIndexPath = Set<Int>()
+  
+  private var layoutEngines = [ScrollView: LayoutEngineExpandable]()
+  
   /// The object that provides the data for the collection view.
   ///
   /// - Note: The data source must adopt the `SpreadsheetExpandableViewDataSource` protocol.
@@ -46,8 +50,44 @@ open class SpreadsheetExpandableView: SpreadsheetView {
     }
   }
   
+  override open func selectItem(at indexPath: IndexPath) {
+    let cells = cellsForItem(at: indexPath)
+    if !cells.isEmpty && delegate?.spreadsheetView(self, shouldSelectItemAt: indexPath) ?? true {
+      cells.forEach {
+        $0.isSelected = true
+      }
+      switchExpandState(for: indexPath)
+      selectedIndexPaths.insert(indexPath)
+    }
+  }
+  
+  private func switchExpandState(for indexPath: IndexPath) {
+    var isExpanded = false
+    
+    if expandedIndexPath.contains(indexPath.row) {
+      expandedIndexPath.remove(indexPath.row)
+    } else {
+      expandedIndexPath.insert(indexPath.row)
+      isExpanded = true
+    }
+    
+    for (spreadsheetView, layoutEngine) in layoutEngines {
+      if [columnHeaderView, columnHeaderViewRight, tableView].contains(spreadsheetView) {
+        if isExpanded {
+          layoutEngine.expandSubCells(at: indexPath.row)
+        } else {
+          layoutEngine.collapseSubCells(at: indexPath.row)
+        }
+      }
+    }
+  }
+  
+  func isRowExpanded(at indexPath: Int) -> Bool {
+    return expandedIndexPath.contains(indexPath)
+  }
+  
   open override func resetLayoutProperties() -> LayoutProperties {
-    guard let dataSource = dataSource, let expandableDataSource = expandableDataSource, let expandableDelegate = expandableDelegate else {
+    guard let dataSource = dataSource, let expandableDataSource = expandableDataSource, let _ = expandableDelegate else {
       return LayoutProperties()
     }
     
@@ -157,9 +197,9 @@ open class SpreadsheetExpandableView: SpreadsheetView {
       let height = dataSource.spreadsheetView(self, heightForRow: row)
       if let subrowsCount = numberOfSubrowsInRow[row], subrowsCount > 0 {
         for subrow in 0...subrowsCount - 1 {
-          let isRowExpanded = expandableDelegate.spreadsheetView(self, isItemExpandedAt: row)
+          //let isRowExpanded = expandableDelegate.spreadsheetView(self, isItemExpandedAt: row)
           var subrowsHeightCache = subrowsInRowHeightCache[row] ?? [CGFloat]()
-          let subrowheight = isRowExpanded ? expandableDataSource.spreadsheetView(self, heightForSubrow: subrow, in: row) : 0
+          let subrowheight = expandableDataSource.spreadsheetView(self, heightForSubrow: subrow, in: row)
           subrowsHeightCache.append(subrowheight)
           subrowsInRowHeightCache[row] = subrowsHeightCache
           tableHeight += subrowheight
@@ -250,6 +290,7 @@ open class SpreadsheetExpandableView: SpreadsheetView {
   
   override open func layout(scrollView: ScrollView) {
     let layoutEngine = LayoutEngineExpandable(spreadsheetView: self, scrollView: scrollView)
+    layoutEngines[scrollView] = layoutEngine
     layoutEngine.layout()
   }
   
@@ -296,17 +337,23 @@ open class SpreadsheetExpandableView: SpreadsheetView {
       }
       
       let numberOfSubrows = layoutProperties.numberOfSubrowsInRow[index] ?? 0
-      var subriowsHeight: CGFloat = 0
+      
+      var subrowsHeight: CGFloat = 0
+      
       if numberOfSubrows > 0, let subrowsHeightCache = layoutProperties.subrowsInRowHeightCache[index] {
+        
         for subrow in 0...numberOfSubrows - 1 {
           let subrowHeight = subrowsHeightCache[subrow]
+          
           var rowRecords = scrollViewExpandable.subrowsInRowRecords[scrollView.rowRecords.count - 1] ?? [CGFloat]()
-          rowRecords.append(subriowsHeight + height)
+          rowRecords.append(subrowsHeight + height)
+          
           scrollViewExpandable.subrowsInRowRecords[scrollView.rowRecords.count - 1] = rowRecords
-          subriowsHeight += subrowHeight + intercellSpacing.height
+          subrowsHeight += subrowHeight + intercellSpacing.height
         }
       }
-      height += subriowsHeight
+      
+      height += isRowExpanded(at: row) ? subrowsHeight : 0
     }
     
     scrollView.state.contentSize = CGSize(width: width + intercellSpacing.width, height: height + intercellSpacing.height)
@@ -560,6 +607,7 @@ open class SpreadsheetExpandableView: SpreadsheetView {
     NSObject.cancelPreviousPerformRequests(withTarget: self)
     unhighlightAllSubItems()
     highlightSubItems(on: touches)
+    
     if !allowsMultipleSelection,
       let touch = touches.first, let indexPath = indexPathForSubItem(at: touch.location(in: self)),
       let cell = cellForSubItem(at: indexPath), cell.isUserInteractionEnabled {
@@ -574,23 +622,30 @@ open class SpreadsheetExpandableView: SpreadsheetView {
   }
   
   override open func touchesEnded(_ touches: Set<UITouch>, _ event: UIEvent?) {
-    super.touchesEnded(touches, event)
-    
     guard let touch = touches.first, touch == currentTouch else {
       return
     }
     
-    let highlightedItems = highlightedSubIndexPaths
+    let highlightedItems = highlightedIndexPaths
+    unhighlightAllItems()
+    if let touch = touches.first, let indexPath = indexPathForItem(at: touch.location(in: self)) {
+      selectItems(on: touches, highlightedItems: highlightedItems)
+      perform(#selector(clearCurrentTouch), with: nil, afterDelay: 0)
+      return
+    }
+    
+    let highlightedSubItems = highlightedSubIndexPaths
     unhighlightAllSubItems()
-    if allowsMultipleSelection,
-      let touch = touches.first, let indexPath = indexPathForSubItem(at: touch.location(in: self)),
+    if let touch = touches.first, let indexPath = indexPathForSubItem(at: touch.location(in: self)),
       selectedSubIndexPaths.contains(indexPath) {
       if expandableDelegate?.spreadsheetView(self, shouldSelectItemAt: indexPath.indexPath, for: indexPath.subrow) ?? true {
         deselectSubItem(at: indexPath)
       }
     } else {
-      selectSubItems(on: touches, highlightedItems: highlightedItems)
+      selectSubItems(on: touches, highlightedItems: highlightedSubItems)
     }
+    
+    perform(#selector(clearCurrentTouch), with: nil, afterDelay: 0)
   }
   
   private func selectSubItem(at indexPath: SubrowIndexPath) {
@@ -630,6 +685,15 @@ open class SpreadsheetExpandableView: SpreadsheetView {
   
   private func deselectAllSubItems() {
     selectedSubIndexPaths.forEach { deselectSubItem(at: $0) }
+  }
+  
+  override public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+    guard let indexPath = pendingSelectionIndexPath else {
+      return
+    }
+    cellsForItem(at: indexPath).forEach { $0.setSelected(true, animated: true) }
+    switchExpandState(for: indexPath)
+    pendingSelectionIndexPath = nil
   }
   
   override open func touchesCancelled(_ touches: Set<UITouch>, _ event: UIEvent?) {

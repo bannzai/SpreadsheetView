@@ -65,23 +65,23 @@ final class ReusableCollection<Reusable>: Sequence where Reusable: NSObject {
 
 final class SubrowReusableCollection<Reusable>: Sequence where Reusable: NSObject {
   
-  var pairs = [SubrowAddress: Reusable]()
-  var addresses = Set<SubrowAddress>()
+  var pairs = [SubCellAddress: Reusable]()
+  var addresses = Set<SubCellAddress>()
   
-  func contains(_ member: SubrowAddress) -> Bool {
+  func contains(_ member: SubCellAddress) -> Bool {
     return addresses.contains(member)
   }
   
   @discardableResult
-  func insert(_ newMember: SubrowAddress) -> (inserted: Bool, memberAfterInsert: SubrowAddress) {
+  func insert(_ newMember: SubCellAddress) -> (inserted: Bool, memberAfterInsert: SubCellAddress) {
     return addresses.insert(newMember)
   }
   
-  func subtract(_ other: Set<SubrowAddress>) {
+  func subtract(_ other: Set<SubCellAddress>) {
     addresses.subtract(other)
   }
   
-  subscript(key: SubrowAddress) -> Reusable? {
+  subscript(key: SubCellAddress) -> Reusable? {
     get {
       return pairs[key]
     }

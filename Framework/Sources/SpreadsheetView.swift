@@ -704,7 +704,7 @@ open class SpreadsheetView: UIView {
     selectedIndexPaths.remove(indexPath)
   }
   
-  private func deselectAllItems(animated: Bool) {
+   func deselectAllItems(animated: Bool) {
     selectedIndexPaths.forEach { deselectItem(at: $0, animated: animated) }
   }
   
@@ -1153,7 +1153,7 @@ open class SpreadsheetView: UIView {
     perform(#selector(clearCurrentTouch), with: nil, afterDelay: 0)
   }
   
-  private func selectItem(at indexPath: IndexPath) {
+  open func selectItem(at indexPath: IndexPath) {
     let cells = cellsForItem(at: indexPath)
     if !cells.isEmpty && delegate?.spreadsheetView(self, shouldSelectItemAt: indexPath) ?? true {
       if !allowsMultipleSelection {
@@ -1168,7 +1168,7 @@ open class SpreadsheetView: UIView {
     }
   }
   
-  private func deselectItem(at indexPath: IndexPath) {
+  open func deselectItem(at indexPath: IndexPath) {
     let cells = cellsForItem(at: indexPath)
     cells.forEach {
       $0.isSelected = false
@@ -1177,12 +1177,12 @@ open class SpreadsheetView: UIView {
     selectedIndexPaths.remove(indexPath)
   }
   
-  private func selectItems(on touches: Set<UITouch>, highlightedItems: Set<IndexPath>) {
+  func selectItems(on touches: Set<UITouch>, highlightedItems: Set<IndexPath>) {
     guard allowsSelection else {
       return
     }
     if let touch = touches.first {
-      if let indexPath = indexPathForItem(at: touch.location(in: self)), highlightedItems.contains(indexPath) {
+      if let indexPath = indexPathForItem(at: touch.location(in: self)) {
         selectItem(at: indexPath)
       }
     }
@@ -1190,6 +1190,15 @@ open class SpreadsheetView: UIView {
   
   private func deselectAllItems() {
     selectedIndexPaths.forEach { deselectItem(at: $0) }
+  }
+  
+  public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+    guard let indexPath = pendingSelectionIndexPath else {
+      return
+    }
+    cellsForItem(at: indexPath).forEach { $0.setSelected(true, animated: true) }
+    delegate?.spreadsheetView(self, didSelectItemAt: indexPath)
+    pendingSelectionIndexPath = nil
   }
   
   open func touchesCancelled(_ touches: Set<UITouch>, _ event: UIEvent?) {
@@ -1218,7 +1227,7 @@ open class SpreadsheetView: UIView {
     }
   }
   
-  private func unhighlightAllItems() {
+  func unhighlightAllItems() {
     highlightedIndexPaths.forEach { (indexPath) in
       cellsForItem(at: indexPath).forEach {
         $0.isHighlighted = false

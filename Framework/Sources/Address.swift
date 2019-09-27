@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Address: Hashable {
+public class Address: Hashable, CustomStringConvertible {
   
   let row: Int
   let column: Int
@@ -29,9 +29,13 @@ public class Address: Hashable {
   public static func ==(lhs: Address, rhs: Address) -> Bool {
     return lhs.rowIndex == rhs.rowIndex && lhs.columnIndex == rhs.columnIndex
   }
+  
+  public var description: String {
+    return "Address(row:\(row), column:\(column))"
+  }
 }
 
-public class SubrowAddress: Hashable {
+public class SubCellAddress: Hashable, CustomStringConvertible {
   
   let row: Int
   let column: Int
@@ -54,8 +58,12 @@ public class SubrowAddress: Hashable {
     return hash
   }
   
-  public static func == (lhs: SubrowAddress, rhs: SubrowAddress) -> Bool {
+  public static func == (lhs: SubCellAddress, rhs: SubCellAddress) -> Bool {
     return lhs.rowIndex == rhs.rowIndex && lhs.columnIndex == rhs.columnIndex && lhs.subrow == rhs.subrow
+  }
+  
+  public var description: String {
+    return "Address(row:\(row), column:\(column), subrow:\(subrow))"
   }
   
 }

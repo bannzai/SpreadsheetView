@@ -44,7 +44,7 @@ class ViewController: UIViewController, SpreadsheetExpandableViewDataSource, Spr
     }
   
     func spreadsheetView(_ spreadsheetView: SpreadsheetExpandableView, isItemExpandedAt row: Int) -> Bool {
-      return data[row - 1].isExpanded
+      return false
     }
   
     func spreadsheetView(_ spreadsheetView: SpreadsheetExpandableView, cellForItemIn subrow: Int, at indexPath: IndexPath) -> Cell? {
@@ -56,7 +56,7 @@ class ViewController: UIViewController, SpreadsheetExpandableViewDataSource, Spr
       
       let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! DataCell
       cell.label?.textColor = UIColor.black
-      cell.label?.text = data[indexPath.row - 1].items[0].columnTitles[indexPath.column]
+      cell.label?.text = data[indexPath.row - 1].items[0].columnTitles[0]
       //cell.backgroundColor = UIColor.clear
       
       cell.gridlines.top = subrow > 0 ? .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1)) : .solid(width: CGFloat(1), color: UIColor.white)
@@ -220,7 +220,7 @@ class ViewController: UIViewController, SpreadsheetExpandableViewDataSource, Spr
         
         let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! DataCell
         cell.label?.textColor = UIColor.black
-        cell.label?.text = data[indexPath.row - 1].columnTitles[indexPath.column]
+        cell.label?.text = data[indexPath.row - 1].columnTitles[0]
         
         cell.gridlines.top = .solid(width: CGFloat(0.5), color: UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1))
         cell.gridlines.left = .solid(width: CGFloat(1), color: UIColor.white)
