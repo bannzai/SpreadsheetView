@@ -50,15 +50,8 @@ open class SpreadsheetExpandableView: SpreadsheetView {
     }
   }
   
-  override open func selectItem(at indexPath: IndexPath) {
-    let cells = cellsForItem(at: indexPath)
-    if !cells.isEmpty && delegate?.spreadsheetView(self, shouldSelectItemAt: indexPath) ?? true {
-      cells.forEach {
-        $0.isSelected = true
-      }
-      switchExpandState(for: indexPath)
-      selectedIndexPaths.insert(indexPath)
-    }
+  private func isExpandableIndexPath(_ indexPath: IndexPath) -> Bool {
+    return indexPath.row >= layoutEngines[self.tableView]!.startRow
   }
   
   private func switchExpandState(for indexPath: IndexPath) {
@@ -629,6 +622,11 @@ open class SpreadsheetExpandableView: SpreadsheetView {
     let highlightedItems = highlightedIndexPaths
     unhighlightAllItems()
     if let touch = touches.first, let indexPath = indexPathForItem(at: touch.location(in: self)) {
+      if isExpandableIndexPath(indexPath) {
+        expandItems(on: touches)
+        perform(#selector(clearCurrentTouch), with: nil, afterDelay: 0)
+        return
+      }
       selectItems(on: touches, highlightedItems: highlightedItems)
       perform(#selector(clearCurrentTouch), with: nil, afterDelay: 0)
       return
@@ -646,6 +644,21 @@ open class SpreadsheetExpandableView: SpreadsheetView {
     }
     
     perform(#selector(clearCurrentTouch), with: nil, afterDelay: 0)
+  }
+  
+  func expandItems(on touches: Set<UITouch>) {
+    if let touch = touches.first {
+      if let indexPath = indexPathForItem(at: touch.location(in: self)) {
+        expandItem(at: indexPath)
+      }
+    }
+  }
+  
+  func expandItem(at indexPath: IndexPath) {
+    let cells = cellsForItem(at: indexPath)
+    if !cells.isEmpty {
+      switchExpandState(for: indexPath)
+    }
   }
   
   private func selectSubItem(at indexPath: SubrowIndexPath) {
@@ -692,7 +705,11 @@ open class SpreadsheetExpandableView: SpreadsheetView {
       return
     }
     cellsForItem(at: indexPath).forEach { $0.setSelected(true, animated: true) }
-    switchExpandState(for: indexPath)
+    if !isExpandableIndexPath(indexPath) {
+       delegate?.spreadsheetView(self, didSelectItemAt: indexPath)
+    } else {
+       //switchExpandState(for: indexPath)
+    }
     pendingSelectionIndexPath = nil
   }
   

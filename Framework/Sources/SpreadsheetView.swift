@@ -1153,7 +1153,7 @@ open class SpreadsheetView: UIView {
     perform(#selector(clearCurrentTouch), with: nil, afterDelay: 0)
   }
   
-  open func selectItem(at indexPath: IndexPath) {
+  func selectItem(at indexPath: IndexPath) {
     let cells = cellsForItem(at: indexPath)
     if !cells.isEmpty && delegate?.spreadsheetView(self, shouldSelectItemAt: indexPath) ?? true {
       if !allowsMultipleSelection {
@@ -1168,7 +1168,7 @@ open class SpreadsheetView: UIView {
     }
   }
   
-  open func deselectItem(at indexPath: IndexPath) {
+  func deselectItem(at indexPath: IndexPath) {
     let cells = cellsForItem(at: indexPath)
     cells.forEach {
       $0.isSelected = false
@@ -1188,7 +1188,7 @@ open class SpreadsheetView: UIView {
     }
   }
   
-  private func deselectAllItems() {
+  func deselectAllItems() {
     selectedIndexPaths.forEach { deselectItem(at: $0) }
   }
   

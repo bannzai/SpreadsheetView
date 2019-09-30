@@ -368,7 +368,7 @@ final class LayoutEngineExpandable: LayoutEngine {
             var subcellsBelowRowViews = [SubCellAddress: Cell]()
             
             cellView.frame.origin.y += expandedSubrowsAtRowHeight
-            self.scrollView.rowRecords[belowRow - 1] = cellView.frame.origin.y
+            self.scrollView.rowRecords[belowRow - self.startRow] = cellView.frame.origin.y
             
             for (subcellAddress, _) in self.subcellOrigins.filter({ $0.key.row == cellAddress.row && $0.key.column == cellAddress.column}) {
               subcellsBelowRowViews[subcellAddress] = self.scrollViewExpandable?.visibleSubCells[subcellAddress]
@@ -380,8 +380,8 @@ final class LayoutEngineExpandable: LayoutEngine {
             
             for subcellAddress in orderedSubcellAddresses {
               if let subcell = subcellsBelowRowViews[subcellAddress] {
-                let subrowsInRowHeightCache = self.subrowsInRowHeightCache[row] ?? []
-                subcell.frame.origin.y = cellView.frame.origin.y + subrowsInRowHeightCache[0..<subcellAddress.subrow].reduce(0, { (result, height) -> CGFloat in
+                let subrowsInRowHeightCache = self.subrowsInRowHeightCache[belowRow] ?? []
+                subcell.frame.origin.y = cellView.frame.origin.y + (self.spreadsheetExpandableView?.isRowExpanded(at: belowRow) ?? false ? (cellView.frame.height + self.intercellSpacing.height) : 0) + subrowsInRowHeightCache[0..<subcellAddress.subrow].reduce(0, { (result, height) -> CGFloat in
                   var r = result
                   r += CGFloat(height + self.intercellSpacing.height)
                   return r
@@ -454,7 +454,7 @@ final class LayoutEngineExpandable: LayoutEngine {
              var subcellsBelowRowViews = [SubCellAddress: Cell]()
              
              cellView.frame.origin.y -= expandedSubrowsAtRowHeight
-             self.scrollView.rowRecords[belowRow - 1] = cellView.frame.origin.y
+             self.scrollView.rowRecords[belowRow - self.startRow] = cellView.frame.origin.y
              
              for (subcellAddress, subcellOrigin) in self.subcellOrigins.filter({ $0.key.row == cellAddress.row && $0.key.column == cellAddress.column}) {
                subcellsBelowRowOrigins[subcellAddress] = subcellOrigin
@@ -467,8 +467,8 @@ final class LayoutEngineExpandable: LayoutEngine {
              
              for subcellAddress in orderedSubcellAddresses {
                if let subcell = subcellsBelowRowViews[subcellAddress], let _ = subcellsBelowRowOrigins[subcellAddress] {
-                 let subrowsInRowHeightCache = self.subrowsInRowHeightCache[row] ?? []
-                 subcell.frame.origin.y = cellView.frame.origin.y + subrowsInRowHeightCache[0..<subcellAddress.subrow].reduce(0, { (result, height) -> CGFloat in
+                 let subrowsInRowHeightCache = self.subrowsInRowHeightCache[belowRow] ?? []
+                 subcell.frame.origin.y = cellView.frame.origin.y + (self.spreadsheetExpandableView?.isRowExpanded(at: belowRow) ?? false ? (cellView.frame.height + self.intercellSpacing.height) : 0) + subrowsInRowHeightCache[0..<subcellAddress.subrow].reduce(0, { (result, height) -> CGFloat in
                    var r = result
                    r += CGFloat(height + self.intercellSpacing.height)
                    return r
