@@ -8,118 +8,90 @@
 
 import UIKit
 
-final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
-    var columnRecords = [CGFloat]()
-    var rowRecords = [CGFloat]()
-
-    var visibleCells = ReusableCollection<Cell>()
-    var visibleVerticalGridlines = ReusableCollection<Gridline>()
-    var visibleHorizontalGridlines = ReusableCollection<Gridline>()
-    var visibleBorders = ReusableCollection<Border>()
-
-    typealias TouchHandler = (_ touches: Set<UITouch>, _ event: UIEvent?) -> Void
-    var touchesBegan: TouchHandler?
-    var touchesEnded: TouchHandler?
-    var touchesCancelled: TouchHandler?
-
-    var layoutAttributes = LayoutAttributes(startColumn: 0, startRow: 0, numberOfColumns: 0, numberOfRows: 0, columnCount: 0, rowCount: 0, insets: .zero)
+open class ScrollView: UIScrollView {
   
-    var state = State()
+  var columnRecords = [CGFloat]()
+  var rowRecords = [CGFloat]()
   
-    struct State {
-        var frame = CGRect.zero
-        var contentSize = CGSize.zero
-        var contentOffset = CGPoint.zero
-    }
-
-    var hasDisplayedContent: Bool {
-        return columnRecords.count > 0 || rowRecords.count > 0
-    }
-
-    func resetReusableObjects() {
-        for cell in visibleCells {
-            cell.removeFromSuperview()
-        }
-        for gridline in visibleVerticalGridlines {
-            gridline.removeFromSuperlayer()
-        }
-        for gridline in visibleHorizontalGridlines {
-            gridline.removeFromSuperlayer()
-        }
-        for border in visibleBorders {
-            border.removeFromSuperview()
-        }
-        visibleCells = ReusableCollection<Cell>()
-        visibleVerticalGridlines = ReusableCollection<Gridline>()
-        visibleHorizontalGridlines = ReusableCollection<Gridline>()
-        visibleBorders = ReusableCollection<Border>()
-    }
-
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return gestureRecognizer is UIPanGestureRecognizer
-    }
-
-    override func touchesShouldBegin(_ touches: Set<UITouch>, with event: UIEvent?, in view: UIView) -> Bool {
-        return hasDisplayedContent
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard hasDisplayedContent else {
-            return
-        }
-        touchesBegan?(touches, event)
-    }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard hasDisplayedContent else {
-            return
-        }
-        touchesEnded?(touches, event)
-    }
-
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard hasDisplayedContent else {
-            return
-        }
-        touchesCancelled?(touches, event)
-    }
+  var visibleCells = ReusableCollection<Cell>()
+  var visibleVerticalGridlines = ReusableCollection<Gridline>()
+  var visibleHorizontalGridlines = ReusableCollection<Gridline>()
+  var visibleBorders = ReusableCollection<Border>()
   
-    public var topBorder: CALayer? = nil
-    public var bottomBorder: CALayer? = nil
-    public var leftBorder: CALayer? = nil
-    public var rightBorder: CALayer? = nil
+  typealias TouchHandler = (_ touches: Set<UITouch>, _ event: UIEvent?) -> Void
+  var touchesBegan: TouchHandler?
+  var touchesEnded: TouchHandler?
+  var touchesCancelled: TouchHandler?
   
-    func addTopBorder(color: UIColor, thickness: CGFloat) {
-      if topBorder != nil && topBorder!.bounds.width == self.state.contentSize.width {
-        return
-      }
-      topBorder?.removeFromSuperlayer()
-      topBorder = self.layer.addBorder(edge: .top, color: color, thickness: thickness, length: self.state.contentSize.width)
-    }
+  var layoutAttributes = LayoutAttributes(startColumn: 0, startRow: 0, numberOfColumns: 0, numberOfRows: 0, columnCount: 0, rowCount: 0, insets: .zero)
   
-    func addBottomBorder(color: UIColor, thickness: CGFloat) {
-      if bottomBorder != nil && bottomBorder!.bounds.width == self.state.contentSize.width {
-        return
-      }
-      bottomBorder?.removeFromSuperlayer()
-      bottomBorder = self.layer.addBorder(edge: .bottom, color: color, thickness: thickness, length: self.state.contentSize.width)
-    }
+  var state = State()
   
-    func addLeftBorder(color: UIColor, thickness: CGFloat) {
-      if leftBorder != nil && leftBorder!.bounds.height == self.state.contentSize.height {
-        return
-      }
-      leftBorder?.removeFromSuperlayer()
-      leftBorder = self.layer.addBorder(edge: .left, color: color, thickness: thickness, length: self.state.contentSize.height)
-    }
+  struct State {
+    var frame = CGRect.zero
+    var contentSize = CGSize.zero
+    var contentOffset = CGPoint.zero
+  }
   
-    func addRightBorder(color: UIColor, thickness: CGFloat) {
-      if rightBorder != nil && rightBorder!.bounds.height == self.state.contentSize.height {
-        return
-      }
-      rightBorder?.removeFromSuperlayer()
-      rightBorder = self.layer.addBorder(edge: .right, color: color, thickness: thickness, length: self.state.contentSize.height)
+  var hasDisplayedContent: Bool {
+    return columnRecords.count > 0 || rowRecords.count > 0
+  }
+  
+  open func resetReusableObjects() {
+    for cell in visibleCells {
+      cell.removeFromSuperview()
     }
+    for gridline in visibleVerticalGridlines {
+      gridline.removeFromSuperlayer()
+    }
+    for gridline in visibleHorizontalGridlines {
+      gridline.removeFromSuperlayer()
+    }
+    for border in visibleBorders {
+      border.removeFromSuperview()
+    }
+    visibleCells = ReusableCollection<Cell>()
+    visibleVerticalGridlines = ReusableCollection<Gridline>()
+    visibleHorizontalGridlines = ReusableCollection<Gridline>()
+    visibleBorders = ReusableCollection<Border>()
+  }
+  
+  public var topBorder: CALayer? = nil
+  public var bottomBorder: CALayer? = nil
+  public var leftBorder: CALayer? = nil
+  public var rightBorder: CALayer? = nil
+  
+  func addTopBorder(color: UIColor, thickness: CGFloat) {
+    if topBorder != nil && topBorder!.bounds.width == self.state.contentSize.width {
+      return
+    }
+    topBorder?.removeFromSuperlayer()
+    topBorder = self.layer.addBorder(edge: .top, color: color, thickness: thickness, length: self.state.contentSize.width)
+  }
+  
+  func addBottomBorder(color: UIColor, thickness: CGFloat) {
+    if bottomBorder != nil && bottomBorder!.bounds.width == self.state.contentSize.width {
+      return
+    }
+    bottomBorder?.removeFromSuperlayer()
+    bottomBorder = self.layer.addBorder(edge: .bottom, color: color, thickness: thickness, length: self.state.contentSize.width)
+  }
+  
+  func addLeftBorder(color: UIColor, thickness: CGFloat) {
+    if leftBorder != nil && leftBorder!.bounds.height == self.state.contentSize.height {
+      return
+    }
+    leftBorder?.removeFromSuperlayer()
+    leftBorder = self.layer.addBorder(edge: .left, color: color, thickness: thickness, length: self.state.contentSize.height)
+  }
+  
+  func addRightBorder(color: UIColor, thickness: CGFloat) {
+    if rightBorder != nil && rightBorder!.bounds.height == self.state.contentSize.height {
+      return
+    }
+    rightBorder?.removeFromSuperlayer()
+    rightBorder = self.layer.addBorder(edge: .right, color: color, thickness: thickness, length: self.state.contentSize.height)
+  }
 }
 
 extension CALayer {
@@ -147,5 +119,37 @@ extension CALayer {
     addSublayer(border)
     
     return border
+  }
+}
+
+extension ScrollView: UIGestureRecognizerDelegate {
+  
+  open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    return gestureRecognizer is UIPanGestureRecognizer
+  }
+  
+  override open func touchesShouldBegin(_ touches: Set<UITouch>, with event: UIEvent?, in view: UIView) -> Bool {
+    return hasDisplayedContent
+  }
+  
+  override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    guard hasDisplayedContent else {
+      return
+    }
+    touchesBegan?(touches, event)
+  }
+  
+  override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    guard hasDisplayedContent else {
+      return
+    }
+    touchesEnded?(touches, event)
+  }
+  
+  override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    guard hasDisplayedContent else {
+      return
+    }
+    touchesCancelled?(touches, event)
   }
 }

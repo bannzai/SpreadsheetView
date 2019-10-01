@@ -48,6 +48,13 @@
 		14CBB7F01EC8AF22005BEEB3 /* CellRangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CBB7EF1EC8AF22005BEEB3 /* CellRangeTests.swift */; };
 		14EA70931EC198D600AB24EC /* SpreadsheetView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 149E6A691EADE047000D851D /* SpreadsheetView.framework */; };
 		14EA70941EC198D600AB24EC /* SpreadsheetView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 149E6A691EADE047000D851D /* SpreadsheetView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5E9DEA0323279D22000175C5 /* SpreadsheetExpandableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9DEA0223279D22000175C5 /* SpreadsheetExpandableViewDataSource.swift */; };
+		5E9DEA0623279DAC000175C5 /* SpreadsheetExpandableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9DEA0523279DAC000175C5 /* SpreadsheetExpandableView.swift */; };
+		5E9DEA0923279DD2000175C5 /* SpreadsheetExpandableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9DEA0823279DD2000175C5 /* SpreadsheetExpandableViewDelegate.swift */; };
+		5E9DEA0C2327B9C1000175C5 /* LayoutEngineExpandable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9DEA0B2327B9C0000175C5 /* LayoutEngineExpandable.swift */; };
+		5E9DEA0D2327B9C1000175C5 /* LayoutEngineExpandable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9DEA0B2327B9C0000175C5 /* LayoutEngineExpandable.swift */; };
+		5E9DEA0F2327F11B000175C5 /* ScrollViewExpandable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9DEA0E2327F11B000175C5 /* ScrollViewExpandable.swift */; };
+		5E9DEA102327F11B000175C5 /* ScrollViewExpandable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9DEA0E2327F11B000175C5 /* ScrollViewExpandable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +140,11 @@
 		14B2F24F1EC031950014C199 /* Borders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Borders.swift; sourceTree = "<group>"; };
 		14B36C4E1EBF664600730F29 /* Gridlines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gridlines.swift; sourceTree = "<group>"; };
 		14CBB7EF1EC8AF22005BEEB3 /* CellRangeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellRangeTests.swift; sourceTree = "<group>"; };
+		5E9DEA0223279D22000175C5 /* SpreadsheetExpandableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpreadsheetExpandableViewDataSource.swift; sourceTree = "<group>"; };
+		5E9DEA0523279DAC000175C5 /* SpreadsheetExpandableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpreadsheetExpandableView.swift; sourceTree = "<group>"; };
+		5E9DEA0823279DD2000175C5 /* SpreadsheetExpandableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpreadsheetExpandableViewDelegate.swift; sourceTree = "<group>"; };
+		5E9DEA0B2327B9C0000175C5 /* LayoutEngineExpandable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEngineExpandable.swift; sourceTree = "<group>"; };
+		5E9DEA0E2327F11B000175C5 /* ScrollViewExpandable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewExpandable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +254,11 @@
 				149E6A8F1EADE0EA000D851D /* IndexPath+Column.swift */,
 				149E6A901EADE0EA000D851D /* Array+BinarySearch.swift */,
 				149E23E61EBD15940049E172 /* Supporting Files */,
+				5E9DEA0223279D22000175C5 /* SpreadsheetExpandableViewDataSource.swift */,
+				5E9DEA0523279DAC000175C5 /* SpreadsheetExpandableView.swift */,
+				5E9DEA0823279DD2000175C5 /* SpreadsheetExpandableViewDelegate.swift */,
+				5E9DEA0B2327B9C0000175C5 /* LayoutEngineExpandable.swift */,
+				5E9DEA0E2327F11B000175C5 /* ScrollViewExpandable.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -433,6 +450,7 @@
 				149E6A941EADE0EA000D851D /* SpreadsheetViewDelegate.swift in Sources */,
 				149E24071EBF05A10049E172 /* LayoutEngine.swift in Sources */,
 				149E6A9E1EADE0EA000D851D /* Array+BinarySearch.swift in Sources */,
+				5E9DEA0923279DD2000175C5 /* SpreadsheetExpandableViewDelegate.swift in Sources */,
 				143664CF1EB655CA00321E5E /* SpreadsheetView+UIScrollViewDelegate.swift in Sources */,
 				143664C91EB6518600321E5E /* SpreadsheetView+UIScrollView.swift in Sources */,
 				149E6A9C1EADE0EA000D851D /* ReuseQueue.swift in Sources */,
@@ -443,6 +461,7 @@
 				149E6A931EADE0EA000D851D /* SpreadsheetViewDataSource.swift in Sources */,
 				149E6A9B1EADE0EA000D851D /* Address.swift in Sources */,
 				149E6A9A1EADE0EA000D851D /* Location.swift in Sources */,
+				5E9DEA0F2327F11B000175C5 /* ScrollViewExpandable.swift in Sources */,
 				1451A0721ECEC2AF00C048DF /* SpreadsheetView+UIViewHierarchy.swift in Sources */,
 				14B2F2501EC031950014C199 /* Borders.swift in Sources */,
 				149E6A961EADE0EA000D851D /* ScrollView.swift in Sources */,
@@ -451,6 +470,9 @@
 				149E6A991EADE0EA000D851D /* CellRange.swift in Sources */,
 				149E6A9D1EADE0EA000D851D /* IndexPath+Column.swift in Sources */,
 				141210001EE1D7A7004E41A3 /* SpreadsheetView+UISnapshotting.swift in Sources */,
+				5E9DEA0623279DAC000175C5 /* SpreadsheetExpandableView.swift in Sources */,
+				5E9DEA0C2327B9C1000175C5 /* LayoutEngineExpandable.swift in Sources */,
+				5E9DEA0323279D22000175C5 /* SpreadsheetExpandableViewDataSource.swift in Sources */,
 				143664CB1EB652F100321E5E /* SpreadsheetView+CirclularScrolling.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,8 +484,10 @@
 				143664BD1EB59DCA00321E5E /* ViewTests.swift in Sources */,
 				149E6A781EADE048000D851D /* ScrollTests.swift in Sources */,
 				1478491F1EC38F8D0020C938 /* ConfigurationTests.swift in Sources */,
+				5E9DEA0D2327B9C1000175C5 /* LayoutEngineExpandable.swift in Sources */,
 				143664C51EB6201800321E5E /* PerformanceTests.swift in Sources */,
 				143664C11EB5A07300321E5E /* HelperObjects.swift in Sources */,
+				5E9DEA102327F11B000175C5 /* ScrollViewExpandable.swift in Sources */,
 				14CBB7F01EC8AF22005BEEB3 /* CellRangeTests.swift in Sources */,
 				147898E31ECB607E004BB0A1 /* CellTests.swift in Sources */,
 				143664BF1EB5A01600321E5E /* HelperFunctions.swift in Sources */,
