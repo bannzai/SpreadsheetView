@@ -59,8 +59,11 @@ open class SpreadsheetExpandableView: SpreadsheetView {
     
     if expandedIndexPath.contains(indexPath.row) {
       expandedIndexPath.remove(indexPath.row)
+      expandableDelegate?.spreadsheetView(self, didCollapseItemAt: indexPath.row)
+      isExpanded = false
     } else {
       expandedIndexPath.insert(indexPath.row)
+      expandableDelegate?.spreadsheetView(self, didExpandItemAt: indexPath.row)
       isExpanded = true
     }
     

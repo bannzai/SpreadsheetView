@@ -88,6 +88,22 @@ public protocol SpreadsheetExpandableViewDelegate: SpreadsheetViewDelegate {
   ///   - spreadsheetView: The spreadsheet view object that is notifying you of the selection change.
   ///   - indexPath: The index path of the cell that expanded.
   func spreadsheetView(_ spreadsheetView: SpreadsheetExpandableView, isItemExpandedAt row: Int) -> Bool
+  /// Tells the delegate that the cell at the specified index path was selected.
+  /// - Note: The spreadsheet view calls this method when the user successfully selects a cell in the spreadsheet view.
+  ///   It does not call this method when you programmatically set the selection.
+  ///
+  /// - Parameters:
+  ///   - spreadsheetView: The spreadsheet view object that is notifying you of the selection change.
+  ///   - indexPath: The index path of the cell that was selected.
+  func spreadsheetView(_ spreadsheetView: SpreadsheetExpandableView, didExpandItemAt row: Int)
+  /// Tells the delegate that the cell at the specified path was deselected.
+  /// - Note: The spreadsheet view calls this method when the user successfully deselects an item in the spreadsheet view.
+  ///   It does not call this method when you programmatically deselect items.
+  ///
+  /// - Parameters:
+  ///   - spreadsheetView: The spreadsheet view object that is notifying you of the selection change.
+  ///   - indexPath: The index path of the cell that was deselected.
+  func spreadsheetView(_ spreadsheetView: SpreadsheetExpandableView, didCollapseItemAt row: Int)
 }
 
 extension SpreadsheetExpandableViewDelegate {
@@ -99,4 +115,6 @@ extension SpreadsheetExpandableViewDelegate {
   public func spreadsheetView(_ spreadsheetView: SpreadsheetExpandableView, didSelectItemAt indexPath: IndexPath, for subrow: Int) {}
   public func spreadsheetView(_ spreadsheetView: SpreadsheetExpandableView, didDeselectItemAt indexPath: IndexPath, for subrow: Int) {}
   public func spreadsheetView(_ spreadsheetView: SpreadsheetExpandableView, isItemExpandedAt row: Int) -> Bool { return false }
+  public func spreadsheetView(_ spreadsheetView: SpreadsheetExpandableView, didExpandItemAt row: Int) {}
+  public func spreadsheetView(_ spreadsheetView: SpreadsheetExpandableView, didCollapseItemAt row: Int) {}
 }
