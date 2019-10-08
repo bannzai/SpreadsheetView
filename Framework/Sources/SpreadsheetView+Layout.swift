@@ -85,6 +85,7 @@ extension SpreadsheetView {
   
   private func layoutDividerViews() {
     let leftFoldedColumnsWidth = layoutProperties.columnWidthCache.prefix(upTo: frozenColumns).reduce(0) { $0 + $1 + intercellSpacing.width }
+    let rightFoldedColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 + intercellSpacing.width }
     
     if frozenColumns < 1 {
       columnHeaderView.rightBorder?.removeFromSuperlayer()
@@ -108,6 +109,15 @@ extension SpreadsheetView {
       cornerViewRight.leftBorder?.removeFromSuperlayer()
     } else {
       cornerViewRight.addLeftBorder(color: self.dividerColor, thickness: self.dividerThickness)
+    }
+    
+    if tableView.contentOffset.x > (tableView.contentSize.width - self.frame.width + leftFoldedColumnsWidth) && !stickyColumnHeader {
+      let offset = tableView.contentOffset.x
+      cornerViewRight.frame.origin.x = tableView.contentSize.width - rightFoldedColumnsWidth - offset + leftFoldedColumnsWidth
+      columnHeaderViewRight.frame.origin.x = tableView.contentSize.width - rightFoldedColumnsWidth - offset + leftFoldedColumnsWidth
+    } else {
+      cornerViewRight.frame.origin.x = self.frame.size.width - rightFoldedColumnsWidth
+      columnHeaderViewRight.frame.origin.x = self.frame.size.width - rightFoldedColumnsWidth
     }
     
     if tableView.contentOffset.x < (tableView.contentSize.width - self.frame.width + leftFoldedColumnsWidth) && !stickyColumnHeader {

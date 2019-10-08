@@ -497,7 +497,9 @@ final class LayoutEngineExpandable: LayoutEngine {
     let border: (borders: Borders?, hasBorders: Bool)
     
     if expandableScrollView.visibleSubCells.contains(address) {
+      //print("expandableScrollView visibleSubCells.contains(address) \(address)")
       if let cell = expandableScrollView.visibleSubCells[address] {
+        //print("expandableScrollView let cell = expandableScrollView.visibleSubCells[address] \(address)")
         cell.frame = frame
         subcellOrigins[address] = frame.origin
         gridlines = cell.gridlines
@@ -523,6 +525,8 @@ final class LayoutEngineExpandable: LayoutEngine {
       border = (cell.borders, cell.hasBorder)
       
       scrollView.insertSubview(cell, at: 0)
+      //print("expandableScrollView scrollView.insertSubview(cell, at: 0) \(address)")
+      
       expandableScrollView.visibleSubCells[address] = cell
       
       subcellOrigins[address] = frame.origin
