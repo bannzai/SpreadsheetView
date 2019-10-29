@@ -43,6 +43,8 @@ public class SubCellAddress: Hashable, CustomStringConvertible {
   let columnIndex: Int
   let subrow: Int
   
+  var _hashValue: Int?
+  
   init(row: Int = 0, column: Int = 0, rowIndex: Int = 0, columnIndex: Int = 0, subrow: Int = 0) {
     self.subrow = subrow
     self.row = row
@@ -52,9 +54,13 @@ public class SubCellAddress: Hashable, CustomStringConvertible {
   }
   
   public var hashValue: Int {
+    guard _hashValue == nil else {
+      return _hashValue!
+    }
     var hash = (rowIndex ^ (rowIndex >> 32))
     hash = 31 * hash + (columnIndex ^ (columnIndex >> 32))
     hash = 31 * hash + (subrow ^ (subrow >> 32))
+    _hashValue = hash
     return hash
   }
   

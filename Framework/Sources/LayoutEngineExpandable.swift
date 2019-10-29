@@ -205,7 +205,9 @@ final class LayoutEngineExpandable: LayoutEngine {
       
       let rowHeight = rowHeightCache[row]
       
-      layoutSubCells(row: row, column: column, rowIndex: rowIndex, columnIndex: columnIndex, rowHeight: rowHeight, columnWidth: columnWidth)
+      if spreadsheetExpandableView?.isRowExpanded(at: row) ?? false {
+        layoutSubCells(row: row, column: column, rowIndex: rowIndex, columnIndex: columnIndex, rowHeight: rowHeight, columnWidth: columnWidth)
+      }
       
       guard cellOrigin.x + columnWidth > visibleRect.minX else {
         cellOrigin.x += columnWidth + intercellSpacing.width
@@ -288,16 +290,17 @@ final class LayoutEngineExpandable: LayoutEngine {
     
     if let numberOfSubrows = numberOfSubrowsInRow[row], numberOfSubrows > 0, let subrowHeights = subrowsInRowHeightCache[row] {
       for subrow in 0...numberOfSubrows - 1 {
-        let subrowOffsetY = (spreadsheetExpandableView?.isRowExpanded(at: row) ?? false) ? subrowHeights[subrow] : 0
+        let isRowExpanded = spreadsheetExpandableView?.isRowExpanded(at: row) ?? false
+        let subrowOffsetY = isRowExpanded ? subrowHeights[subrow] : 0
         
-        guard subcellOrigin.y + subrowOffsetY > visibleRect.minY else {
-          subcellOrigin.y += subrowOffsetY + intercellSpacing.width
-          continue
-        }
-
-        guard subcellOrigin.y <= visibleRect.maxY else {
-          continue
-        }
+//        guard subcellOrigin.y + subrowOffsetY > visibleRect.minY else {
+//          subcellOrigin.y += subrowOffsetY + intercellSpacing.width
+//          continue
+//        }
+//
+//        guard subcellOrigin.y <= visibleRect.maxY else {
+//          continue
+//        }
         
         let address = SubCellAddress(row: row, column: column, rowIndex: rowIndex, columnIndex: columnIndex, subrow: subrow)
         visibleSubCellAddresses.insert(address)
@@ -313,6 +316,9 @@ final class LayoutEngineExpandable: LayoutEngine {
   }
   
   func expandSubCells(at row: Int) {
+    
+    enumerateColumns(currentRow: row, currentRowIndex: row)
+    
     // views for row sub cells
     var subcellsAtRowViews = [SubCellAddress: Cell]()
     
@@ -427,6 +433,7 @@ final class LayoutEngineExpandable: LayoutEngine {
       
       var expandedSubrowsAtRowHeight:CGFloat = 0
       var currentSubRow = -1
+      
       for subcellAddress in orderedSubcellAddresses {
         if let subcell = subcellsAtRowViews[subcellAddress] {
           subcell.frame.origin.y = cellAtRowOriginY
@@ -482,7 +489,15 @@ final class LayoutEngineExpandable: LayoutEngine {
        }
       
     }) { _ in
-
+      subcellsAtRowViews.values.forEach({ $0.removeFromSuperview() })
+      subcellsAtRowViews.keys.forEach({ (address) in
+        if let addresses = self.scrollViewExpandable?.visibleSubCells.addresses {
+          self.scrollViewExpandable?.visibleSubCells.addresses = addresses.filter({ $0 != address })
+        }
+        if let pairs = self.scrollViewExpandable?.visibleSubCells.pairs {
+          self.scrollViewExpandable?.visibleSubCells.pairs = pairs.filter({ $0.key != address })
+        }
+      })
     }
   }
   
@@ -496,10 +511,16 @@ final class LayoutEngineExpandable: LayoutEngine {
     let gridlines: Gridlines?
     let border: (borders: Borders?, hasBorders: Bool)
     
+//    let indexPath = SubrowIndexPath(indexPath: IndexPath(row: address.rowIndex, column: address.columnIndex), subrow: address.subrow)
+//
+//    if !expandableSpreadSheetView.isRowExpanded(at: indexPath.row) {
+//      return
+//    }
+    
     if expandableScrollView.visibleSubCells.contains(address) {
-      //print("expandableScrollView visibleSubCells.contains(address) \(address)")
+      print("expandableScrollView visibleSubCells.contains(address) \(address)")
       if let cell = expandableScrollView.visibleSubCells[address] {
-        //print("expandableScrollView let cell = expandableScrollView.visibleSubCells[address] \(address)")
+        print("expandableScrollView let cell = expandableScrollView.visibleSubCells[address] \(address)")
         cell.frame = frame
         subcellOrigins[address] = frame.origin
         gridlines = cell.gridlines
@@ -525,7 +546,7 @@ final class LayoutEngineExpandable: LayoutEngine {
       border = (cell.borders, cell.hasBorder)
       
       scrollView.insertSubview(cell, at: 0)
-      //print("expandableScrollView scrollView.insertSubview(cell, at: 0) \(address)")
+      print("expandableScrollView scrollView.insertSubview(cell, at: 0) \(address)")
       
       expandableScrollView.visibleSubCells[address] = cell
       
