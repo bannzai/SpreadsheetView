@@ -160,6 +160,10 @@ open class SpreadsheetView: UIView {
     return cells_.sorted()
   }
   
+  public func visibleCell(for indexPath: IndexPath) -> Cell? {
+    return visibleCells.first(where: { $0.indexPath.column == indexPath.column && $0.indexPath.row == indexPath.row })
+  }
+  
   
   /// An array of the visible items in the collection view.
   /// - Note: The value of this property is a sorted array of IndexPath objects, each of which corresponds to a visible cell in the spreadsheet view.
