@@ -89,9 +89,10 @@ final class LayoutEngineExpandable: LayoutEngine {
     cellOrigin.x = insets.x + columnRecords[startColumnIndex] + intercellSpacing.width
     
     var columnIndex = startColumnIndex + startColumn
+    var columnStep = 1
     
     while columnIndex < columnCount {
-      var columnStep = 1
+      
       defer {
         columnIndex += columnStep
       }
@@ -293,17 +294,26 @@ final class LayoutEngineExpandable: LayoutEngine {
         let isRowExpanded = spreadsheetExpandableView?.isRowExpanded(at: row) ?? false
         let subrowOffsetY = isRowExpanded ? subrowHeights[subrow] : 0
         
-//        guard subcellOrigin.y + subrowOffsetY > visibleRect.minY else {
-//          subcellOrigin.y += subrowOffsetY + intercellSpacing.width
-//          continue
-//        }
-//
-//        guard subcellOrigin.y <= visibleRect.maxY else {
-//          continue
-//        }
+        guard subcellOrigin.x + columnWidth > visibleRect.minX else {
+          subcellOrigin.x += columnWidth + intercellSpacing.width
+          continue
+        }
+        guard subcellOrigin.x <= visibleRect.maxX else {
+          subcellOrigin.x += columnWidth + intercellSpacing.width
+          return
+        }
+        guard subcellOrigin.y + subrowOffsetY > visibleRect.minY else {
+          subcellOrigin.y += subrowOffsetY + intercellSpacing.width
+          continue
+        }
+        guard subcellOrigin.y <= visibleRect.maxY else {
+          return
+        }
         
         let address = SubCellAddress(row: row, column: column, rowIndex: rowIndex, columnIndex: columnIndex, subrow: subrow)
         visibleSubCellAddresses.insert(address)
+        
+        print("layoutSubCells for address: \(address)")
         
         let cellSize = CGSize(width: columnWidth, height: subrowHeights[subrow])
         layoutSubcell(address: address, frame: CGRect(origin: subcellOrigin, size: cellSize))
@@ -317,6 +327,7 @@ final class LayoutEngineExpandable: LayoutEngine {
   
   func expandSubCells(at row: Int) {
     
+    cellOrigin = .zero
     enumerateColumns(currentRow: row, currentRowIndex: row)
     
     // views for row sub cells
@@ -330,7 +341,7 @@ final class LayoutEngineExpandable: LayoutEngine {
       if cellAddress.row == row, let cellView = scrollViewExpandable?.visibleCells[cellAddress] {
         cellAtRowOriginY = cellView.frame.origin.y
         cellAtRowHeight = cellView.frame.height
-        for (subcellAddress, _) in self.subcellOrigins.filter({ $0.key.row == cellAddress.row && $0.key.column == cellAddress.column}) {
+        for (subcellAddress, _) in self.subcellOrigins.filter({ $0.key.row == cellAddress.row && $0.key.column == cellAddress.column }) {
           subcellsAtRowViews[subcellAddress] = scrollViewExpandable?.visibleSubCells[subcellAddress]
         }
       }
@@ -419,7 +430,7 @@ final class LayoutEngineExpandable: LayoutEngine {
       if cellAddress.row == row, let cellView = scrollViewExpandable?.visibleCells[cellAddress] {
         cellAtRowOriginY = cellView.frame.origin.y
         //scrollView.bringSubviewToFront(cellView)
-        for (subcellAddress, _) in self.subcellOrigins.filter({ $0.key.row == cellAddress.row && $0.key.column == cellAddress.column}) {
+        for (subcellAddress, _) in self.subcellOrigins.filter({ $0.key.row == cellAddress.row && $0.key.column == cellAddress.column }) {
           subcellsAtRowViews[subcellAddress] = scrollViewExpandable?.visibleSubCells[subcellAddress]
         }
       }
@@ -429,22 +440,22 @@ final class LayoutEngineExpandable: LayoutEngine {
       return lhs.subrow < rhs.subrow
     }
     
-    UIView.animate(withDuration: 0.3, animations: {
-      
-      var expandedSubrowsAtRowHeight:CGFloat = 0
-      var currentSubRow = -1
-      
-      for subcellAddress in orderedSubcellAddresses {
-        if let subcell = subcellsAtRowViews[subcellAddress] {
-          subcell.frame.origin.y = cellAtRowOriginY
-          if currentSubRow != subcellAddress.subrow {
-            expandedSubrowsAtRowHeight += subcell.frame.height + self.intercellSpacing.height
-          }
-          currentSubRow = subcellAddress.subrow
+    var expandedSubrowsAtRowHeight:CGFloat = 0
+    var currentSubRow = -1
+    
+    for subcellAddress in orderedSubcellAddresses {
+      if let subcell = subcellsAtRowViews[subcellAddress] {
+        //subcell.frame.origin.y = cellAtRowOriginY
+        if currentSubRow != subcellAddress.subrow {
+          expandedSubrowsAtRowHeight += subcell.frame.height + self.intercellSpacing.height
         }
+        currentSubRow = subcellAddress.subrow
       }
-      
-      expandedSubrowsAtRowHeight += self.intercellSpacing.height
+    }
+    
+    expandedSubrowsAtRowHeight += self.intercellSpacing.height
+    
+    UIView.animate(withDuration: 0.3, animations: {
        
        let nextRow = row + 1
        
@@ -489,6 +500,13 @@ final class LayoutEngineExpandable: LayoutEngine {
        }
       
     }) { _ in
+      
+      for subcellAddress in orderedSubcellAddresses {
+        if let subcell = subcellsAtRowViews[subcellAddress] {
+          subcell.frame.origin.y = cellAtRowOriginY
+        }
+      }
+      
       subcellsAtRowViews.values.forEach({ $0.removeFromSuperview() })
       subcellsAtRowViews.keys.forEach({ (address) in
         if let addresses = self.scrollViewExpandable?.visibleSubCells.addresses {
