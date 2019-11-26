@@ -160,6 +160,10 @@ open class SpreadsheetView: UIView {
     return cells_.sorted()
   }
   
+  public func visibleCell(for indexPath: IndexPath) -> Cell? {
+    return visibleCells.first(where: { $0.indexPath.column == indexPath.column && $0.indexPath.row == indexPath.row })
+  }
+  
   
   /// An array of the visible items in the collection view.
   /// - Note: The value of this property is a sorted array of IndexPath objects, each of which corresponds to a visible cell in the spreadsheet view.
@@ -711,17 +715,17 @@ open class SpreadsheetView: UIView {
   public func indexPathForItem(at point: CGPoint) -> IndexPath? {
     var row = 0
     var column = 0
-    if tableView.convert(tableView.bounds, to: self).contains(point), let indexPath = indexPathForItem(at: point, in: tableView) {
+    if columnHeaderViewRight.convert(columnHeaderViewRight.bounds, to: self).contains(point), let indexPath = indexPathForItem(at: point, in: columnHeaderViewRight) {
+      (row, column) = (indexPath.row + frozenRows, indexPath.column + (numberOfColumns - frozenColumnsRight))
+    } else if cornerViewRight.convert(cornerViewRight.bounds, to: self).contains(point), let indexPath = indexPathForItem(at: point, in: cornerViewRight) {
+      (row, column) = (indexPath.row, indexPath.column + (numberOfColumns - frozenColumnsRight))
+    } else if tableView.convert(tableView.bounds, to: self).contains(point), let indexPath = indexPathForItem(at: point, in: tableView) {
       (row, column) = (indexPath.row + frozenRows, indexPath.column + frozenColumns)
     } else if rowHeaderView.convert(rowHeaderView.bounds, to: self).contains(point), let indexPath = indexPathForItem(at: point, in: rowHeaderView) {
       (row, column) = (indexPath.row, indexPath.column + frozenColumns)
     } else if columnHeaderView.convert(columnHeaderView.bounds, to: self).contains(point), let indexPath = indexPathForItem(at: point, in: columnHeaderView) {
       (row, column) = (indexPath.row + frozenRows, indexPath.column)
-    }  else if columnHeaderViewRight.convert(columnHeaderViewRight.bounds, to: self).contains(point), let indexPath = indexPathForItem(at: point, in: columnHeaderViewRight) {
-      (row, column) = (indexPath.row + frozenRows, indexPath.column)
     } else if cornerView.convert(cornerView.bounds, to: self).contains(point), let indexPath = indexPathForItem(at: point, in: cornerView) {
-      (row, column) = (indexPath.row, indexPath.column)
-    } else if cornerViewRight.convert(cornerViewRight.bounds, to: self).contains(point), let indexPath = indexPathForItem(at: point, in: cornerViewRight) {
       (row, column) = (indexPath.row, indexPath.column)
     } else {
       return nil

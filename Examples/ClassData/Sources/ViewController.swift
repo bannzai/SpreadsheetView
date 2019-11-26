@@ -35,11 +35,11 @@ class ViewController: UIViewController, SpreadsheetExpandableViewDataSource, Spr
       case 0:
         return 0
       case 1:
-        return 2
+        return 10
       case 2:
-        return 3
+        return 8
       default:
-        return 1
+        return 15
       }
     }
   
