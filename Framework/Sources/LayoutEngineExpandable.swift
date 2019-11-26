@@ -258,7 +258,6 @@ final class LayoutEngineExpandable: LayoutEngine {
       }
     } else {
       let indexPath = IndexPath(row: address.rowIndex, column: address.columnIndex)
-      
       let cell = dataSource.spreadsheetView(spreadsheetView, cellForItemAt: indexPath) ?? spreadsheetView.dequeueReusableCell(withReuseIdentifier: blankCellReuseIdentifier, for: indexPath)
       guard let _ = cell.reuseIdentifier else {
         fatalError("the cell returned from `spreadsheetView(_:cellForItemAt:)` does not have a `reuseIdentifier` - cells must be retrieved by calling `dequeueReusableCell(withReuseIdentifier:for:)`")
@@ -313,22 +312,18 @@ final class LayoutEngineExpandable: LayoutEngine {
         let address = SubCellAddress(row: row, column: column, rowIndex: rowIndex, columnIndex: columnIndex, subrow: subrow)
         visibleSubCellAddresses.insert(address)
         
-        print("layoutSubCells for address: \(address)")
-        
         let cellSize = CGSize(width: columnWidth, height: subrowHeights[subrow])
         layoutSubcell(address: address, frame: CGRect(origin: subcellOrigin, size: cellSize))
         
         subcellOrigin.y += subrowOffsetY > 0 ? subrowOffsetY + intercellSpacing.width : 0
       }
-      
-      //cellOrigin.y += intercellSpacing.width
     }
   }
   
   func expandSubCells(at row: Int) {
     
     cellOrigin = .zero
-    enumerateColumns(currentRow: row, currentRowIndex: row)
+    let _ = enumerateColumns(currentRow: row, currentRowIndex: row)
     
     // views for row sub cells
     var subcellsAtRowViews = [SubCellAddress: Cell]()
@@ -355,6 +350,7 @@ final class LayoutEngineExpandable: LayoutEngine {
       
       var expandedSubrowsAtRowHeight:CGFloat = 0
       var currentSubRow = -1
+      
       for subcellAddress in orderedSubcellAddresses {
         if let subcell = subcellsAtRowViews[subcellAddress] {
           let subrowsInRowHeightCache = self.subrowsInRowHeightCache[row] ?? []
@@ -373,7 +369,6 @@ final class LayoutEngineExpandable: LayoutEngine {
       expandedSubrowsAtRowHeight += self.intercellSpacing.height
       
       for belowRow in (row + 1)...self.rowCount {
-        
         var callsCount = 0
         
         for (cellAddress, _) in self.cellOrigins {
@@ -407,14 +402,21 @@ final class LayoutEngineExpandable: LayoutEngine {
             }
             
           }
-          
         }
         
+        for (cellAddress, _) in self.horizontalGridLayouts {
+          if cellAddress.row == belowRow + 1 {
+            if self.scrollView.visibleHorizontalGridlines.contains(cellAddress) {
+              if let gridline = self.scrollView.visibleHorizontalGridlines[cellAddress] {
+                gridline.frame.origin.y += expandedSubrowsAtRowHeight
+              }
+            }
+          }
+        }
       }
       
-      
     }) { _ in
-        
+      self.renderHorizontalSubGridlines()
     }
     
   }
@@ -423,12 +425,9 @@ final class LayoutEngineExpandable: LayoutEngine {
     // views for row sub cells
     var subcellsAtRowViews = [SubCellAddress: Cell]()
   
-    var cellAtRowOriginY:CGFloat = 0
-    
     for (cellAddress, _) in cellOrigins {
       //Find row all sub cell origins and views
-      if cellAddress.row == row, let cellView = scrollViewExpandable?.visibleCells[cellAddress] {
-        cellAtRowOriginY = cellView.frame.origin.y
+      if cellAddress.row == row, let _ = scrollViewExpandable?.visibleCells[cellAddress] {
         //scrollView.bringSubviewToFront(cellView)
         for (subcellAddress, _) in self.subcellOrigins.filter({ $0.key.row == cellAddress.row && $0.key.column == cellAddress.column }) {
           subcellsAtRowViews[subcellAddress] = scrollViewExpandable?.visibleSubCells[subcellAddress]
@@ -455,9 +454,9 @@ final class LayoutEngineExpandable: LayoutEngine {
     
     expandedSubrowsAtRowHeight += self.intercellSpacing.height
     
+    let nextRow = row + 1
+    
     UIView.animate(withDuration: 0.3, animations: {
-       
-       let nextRow = row + 1
        
        for belowRow in nextRow...self.rowCount {
 
@@ -501,13 +500,14 @@ final class LayoutEngineExpandable: LayoutEngine {
       
     }) { _ in
       
-      for subcellAddress in orderedSubcellAddresses {
-        if let subcell = subcellsAtRowViews[subcellAddress] {
-          subcell.frame.origin.y = cellAtRowOriginY
-        }
-      }
+//      for subcellAddress in orderedSubcellAddresses {
+//        if let subcell = subcellsAtRowViews[subcellAddress] {
+//          subcell.frame.origin.y = cellAtRowOriginY
+//        }
+//      }
       
       subcellsAtRowViews.values.forEach({ $0.removeFromSuperview() })
+      
       subcellsAtRowViews.keys.forEach({ (address) in
         if let addresses = self.scrollViewExpandable?.visibleSubCells.addresses {
           self.scrollViewExpandable?.visibleSubCells.addresses = addresses.filter({ $0 != address })
@@ -516,6 +516,26 @@ final class LayoutEngineExpandable: LayoutEngine {
           self.scrollViewExpandable?.visibleSubCells.pairs = pairs.filter({ $0.key != address })
         }
       })
+      
+      for (address, _) in self.horizontalSubGridLayouts {
+        if address.row == row, self.scrollViewExpandable?.visibleSubHorizontalGridlines.contains(address) ?? false {
+          if let gridline = self.scrollViewExpandable?.visibleSubHorizontalGridlines[address] {
+            gridline.removeFromSuperlayer()
+          }
+        }
+        self.visibleSubHorizontalGridAddresses.remove(address)
+      }
+      
+      for (cellAddress, _) in self.horizontalGridLayouts {
+        if cellAddress.row == nextRow + 1 {
+          if self.scrollView.visibleHorizontalGridlines.contains(cellAddress) {
+            if let gridline = self.scrollView.visibleHorizontalGridlines[cellAddress] {
+              gridline.frame.origin.y -= expandedSubrowsAtRowHeight
+            }
+          }
+        }
+      }
+      
     }
   }
   
@@ -529,16 +549,8 @@ final class LayoutEngineExpandable: LayoutEngine {
     let gridlines: Gridlines?
     let border: (borders: Borders?, hasBorders: Bool)
     
-//    let indexPath = SubrowIndexPath(indexPath: IndexPath(row: address.rowIndex, column: address.columnIndex), subrow: address.subrow)
-//
-//    if !expandableSpreadSheetView.isRowExpanded(at: indexPath.row) {
-//      return
-//    }
-    
     if expandableScrollView.visibleSubCells.contains(address) {
-      print("expandableScrollView visibleSubCells.contains(address) \(address)")
       if let cell = expandableScrollView.visibleSubCells[address] {
-        print("expandableScrollView let cell = expandableScrollView.visibleSubCells[address] \(address)")
         cell.frame = frame
         subcellOrigins[address] = frame.origin
         gridlines = cell.gridlines
@@ -557,14 +569,11 @@ final class LayoutEngineExpandable: LayoutEngine {
       cell.indexPath = indexPath.indexPath
       cell.subrow = indexPath.subrow
       cell.frame = frame
-      //cell.isHighlighted = highlightedIndexPaths.contains(indexPath)
-      //cell.isSelected = selectedIndexPaths.contains(indexPath)
       
       gridlines = cell.gridlines
       border = (cell.borders, cell.hasBorder)
       
       scrollView.insertSubview(cell, at: 0)
-      print("expandableScrollView scrollView.insertSubview(cell, at: 0) \(address)")
       
       expandableScrollView.visibleSubCells[address] = cell
       
@@ -640,8 +649,18 @@ final class LayoutEngineExpandable: LayoutEngine {
   }
   
   override func renderHorizontalGridlines() {
-    guard let expandableScrollView = scrollView as? ScrollViewExpandable else {
+    guard let _ = scrollView as? ScrollViewExpandable else {
       super.renderHorizontalGridlines()
+      return
+    }
+    
+    renderHorizontalSubGridlines()
+    
+    super.renderHorizontalGridlines()
+  }
+  
+  func renderHorizontalSubGridlines() {
+    guard let expandableScrollView = scrollView as? ScrollViewExpandable else {
       return
     }
     
@@ -677,8 +696,6 @@ final class LayoutEngineExpandable: LayoutEngine {
       }
       visibleSubHorizontalGridAddresses.insert(address)
     }
-    
-    super.renderHorizontalGridlines()
   }
   
   override func renderVerticalGridlines() {
