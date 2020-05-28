@@ -53,6 +53,10 @@ extension CellRange: Hashable {
         return from.hashValue
     }
 
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(from)
+    }
+    
     public static func ==(lhs: CellRange, rhs: CellRange) -> Bool {
         return lhs.from == rhs.from
     }
