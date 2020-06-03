@@ -321,8 +321,21 @@ final class LayoutEngineExpandable: LayoutEngine {
   }
   
   func expandSubCells(at row: Int) {
-    
     cellOrigin = .zero
+
+    let startRowIndex = spreadsheetView.findIndex(in: scrollView.rowRecords, for: visibleRect.origin.y - insets.y)
+    cellOrigin.y = insets.y + scrollView.rowRecords[startRowIndex] + intercellSpacing.height
+
+    for rowIndex in (startRowIndex + startRow)..<row {
+      let row = rowIndex % numberOfRows
+
+      cellOrigin.y += rowHeightCache[row] + intercellSpacing.height + (subrowsInRowHeightCache[row]?.reduce(0, { (result, height) -> CGFloat in
+        var r = result
+        r += (spreadsheetExpandableView?.isRowExpanded(at: row) ?? false) ? CGFloat(height + intercellSpacing.height) : CGFloat(0)
+        return r
+      }) ?? 0)
+    }
+
     let _ = enumerateColumns(currentRow: row, currentRowIndex: row)
     
     // views for row sub cells
