@@ -7,23 +7,23 @@ public class SpreadsheetViewController: UIViewController, SpreadsheetViewDataSou
     public var numberOfColumns: (_ spreadsheetView: SpreadsheetView) -> Int = { _ in return 0 }
     public var numberOfRows: (_ spreadsheetView: SpreadsheetView) -> Int = { _ in return 0 }
 
-    public var widthForColumn: (_ spreadsheetView: SpreadsheetView, _ column: Int) -> CGFloat = { _ in return 0 }
-    public var heightForRow: (_ spreadsheetView: SpreadsheetView, _ column: Int) -> CGFloat = { _ in return 0 }
+    public var widthForColumn: (_ spreadsheetView: SpreadsheetView, _ column: Int) -> CGFloat = { _,_ in return 0 }
+    public var heightForRow: (_ spreadsheetView: SpreadsheetView, _ column: Int) -> CGFloat = { _,_ in return 0 }
 
-    public var cellForItemAt: (_ spreadsheetView: SpreadsheetView, _ indexPath: IndexPath) -> Cell? = { _ in return nil }
+    public var cellForItemAt: (_ spreadsheetView: SpreadsheetView, _ indexPath: IndexPath) -> Cell? = { _,_ in return nil }
 
     public var mergedCells: (_ spreadsheetView: SpreadsheetView) -> [CellRange] = { _ in return [] }
 
     public var frozenColumns: (_ spreadsheetView: SpreadsheetView) -> Int = { _ in return 0 }
     public var frozenRows: (_ spreadsheetView: SpreadsheetView) -> Int = { _ in return 0 }
 
-    public var shouldHighlightItemAt: (_ spreadsheetView: SpreadsheetView, _ indexPath: IndexPath) -> Bool = { _ in return true }
-    public var didHighlightItemAt: (_ spreadsheetView: SpreadsheetView, _ indexPath: IndexPath) -> Void = { _ in }
-    public var didUnhighlightItemAt: (_ spreadsheetView: SpreadsheetView, _ indexPath: IndexPath) -> Void = { _ in }
-    public var shouldSelectItemAt: (_ spreadsheetView: SpreadsheetView, _ indexPath: IndexPath) -> Bool = { _ in return true }
-    public var shouldDeselectItemAt: (_ spreadsheetView: SpreadsheetView, _ indexPath: IndexPath) -> Bool = { _ in return true }
-    public var didSelectItemAt: (_ spreadsheetView: SpreadsheetView, _ indexPath: IndexPath) -> Void = { _ in }
-    public var didDeselectItemAt: (_ spreadsheetView: SpreadsheetView, _ indexPath: IndexPath) -> Void = { _ in }
+    public var shouldHighlightItemAt: (_ spreadsheetView: SpreadsheetView, _ indexPath: IndexPath) -> Bool = { _,_ in return true }
+    public var didHighlightItemAt: (_ spreadsheetView: SpreadsheetView, _ indexPath: IndexPath) -> Void = { _,_ in }
+    public var didUnhighlightItemAt: (_ spreadsheetView: SpreadsheetView, _ indexPath: IndexPath) -> Void = { _,_ in }
+    public var shouldSelectItemAt: (_ spreadsheetView: SpreadsheetView, _ indexPath: IndexPath) -> Bool = { _,_ in return true }
+    public var shouldDeselectItemAt: (_ spreadsheetView: SpreadsheetView, _ indexPath: IndexPath) -> Bool = { _,_ in return true }
+    public var didSelectItemAt: (_ spreadsheetView: SpreadsheetView, _ indexPath: IndexPath) -> Void = { _,_ in }
+    public var didDeselectItemAt: (_ spreadsheetView: SpreadsheetView, _ indexPath: IndexPath) -> Void = { _,_ in }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
