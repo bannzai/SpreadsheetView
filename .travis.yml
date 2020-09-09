@@ -16,7 +16,7 @@ jobs:
     osx_image: xcode9
     script:
     - bundle exec rake test-without-building:simulator
-      DESTINATIONS="['name=iPhone 4s,OS=9.3']"
+      DESTINATIONS="['name=iPhone 5s,OS=9.3']"
     after_success:
     - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
   - <<: *test
@@ -82,13 +82,13 @@ jobs:
   - stage: 'test (xcode8.3)'
     osx_image: xcode8.3
     script:
-    - bundle exec rake test:simulator DESTINATIONS="['name=iPhone 4s,OS=9.3']" SWIFT_VERSION=3.0
+    - bundle exec rake test:simulator DESTINATIONS="['name=iPhone 5s,OS=9.3']" SWIFT_VERSION=5.0
     after_success:
     - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
   - stage: 'test (xcode8.3)'
     osx_image: xcode8.3
     script:
-    - bundle exec rake test:simulator DESTINATIONS="['name=iPhone 7,OS=10.3.1']" SWIFT_VERSION=3.0
+    - bundle exec rake test:simulator DESTINATIONS="['name=iPhone 8,OS=10.3.1']" SWIFT_VERSION=5.0
     after_success:
     - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
   - stage: carthage
@@ -98,8 +98,8 @@ jobs:
   - stage: carthage
     osx_image: xcode8.3
     script:
-    - echo SWIFT_VERSION=\"3.0\" > swift3.xcconfig
-    - XCODE_XCCONFIG_FILE=`pwd`/swift3.xcconfig carthage build --no-skip-current
+    - echo SWIFT_VERSION=\"5.0\" > swift5.xcconfig
+    - XCODE_XCCONFIG_FILE=`pwd`/swift5.xcconfig carthage build --no-skip-current
 env:
   global:
   - LANG=en_US.UTF-8
