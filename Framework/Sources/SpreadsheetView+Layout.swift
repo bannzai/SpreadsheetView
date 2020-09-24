@@ -84,6 +84,11 @@ extension SpreadsheetView {
   }
   
   private func layoutDividerViews() {
+    layoutDividerColumns()
+    layoutDividerRows()
+  }
+
+  private func layoutDividerColumns() {
     let leftFoldedColumnsWidth = layoutProperties.columnWidthCache.prefix(upTo: frozenColumns).reduce(0) { $0 + $1 + intercellSpacing.width }
     let rightFoldedColumnsWidth = layoutProperties.columnWidthCache.reversed().prefix(upTo: frozenColumnsRight).reduce(0) { $0 + $1 + intercellSpacing.width }
     
@@ -136,7 +141,29 @@ extension SpreadsheetView {
       columnHeaderView.rightBorder?.backgroundColor = UIColor.clear.cgColor
     }
   }
-  
+
+  private func layoutDividerRows() {
+    if frozenRows < 1 {
+      rowHeaderView.topBorder?.removeFromSuperlayer()
+    } else {
+      rowHeaderView.addBottomBorder(color: UIColor.clear, thickness: self.dividerThickness)
+    }
+
+    if frozenRows < 1 && frozenColumns < 1 && circularScrolling.options.headerStyle != .none {
+      cornerView.bottomBorder?.removeFromSuperlayer()
+    } else {
+      cornerView.addBottomBorder(color: UIColor.clear, thickness: self.dividerThickness)
+    }
+
+    if tableView.contentOffset.y > 0 && !stickyColumnHeader {
+      cornerView.bottomBorder?.backgroundColor = self.dividerColor.cgColor
+      rowHeaderView.bottomBorder?.backgroundColor = self.dividerColor.cgColor
+    } else {
+      cornerView.bottomBorder?.backgroundColor = UIColor.clear.cgColor
+      rowHeaderView.bottomBorder?.backgroundColor = UIColor.clear.cgColor
+    }
+  }
+
   //    private func layout(scrollView: ScrollView) {
   //        let layoutEngine = LayoutEngine(spreadsheetView: self, scrollView: scrollView)
   //        layoutEngine.layout()
