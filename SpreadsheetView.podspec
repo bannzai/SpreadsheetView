@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.screenshots      = 'https://raw.githubusercontent.com/kishikawakatsumi/SpreadsheetView/master/Resources/GanttChart.png', 'https://raw.githubusercontent.com/kishikawakatsumi/SpreadsheetView/master/Resources/Timetable.png', 'https://raw.githubusercontent.com/kishikawakatsumi/SpreadsheetView/master/Resources/DailySchedule_portrait.png'
   s.ios.deployment_target = '8.0'
   s.source_files     = 'Framework/Sources/*.swift'
-  s.pod_target_xcconfig = { 'SWIFT_OPTIMIZATION_LEVEL' => '-Owholemodule', 'APPLICATION_EXTENSION_API_ONLY' => 'YES' }
+  s.pod_target_xcconfig = { 'SWIFT_OPTIMIZATION_LEVEL' => '-O', 'APPLICATION_EXTENSION_API_ONLY' => 'YES' }
   s.frameworks = 'UIKit'
   s.source           = { :git => 'https://github.com/kishikawakatsumi/SpreadsheetView.git', :tag => "v#{s.version}" }
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
