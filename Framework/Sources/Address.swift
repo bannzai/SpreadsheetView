@@ -14,6 +14,11 @@ struct Address: Hashable {
     let rowIndex: Int
     let columnIndex: Int
 
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(rowIndex)
+        hasher.combine(columnIndex)
+    }
+
     static func ==(lhs: Address, rhs: Address) -> Bool {
         return lhs.rowIndex == rhs.rowIndex && lhs.columnIndex == rhs.columnIndex
     }

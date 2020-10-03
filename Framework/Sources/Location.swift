@@ -17,6 +17,11 @@ public struct Location: Hashable {
         self.column = column
     }
 
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(row)
+        hasher.combine(column)
+    }
+
     init(indexPath: IndexPath) {
         self.init(row: indexPath.row, column: indexPath.column)
     }
