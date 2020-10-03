@@ -166,100 +166,100 @@ public class CircularScrollingConfigurationBuilder<T: CircularScrollingConfigura
 }
 
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Horizontally {
-    public var rowHeaderStartsFirstColumn: CircularScrollingConfigurationBuilder<CircularScrolling.Horizontally.RowHeaderStartsFirstColumn> {
+    var rowHeaderStartsFirstColumn: CircularScrollingConfigurationBuilder<CircularScrolling.Horizontally.RowHeaderStartsFirstColumn> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Horizontally.RowHeaderStartsFirstColumn>()
     }
-    public var columnHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Horizontally.ColumnHeaderNotRepeated> {
+    var columnHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Horizontally.ColumnHeaderNotRepeated> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Horizontally.ColumnHeaderNotRepeated>()
     }
 }
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Horizontally.RowHeaderStartsFirstColumn {}
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Horizontally.ColumnHeaderNotRepeated {
-    public var rowHeaderStartsFirstColumn: CircularScrollingConfigurationBuilder<CircularScrolling.Horizontally.ColumnHeaderNotRepeated.RowHeaderStartsFirstColumn> {
+    var rowHeaderStartsFirstColumn: CircularScrollingConfigurationBuilder<CircularScrolling.Horizontally.ColumnHeaderNotRepeated.RowHeaderStartsFirstColumn> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Horizontally.ColumnHeaderNotRepeated.RowHeaderStartsFirstColumn>()
     }
 }
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Horizontally.ColumnHeaderNotRepeated.RowHeaderStartsFirstColumn {}
 
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Vertically {
-    public var columnHeaderStartsFirstRow: CircularScrollingConfigurationBuilder<CircularScrolling.Vertically.ColumnHeaderStartsFirstRow> {
+    var columnHeaderStartsFirstRow: CircularScrollingConfigurationBuilder<CircularScrolling.Vertically.ColumnHeaderStartsFirstRow> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Vertically.ColumnHeaderStartsFirstRow>()
     }
-    public var rowHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Vertically.RowHeaderNotRepeated> {
+    var rowHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Vertically.RowHeaderNotRepeated> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Vertically.RowHeaderNotRepeated>()
     }
 }
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Vertically.ColumnHeaderStartsFirstRow {}
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Vertically.RowHeaderNotRepeated {
-    public var columnHeaderStartsFirstRow: CircularScrollingConfigurationBuilder<CircularScrolling.Vertically.RowHeaderNotRepeated.ColumnHeaderStartsFirstRow> {
+    var columnHeaderStartsFirstRow: CircularScrollingConfigurationBuilder<CircularScrolling.Vertically.RowHeaderNotRepeated.ColumnHeaderStartsFirstRow> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Vertically.RowHeaderNotRepeated.ColumnHeaderStartsFirstRow>()
     }
 }
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Vertically.RowHeaderNotRepeated.ColumnHeaderStartsFirstRow {}
 
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Both {
-    public var rowHeaderStartsFirstColumn: CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderStartsFirstColumn> {
+    var rowHeaderStartsFirstColumn: CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderStartsFirstColumn> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderStartsFirstColumn>()
     }
-    public var columnHeaderStartsFirstRow: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderStartsFirstRow> {
+    var columnHeaderStartsFirstRow: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderStartsFirstRow> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderStartsFirstRow>()
     }
-    public var columnHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated> {
+    var columnHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated>()
     }
-    public var rowHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated> {
+    var rowHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated>()
     }
 }
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Both.RowHeaderStartsFirstColumn {
-    public var rowHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderStartsFirstColumn.RowHeaderNotRepeated> {
+    var rowHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderStartsFirstColumn.RowHeaderNotRepeated> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderStartsFirstColumn.RowHeaderNotRepeated>()
     }
 }
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Both.ColumnHeaderStartsFirstRow {
-    public var columnHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderStartsFirstRow.ColumnHeaderNotRepeated> {
+    var columnHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderStartsFirstRow.ColumnHeaderNotRepeated> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderStartsFirstRow.ColumnHeaderNotRepeated>()
     }
 }
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Both.RowHeaderStartsFirstColumn.RowHeaderNotRepeated {}
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Both.ColumnHeaderStartsFirstRow.ColumnHeaderNotRepeated {}
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Both.ColumnHeaderNotRepeated {
-    public var rowHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated.RowHeaderNotRepeated> {
+    var rowHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated.RowHeaderNotRepeated> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated.RowHeaderNotRepeated>()
     }
-    public var rowHeaderStartsFirstColumn: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated.RowHeaderStartsFirstColumn> {
+    var rowHeaderStartsFirstColumn: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated.RowHeaderStartsFirstColumn> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated.RowHeaderStartsFirstColumn>()
     }
-    public var columnHeaderStartsFirstRow: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated.ColumnHeaderStartsFirstRow> {
+    var columnHeaderStartsFirstRow: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated.ColumnHeaderStartsFirstRow> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated.ColumnHeaderStartsFirstRow>()
     }
 }
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Both.ColumnHeaderNotRepeated.RowHeaderNotRepeated {
-    public var rowHeaderStartsFirstColumn: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated.RowHeaderNotRepeated.RowHeaderStartsFirstColumn> {
+    var rowHeaderStartsFirstColumn: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated.RowHeaderNotRepeated.RowHeaderStartsFirstColumn> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated.RowHeaderNotRepeated.RowHeaderStartsFirstColumn>()
     }
-    public var columnHeaderStartsFirstRow: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated.RowHeaderNotRepeated.ColumnHeaderStartsFirstRow> {
+    var columnHeaderStartsFirstRow: CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated.RowHeaderNotRepeated.ColumnHeaderStartsFirstRow> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.ColumnHeaderNotRepeated.RowHeaderNotRepeated.ColumnHeaderStartsFirstRow>()
     }
 }
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Both.ColumnHeaderNotRepeated.RowHeaderNotRepeated.RowHeaderStartsFirstColumn {}
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Both.ColumnHeaderNotRepeated.RowHeaderNotRepeated.ColumnHeaderStartsFirstRow {}
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Both.RowHeaderNotRepeated {
-    public var columnHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated.ColumnHeaderNotRepeated> {
+    var columnHeaderNotRepeated: CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated.ColumnHeaderNotRepeated> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated.ColumnHeaderNotRepeated>()
     }
-    public var rowHeaderStartsFirstColumn: CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated.RowHeaderStartsFirstColumn> {
+    var rowHeaderStartsFirstColumn: CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated.RowHeaderStartsFirstColumn> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated.RowHeaderStartsFirstColumn>()
     }
-    public var columnHeaderStartsFirstRow: CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated.ColumnHeaderStartsFirstRow> {
+    var columnHeaderStartsFirstRow: CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated.ColumnHeaderStartsFirstRow> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated.ColumnHeaderStartsFirstRow>()
     }
 }
 public extension CircularScrollingConfigurationBuilder where T: CircularScrolling.Both.RowHeaderNotRepeated.ColumnHeaderNotRepeated {
-    public var rowHeaderStartsFirstColumn: CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated.ColumnHeaderNotRepeated.RowHeaderStartsFirstColumn> {
+    var rowHeaderStartsFirstColumn: CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated.ColumnHeaderNotRepeated.RowHeaderStartsFirstColumn> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated.ColumnHeaderNotRepeated.RowHeaderStartsFirstColumn>()
     }
-    public var columnHeaderStartsFirstRow: CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated.ColumnHeaderNotRepeated.ColumnHeaderStartsFirstRow> {
+    var columnHeaderStartsFirstRow: CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated.ColumnHeaderNotRepeated.ColumnHeaderStartsFirstRow> {
         return CircularScrollingConfigurationBuilder<CircularScrolling.Both.RowHeaderNotRepeated.ColumnHeaderNotRepeated.ColumnHeaderStartsFirstRow>()
     }
 }
