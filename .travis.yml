@@ -6,14 +6,14 @@ cache:
 jobs:
   include:
   - stage: build
-    osx_image: xcode12u
+    osx_image: xcode12
     install:
     - bundle install --path=vendor/bundle --binstubs=vendor/bin
     script:
     - bundle exec rake build-for-testing:simulator
   - &test
-    stage: 'test (xcode12u)'
-    osx_image: xcode12u
+    stage: 'test (xcode12)'
+    osx_image: xcode12
     script:
     - bundle exec rake test-without-building:simulator
       DESTINATIONS="['name=iPhone SE,OS=14.0']"
@@ -86,7 +86,7 @@ jobs:
     after_success:
     - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
   - stage: carthage
-    osx_image: xcode12u
+    osx_image: xcode12
     script:
     - carthage build --no-skip-current
 env:
