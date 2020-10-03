@@ -86,7 +86,7 @@ jobs:
     after_success:
     - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
   - stage: carthage
-    osx_image: xcode9
+    osx_image: xcode12u
     script:
     - carthage build --no-skip-current
 env:
