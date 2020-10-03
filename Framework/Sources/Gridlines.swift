@@ -19,9 +19,6 @@ public struct Gridlines {
     }
 }
 
-@available(*, deprecated: 0.6.3, renamed: "Gridlines")
-public typealias Grids = Gridlines
-
 public enum GridStyle {
     case `default`
     case none
