@@ -6,7 +6,7 @@ namespace :test do
     configuration = ENV['CONFIGURATION'] || 'Release'
     destinations = eval(ENV['DESTINATIONS'] || '[]')
     testcase = ENV['TESTCASE']
-    swift_version = ENV['SWIFT_VERSION'] || '4.0'
+    swift_version = ENV['SWIFT_VERSION'] || '5.0'
 
     t.workspace = 'SpreadsheetView'
     t.scheme = 'SpreadsheetView'
