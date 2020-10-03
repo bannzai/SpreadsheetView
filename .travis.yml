@@ -16,7 +16,7 @@ jobs:
     osx_image: xcode12
     script:
     - bundle exec rake test-without-building:simulator
-      DESTINATIONS="['name=iPhone SE,OS=14.0']"
+      DESTINATIONS="['name=iPhone SE (2nd generation),OS=14.0']"
     after_success:
     - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
   - <<: *test
