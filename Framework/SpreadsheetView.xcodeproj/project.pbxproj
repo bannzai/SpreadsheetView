@@ -379,10 +379,9 @@
 			};
 			buildConfigurationList = 149E6A631EADE047000D851D /* Build configuration list for PBXProject "SpreadsheetView" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);

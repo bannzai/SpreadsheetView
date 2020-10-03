@@ -156,10 +156,9 @@
 			};
 			buildConfigurationList = 140D6D0A1EC41F3500DFF8C1 /* Build configuration list for PBXProject "Timetable" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);

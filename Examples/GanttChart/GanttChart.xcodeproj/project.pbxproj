@@ -150,10 +150,9 @@
 			};
 			buildConfigurationList = 1497BDF41EBFC054003186A3 /* Build configuration list for PBXProject "GanttChart" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
