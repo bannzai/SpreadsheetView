@@ -6,14 +6,14 @@ cache:
 jobs:
   include:
   - stage: build
-    osx_image: xcode9
+    osx_image: xcode12u
     install:
     - bundle install --path=vendor/bundle --binstubs=vendor/bin
     script:
     - bundle exec rake build-for-testing:simulator
   - &test
-    stage: 'test (xcode9)'
-    osx_image: xcode9
+    stage: 'test (xcode12u)'
+    osx_image: xcode12u
     script:
     - bundle exec rake test-without-building:simulator
       DESTINATIONS="['name=iPhone 4s,OS=9.3']"
