@@ -31,7 +31,7 @@ jobs:
     - <%= k %>
 <%- end -%>
   - &test_ipad
-    stage: 'test (iphone)'
+    stage: 'test (ipad)'
     osx_image: xcode12
     script:
     - bundle exec rake build-for-testing:simulator

@@ -43,7 +43,7 @@ jobs:
     script:
     - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone SE (2nd generation),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp
   - &test_ipad
-    stage: 'test (iphone)'
+    stage: 'test (ipad)'
     osx_image: xcode12
     script:
     - bundle exec rake build-for-testing:simulator
