@@ -10,7 +10,7 @@ import XCTest
 @testable import SpreadsheetView
 
 func waitRunLoop(secs: TimeInterval = 0) {
-    RunLoop.main.run(until: Date(timeIntervalSinceNow: 1 + secs))
+    RunLoop.main.run(until: Date(timeIntervalSinceNow: secs))
 }
 
 func defaultViewController(parameters: Parameters) -> SpreadsheetViewController {
