@@ -28,7 +28,7 @@ extension SpreadsheetView {
     }
 
     func touchesEnded(_ touches: Set<UITouch>, _ event: UIEvent?) {
-        guard let touch = touches.first, touch == currentTouch else {
+        guard let touch = touches.first, touch === currentTouch else {
             return
         }
 
