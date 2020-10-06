@@ -2,14 +2,13 @@
 
 class Binder 
   # You can confrim new device via `xcrun xctrace list devices`
-  def test_target_os_and_device
-    @test_target_os_and_device ||= {
-      '14.0': [
-        'iPad (8th generation)',
-        'iPad Air (4th generation)',
-        'iPad Pro (11-inch) (2nd generation)',
-        'iPad Pro (12.9-inch) (4th generation)',
-        'iPad Pro (9.7-inch)',
+  def latest_os
+    '14.0'
+  end
+
+  def devices
+    @devices ||= {
+      'iphone': [
         'iPhone 11',
         'iPhone 11 Pro',
         'iPhone 11 Pro Max',
@@ -17,24 +16,19 @@ class Binder
         'iPhone 8 Plus',
         'iPhone SE (2nd generation)'
       ],
-      '13.0': [
-        'iPhone 11 Pro Max',
+      'ipad': [
+        'iPad (8th generation)',
+        'iPad Air (4th generation)',
+        'iPad Pro (11-inch) (2nd generation)',
+        'iPad Pro (12.9-inch) (4th generation)',
+        'iPad Pro (9.7-inch)',
       ],
     }
-  end
-
-  def versions
-    test_target_os_and_device.keys
-  end
-
-  def devices(version)
-    test_target_os_and_device[version]
   end
 
   def test_cases
     prefix = 'SpreadsheetViewTests'
     tests = [
-      'SelectionTests',
       'CellRangeTests',
       'CellTests',
       'ConfigurationTests',
@@ -45,24 +39,43 @@ class Binder
       'PerformanceTests',
       'ScrollTests',
       'ViewTests',
+
+      # These has a long time for test.
+      'SelectionTests/testSelectItem',
+      'SelectionTests/testAllowsSelection',
+      'SelectionTests/testAllowsMultipleSelection',
+      'SelectionTests/testTouches',
+      'SelectionTests/testTouchesFrozenColumns',
+      'SelectionTests/testTouchesFrozenRows',
+      'SelectionTests/testTouchesFrozenColumnsAndRows',
     ]
     tests.map { |t| prefix + '/' + t }
   end
 
-  def xcodebuilds
+  def iphone_xcodebuilds
     xcodebuilds = []
-    versions.each { |v|
-      test_cases.each { |t|
-        devices(v).each { |d|
-          xcodebuilds.append(formatted(v, d, t))
-        }
+    devices[:iphone].each { |d|
+      xcodebuilds.append(formatted(latest_os, d, nil))
+    }
+    xcodebuilds
+  end
+
+  def ipad_xcodebuilds
+    xcodebuilds = []
+    test_cases.each { |t|
+      devices[:ipad].each { |d|
+        xcodebuilds.append(formatted(latest_os, d, t))
       }
     }
     xcodebuilds
   end
 
   def formatted(version, device, test_case)
-    "xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=#{device},OS=#{version}' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:#{test_case}"
+    if test_case.nil?
+      "xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=#{device},OS=#{version}' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp"
+    else
+      "xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=#{device},OS=#{version}' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:#{test_case}"
+    end
   end
 
   def get_binding

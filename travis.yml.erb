@@ -18,15 +18,27 @@ jobs:
     - echo 'EXCLUDED_ARCHS__EFFECTIVE_PLATFORM_SUFFIX_simulator__NATIVE_ARCH_64_BIT_x86_64__XCODE_1200 = arm64 arm64e armv7 armv7s armv6 armv8' >> xcode12workarround.xcconfig
     - echo 'EXCLUDED_ARCHS = $(inherited) $(EXCLUDED_ARCHS__EFFECTIVE_PLATFORM_SUFFIX_$(EFFECTIVE_PLATFORM_SUFFIX)__NATIVE_ARCH_64_BIT_$(NATIVE_ARCH_64_BIT)__XCODE_$(XCODE_VERSION_MAJOR))' >> xcode12workarround.xcconfig
     - XCODE_XCCONFIG_FILE=`pwd`/xcode12workarround.xcconfig carthage build --no-skip-current
-  - &test
-    stage: 'test (xcode12)'
+  - &test_iphone
+    stage: 'test (iphone)'
     osx_image: xcode12
     script:
     - bundle exec rake build-for-testing:simulator
     after_success:
     - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
-<%- xcodebuilds.each do |k| -%>
-  - <<: *test
+<%- iphone_xcodebuilds.each do |k| -%>
+  - <<: *test_iphone
+    script:
+    - <%= k %>
+<%- end -%>
+  - &test_ipad
+    stage: 'test (iphone)'
+    osx_image: xcode12
+    script:
+    - bundle exec rake build-for-testing:simulator
+    after_success:
+    - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
+<%- ipad_xcodebuilds.each do |k| -%>
+  - <<: *test_ipad
     script:
     - <%= k %>
 <%- end -%>
