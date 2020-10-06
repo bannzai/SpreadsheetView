@@ -23,17 +23,15 @@ class Binder
   end
 
   def long_time_test_name
-    'SpreadsheetViewTests/SelectionTests'
+    'SpreadsheetViewTests/ScrollTests'
   end
   def long_time_test_methods
     [
-      'SpreadsheetViewTests/SelectionTests/testSelectItem',
-      'SpreadsheetViewTests/SelectionTests/testAllowsSelection',
-      'SpreadsheetViewTests/SelectionTests/testAllowsMultipleSelection',
-      'SpreadsheetViewTests/SelectionTests/testTouches',
-      'SpreadsheetViewTests/SelectionTests/testTouchesFrozenColumns',
-      'SpreadsheetViewTests/SelectionTests/testTouchesFrozenRows',
-      'SpreadsheetViewTests/SelectionTests/testTouchesFrozenColumnsAndRows',
+      "#{long_time_test_name}/testTableViewScrolling",
+      "#{long_time_test_name}/testColumnHeaderViewScrolling",
+      "#{long_time_test_name}/testRowHeaderViewScrolling",
+      "#{long_time_test_name}/testColumnAndRowHeaderViewScrolling",
+      "#{long_time_test_name}/testCircularScrolling",
     ]
   end
 
