@@ -21,6 +21,9 @@ class Binder
         'iPad Pro (9.7-inch)',
       ]
   end
+  def minimum_device
+    'iPhone SE (2nd generation)'
+  end
 
   def long_time_test_name
     'SpreadsheetViewTests/ScrollTests'
