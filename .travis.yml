@@ -21,7 +21,7 @@ jobs:
     stage: 'test'
     osx_image: xcode12
     script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=#{iPhone SE (2nd generation)},OS=#{14.0}' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp
+    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone SE (2nd generation),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp
     after_success:
     - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
   - <<: *test
