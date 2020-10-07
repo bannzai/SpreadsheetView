@@ -33,6 +33,8 @@ jobs:
   - &long_time_test
     stage: 'test (for long time)'
     osx_image: xcode12
+    script:
+    - bundle exec rake build-for-testing:simulator
 <%- xcodebuilds_for_long_time_testing.each do |k| -%>
   - <<: *long_time_test
     script:
