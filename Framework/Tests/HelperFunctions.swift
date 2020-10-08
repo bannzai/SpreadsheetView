@@ -35,7 +35,7 @@ func defaultViewController(parameters: Parameters) -> SpreadsheetViewController 
 }
 
 func showViewController(viewController: UIViewController) {
-    let window = UIWindow()
+    let window = UIWindow(frame: UIScreen.main.bounds)
     window.backgroundColor = .white
     window.rootViewController = viewController
     window.makeKeyAndVisible()

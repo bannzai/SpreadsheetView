@@ -9,11 +9,11 @@
 import Foundation
 
 public extension IndexPath {
-    public var column: Int {
+    var column: Int {
         return section
     }
 
-    public init(row: Int, column: Int) {
+    init(row: Int, column: Int) {
         self.init(row: row, section: column)
     }
 }

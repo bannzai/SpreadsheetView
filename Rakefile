@@ -6,7 +6,7 @@ namespace :test do
     configuration = ENV['CONFIGURATION'] || 'Release'
     destinations = eval(ENV['DESTINATIONS'] || '[]')
     testcase = ENV['TESTCASE']
-    swift_version = ENV['SWIFT_VERSION'] || '4.0'
+    swift_version = ENV['SWIFT_VERSION'] || '5.0'
 
     t.workspace = 'SpreadsheetView'
     t.scheme = 'SpreadsheetView'
@@ -18,6 +18,7 @@ namespace :test do
     t.add_build_option('-enableCodeCoverage', 'YES')
     t.add_build_setting('ENABLE_TESTABILITY', 'YES')
     t.add_build_setting('ONLY_ACTIVE_ARCH', 'NO')
+    t.add_build_setting('EXCLUDED_ARCHS[sdk=iphonesimulator*]', 'arm64')
     t.add_build_setting('SWIFT_VERSION', swift_version)
     t.build_dir = 'build'
     t.after_action do
@@ -38,6 +39,7 @@ namespace 'build-for-testing' do
     t.add_build_option('-enableCodeCoverage', 'YES')
     t.add_build_setting('ENABLE_TESTABILITY', 'YES')
     t.add_build_setting('ONLY_ACTIVE_ARCH', 'NO')
+    t.add_build_setting('EXCLUDED_ARCHS[sdk=iphonesimulator*]', 'arm64')
     t.build_dir = 'build'
     t.hide_shell_script_environment = true
   end

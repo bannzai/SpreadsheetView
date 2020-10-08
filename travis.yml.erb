@@ -1,0 +1,50 @@
+language: objective-c
+cache:
+  directories:
+  - build
+  - vendor
+jobs:
+  include:
+  - stage: build
+    osx_image: xcode12
+    install:
+    - bundle install --path=vendor/bundle --binstubs=vendor/bin
+    script:
+    - bundle exec rake build-for-testing:simulator
+  - stage: carthage
+    osx_image: xcode12
+    script:
+    <%-# Xcode 12 workarround. see: https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323 -%>
+    - echo 'EXCLUDED_ARCHS__EFFECTIVE_PLATFORM_SUFFIX_simulator__NATIVE_ARCH_64_BIT_x86_64__XCODE_1200 = arm64 arm64e armv7 armv7s armv6 armv8' >> xcode12workarround.xcconfig
+    - echo 'EXCLUDED_ARCHS = $(inherited) $(EXCLUDED_ARCHS__EFFECTIVE_PLATFORM_SUFFIX_$(EFFECTIVE_PLATFORM_SUFFIX)__NATIVE_ARCH_64_BIT_$(NATIVE_ARCH_64_BIT)__XCODE_$(XCODE_VERSION_MAJOR))' >> xcode12workarround.xcconfig
+    - XCODE_XCCONFIG_FILE=`pwd`/xcode12workarround.xcconfig carthage build --no-skip-current
+  - &test
+    stage: 'test'
+    osx_image: xcode12
+    script:
+    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=<%= minimum_device %>,OS=<%= latest_os %>' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp
+    after_success:
+    - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
+<%- xcodebuilds_ignore_long_time_testing.each do |k| -%>
+  - <<: *test
+    script:
+    - <%= k %>
+<%- end -%>
+  - &long_time_test
+    stage: 'test (for long time)'
+    osx_image: xcode12
+    script:
+    - bundle exec rake build-for-testing:simulator
+<%- xcodebuilds_for_long_time_testing.each do |k| -%>
+  - <<: *long_time_test
+    script:
+    - <%= k %>
+<%- end -%>
+env:
+  global:
+  - LANG=en_US.UTF-8
+  - LC_ALL=en_US.UTF-8
+branches:
+  only:
+  - master
+skip_cleanup: true
