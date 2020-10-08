@@ -19,21 +19,32 @@ extension SpreadsheetView: UIScrollViewDelegate {
             tableView.delegate = self
         }
 
+        let contentInset: UIEdgeInsets
+        if #available(iOS 11.0, *) {
+            #if swift(>=3.2)
+            contentInset = rootView.adjustedContentInset
+            #else
+            contentInset = rootView.value(forKey: "adjustedContentInset") as! UIEdgeInsets
+            #endif
+        } else {
+            contentInset = rootView.contentInset
+        }
+
         if tableView.contentOffset.x < 0 && !stickyColumnHeader {
-            let offset = tableView.contentOffset.x * -1
+            let offset = tableView.contentOffset.x * -1 - contentInset.left
             cornerView.frame.origin.x = offset
             columnHeaderView.frame.origin.x = offset
         } else {
-            cornerView.frame.origin.x = 0
-            columnHeaderView.frame.origin.x = 0
+            cornerView.frame.origin.x = -contentInset.left
+            columnHeaderView.frame.origin.x = -contentInset.left
         }
         if tableView.contentOffset.y < 0 && !stickyRowHeader {
-            let offset = tableView.contentOffset.y * -1
+            let offset = tableView.contentOffset.y * -1 - contentInset.top
             cornerView.frame.origin.y = offset
             rowHeaderView.frame.origin.y = offset
         } else {
-            cornerView.frame.origin.y = 0
-            rowHeaderView.frame.origin.y = 0
+            cornerView.frame.origin.y = -contentInset.top
+            rowHeaderView.frame.origin.y = -contentInset.top
         }
 
         rowHeaderView.contentOffset.x = tableView.contentOffset.x

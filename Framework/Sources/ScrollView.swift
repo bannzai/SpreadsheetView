@@ -28,6 +28,7 @@ final class ScrollView: UIScrollView, UIGestureRecognizerDelegate {
         var frame = CGRect.zero
         var contentSize = CGSize.zero
         var contentOffset = CGPoint.zero
+        var contentInset = UIEdgeInsets.zero
     }
 
     var hasDisplayedContent: Bool {
