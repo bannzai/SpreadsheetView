@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
                        DESC
   s.homepage         = 'https://github.com/kishikawakatsumi/SpreadsheetView'
   s.screenshots      = 'https://raw.githubusercontent.com/kishikawakatsumi/SpreadsheetView/master/Resources/GanttChart.png', 'https://raw.githubusercontent.com/kishikawakatsumi/SpreadsheetView/master/Resources/Timetable.png', 'https://raw.githubusercontent.com/kishikawakatsumi/SpreadsheetView/master/Resources/DailySchedule_portrait.png'
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
   s.source_files     = 'Framework/Sources/*.swift'
   s.pod_target_xcconfig = { 'SWIFT_WHOLE_MODULE_OPTIMIZATION' => 'YES', 'APPLICATION_EXTENSION_API_ONLY' => 'YES' }
   s.frameworks = 'UIKit'
