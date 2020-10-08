@@ -45,7 +45,7 @@ Full configurable spreadsheet view user interfaces for iOS applications. With th
 ##### Find the above displayed examples in the [`Examples`](https://github.com/kishikawakatsumi/SpreadsheetView/tree/master/Examples) folder.
 
 ## Requirements
-SpreadsheetView is written in Swift 3. Compatible with iOS 8.0+
+SpreadsheetView is written in Swift 5. Compatible with iOS 9.0+
 
 ## Installation
 
