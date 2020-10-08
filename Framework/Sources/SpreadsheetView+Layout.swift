@@ -283,11 +283,7 @@ extension SpreadsheetView {
 
         let contentInset: UIEdgeInsets
         if #available(iOS 11.0, *) {
-            #if swift(>=3.2)
             contentInset = rootView.adjustedContentInset
-            #else
-            contentInset = rootView.value(forKey: "adjustedContentInset") as! UIEdgeInsets
-            #endif
         } else {
             contentInset = rootView.contentInset
         }
