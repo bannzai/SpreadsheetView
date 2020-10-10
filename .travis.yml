@@ -10,7 +10,7 @@ jobs:
     install:
     - bundle install --path=vendor/bundle --binstubs=vendor/bin
     script:
-    - bundle exec rake build-for-testing:simulator
+    - ./scripts/build-for-testing
   - stage: carthage
     osx_image: xcode12
     script:
@@ -21,25 +21,7 @@ jobs:
     stage: 'test'
     osx_image: xcode12
     script:
-    - scripts/build-for-test
-  - <<: *test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -skip-testing:SpreadsheetViewTests/ScrollTests
-  - <<: *test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11 Pro,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -skip-testing:SpreadsheetViewTests/ScrollTests
-  - <<: *test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11 Pro Max,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -skip-testing:SpreadsheetViewTests/ScrollTests
-  - <<: *test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 8,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -skip-testing:SpreadsheetViewTests/ScrollTests
-  - <<: *test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 8 Plus,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -skip-testing:SpreadsheetViewTests/ScrollTests
-  - <<: *test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone SE (2nd generation),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -skip-testing:SpreadsheetViewTests/ScrollTests
+    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone SE (2nd generation),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp
   - <<: *test
     script:
     - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPad (8th generation),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -skip-testing:SpreadsheetViewTests/ScrollTests
@@ -59,25 +41,7 @@ jobs:
     stage: 'test (for long time)'
     osx_image: xcode12
     script:
-    - scripts/build-for-test
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testTableViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11 Pro,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testTableViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11 Pro Max,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testTableViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 8,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testTableViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 8 Plus,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testTableViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone SE (2nd generation),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testTableViewScrolling
+    - ./scripts/build-for-testing
   - <<: *long_time_test
     script:
     - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPad (8th generation),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testTableViewScrolling
@@ -95,24 +59,6 @@ jobs:
     - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPad Pro (9.7-inch),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testTableViewScrolling
   - <<: *long_time_test
     script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testColumnHeaderViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11 Pro,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testColumnHeaderViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11 Pro Max,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testColumnHeaderViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 8,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testColumnHeaderViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 8 Plus,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testColumnHeaderViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone SE (2nd generation),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testColumnHeaderViewScrolling
-  - <<: *long_time_test
-    script:
     - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPad (8th generation),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testColumnHeaderViewScrolling
   - <<: *long_time_test
     script:
@@ -126,24 +72,6 @@ jobs:
   - <<: *long_time_test
     script:
     - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPad Pro (9.7-inch),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testColumnHeaderViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testRowHeaderViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11 Pro,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testRowHeaderViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11 Pro Max,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testRowHeaderViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 8,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testRowHeaderViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 8 Plus,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testRowHeaderViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone SE (2nd generation),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testRowHeaderViewScrolling
   - <<: *long_time_test
     script:
     - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPad (8th generation),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testRowHeaderViewScrolling
@@ -161,24 +89,6 @@ jobs:
     - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPad Pro (9.7-inch),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testRowHeaderViewScrolling
   - <<: *long_time_test
     script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testColumnAndRowHeaderViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11 Pro,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testColumnAndRowHeaderViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11 Pro Max,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testColumnAndRowHeaderViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 8,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testColumnAndRowHeaderViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 8 Plus,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testColumnAndRowHeaderViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone SE (2nd generation),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testColumnAndRowHeaderViewScrolling
-  - <<: *long_time_test
-    script:
     - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPad (8th generation),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testColumnAndRowHeaderViewScrolling
   - <<: *long_time_test
     script:
@@ -192,24 +102,6 @@ jobs:
   - <<: *long_time_test
     script:
     - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPad Pro (9.7-inch),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testColumnAndRowHeaderViewScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testCircularScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11 Pro,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testCircularScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11 Pro Max,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testCircularScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 8,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testCircularScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 8 Plus,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testCircularScrolling
-  - <<: *long_time_test
-    script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone SE (2nd generation),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testCircularScrolling
   - <<: *long_time_test
     script:
     - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPad (8th generation),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testCircularScrolling
