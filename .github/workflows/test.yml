@@ -17,7 +17,7 @@ jobs:
   test:
     needs: build
     env:
-      os: '14.0'
+      os: '13.7'
     strategy:
       matrix:
         device: [iPhone 11, iPhone 11 Pro, iPhone 11 Pro Max, iPhone 8, iPhone 8 Plus, iPhone SE (2nd generation)]
