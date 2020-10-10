@@ -30,8 +30,8 @@ jobs:
         name: build-for-testing
     - name: Confirm artifacts
       run: |
-      ls -la ./build
-      ls -la ./build/Build
+        ls -la ./build
+        ls -la ./build/Build
     - if: matrix.device == 'iPhone 11'
       name: Upload to codecov
       run: |
