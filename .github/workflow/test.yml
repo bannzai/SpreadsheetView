@@ -1,0 +1,27 @@
+name: test
+
+on: [pull_request]
+
+jobs:
+  build:
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run xcodebuild
+        run: xcodebuild build-for-testing -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -hideShellScriptEnvironment -enableCodeCoverage YES ENABLE_TESTABILITY=YES ONLY_ACTIVE_ARCH=NO EXCLUDED_ARCHS[sdk=iphonesimulator*]=arm64 CONFIGURATION_TEMP_DIR=build/temp
+  test:
+    needs: build
+    env:
+      os: 14.0
+    strategy:
+      matrix:
+        device: [iPhone 11, iPhone 11 Pro, iPhone 11 Pro Max, iPhone 8, iPhone 8 Plus, iPhone SE (2nd generation)]
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run xcodebuild test 
+      run: xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name={{ matrix.device }},OS={{ env.os }}' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -
+    - if: matrix.device == 'iPhone 11'
+      name: Upload to codecov
+      run: |
+       ./cordov.rb
+       bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
