@@ -2,15 +2,12 @@ language: objective-c
 cache:
   directories:
   - build
-  - vendor
 jobs:
   include:
   - stage: build
     osx_image: xcode12
-    install:
-    - bundle install --path=vendor/bundle --binstubs=vendor/bin
     script:
-    - bundle exec rake build-for-testing:simulator
+    - ./scripts/build-for-test.sh
   - stage: carthage
     osx_image: xcode12
     script:
@@ -22,9 +19,7 @@ jobs:
     stage: 'test'
     osx_image: xcode12
     script:
-    - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=<%= minimum_device %>,OS=<%= latest_os %>' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp
-    after_success:
-    - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
+    - echo 'Dummy script'
 <%- xcodebuilds_ignore_long_time_testing.each do |k| -%>
   - <<: *test
     script:
@@ -34,7 +29,7 @@ jobs:
     stage: 'test (for long time)'
     osx_image: xcode12
     script:
-    - bundle exec rake build-for-testing:simulator
+    - echo 'Dummy script'
 <%- xcodebuilds_for_long_time_testing.each do |k| -%>
   - <<: *long_time_test
     script:

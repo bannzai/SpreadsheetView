@@ -1,33 +1,38 @@
-# This is a basic workflow to help you get started with Actions
+name: test
 
-name: CI
+on: [pull_request]
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    runs-on: macOS-latest
     steps:
-     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+    - uses: actions/checkout@v2
+    - name: Run xcodebuild
+      run: ./scripts/build-for-test.sh
+    - name: Upload artifacts for cache bulid-for-testing
+      uses: actions/upload-artifact@v2
+      with:
+        name: build-for-testing
+        path: ./build
+  test:
+    needs: build
+    env:
+      os: '13.7'
+    strategy:
+      matrix:
+        device: [iPhone 11, iPhone 11 Pro, iPhone 11 Pro Max, iPhone 8, iPhone 8 Plus, iPhone SE (2nd generation)]
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Download artifacts for cache bulid-for-testing
+      uses: actions/download-artifact@v2
+      with:
+        name: build-for-testing
+        path: build
+    - name: Run xcodebuild test
+      run: xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=${{ matrix.device }},OS=${{ env.os }}' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp
+    - if: matrix.device == 'iPhone 11'
+      name: Upload to codecov
+      run: |
+       ./scripts/codecov.rb
+       bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'

@@ -8,12 +8,6 @@ class Binder
 
   def devices
     @devices ||= [
-        'iPhone 11',
-        'iPhone 11 Pro',
-        'iPhone 11 Pro Max',
-        'iPhone 8',
-        'iPhone 8 Plus',
-        'iPhone SE (2nd generation)',
         'iPad (8th generation)',
         'iPad Air (4th generation)',
         'iPad Pro (11-inch) (2nd generation)',
