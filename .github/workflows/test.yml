@@ -7,8 +7,6 @@ jobs:
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Select Xcode version
-      run: sudo xcode-select -s /Applications/Xcode_12.0.app/Contents/Developer
     - name: Run xcodebuild
       run: ./scripts/build-for-test.sh
   test:
@@ -21,8 +19,6 @@ jobs:
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Select Xcode version
-      run: sudo xcode-select -s /Applications/Xcode_12.0.app/Contents/Developer
     - name: Run xcodebuild test 
       run: xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name={{ matrix.device }},OS={{ env.os }}' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -
     - if: matrix.device == 'iPhone 11'
