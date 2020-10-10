@@ -7,10 +7,8 @@ jobs:
   include:
   - stage: build
     osx_image: xcode12
-    install:
-    - bundle install --path=vendor/bundle --binstubs=vendor/bin
     script:
-    - ./scripts/build-for-testing
+    - ./scripts/build-for-test.sh
   - stage: carthage
     osx_image: xcode12
     script:
@@ -41,7 +39,7 @@ jobs:
     stage: 'test (for long time)'
     osx_image: xcode12
     script:
-    - ./scripts/build-for-testing
+    - ./scripts/build-for-test.sh
   - <<: *long_time_test
     script:
     - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPad (8th generation),OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -only-testing:SpreadsheetViewTests/ScrollTests/testTableViewScrolling

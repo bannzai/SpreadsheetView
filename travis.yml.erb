@@ -8,7 +8,7 @@ jobs:
   - stage: build
     osx_image: xcode12
     script:
-    - ./scripts/build-for-testing
+    - ./scripts/build-for-test.sh
   - stage: carthage
     osx_image: xcode12
     script:
@@ -30,7 +30,7 @@ jobs:
     stage: 'test (for long time)'
     osx_image: xcode12
     script:
-    - ./scripts/build-for-testing
+    - ./scripts/build-for-test.sh
 <%- xcodebuilds_for_long_time_testing.each do |k| -%>
   - <<: *long_time_test
     script:
