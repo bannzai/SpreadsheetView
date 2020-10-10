@@ -23,8 +23,6 @@ jobs:
     osx_image: xcode12
     script:
     - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=<%= minimum_device %>,OS=<%= latest_os %>' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp
-    after_success:
-    - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
 <%- xcodebuilds_ignore_long_time_testing.each do |k| -%>
   - <<: *test
     script:
