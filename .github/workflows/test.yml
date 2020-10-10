@@ -29,13 +29,6 @@ jobs:
       with:
         name: build-for-testing
         path: build
-    - name: Confirm artifacts
-      run: |
-        ls -la ./build
-        ls -la ./Build/Build
-        ls -la ./Build/Build/Products/
-        ls -la ./Build/Build/Products/Release-iphonesimulator/
-        ls -la ./Build/Build/Products/Release-iphonesimulator/HostApp.app
     - name: Run xcodebuild test
       run: xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=${{ matrix.device }},OS=${{ env.os }}' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp
     - if: matrix.device == 'iPhone 11'
