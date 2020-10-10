@@ -28,10 +28,10 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: build-for-testing
-    - name: Run xcodebuild
-      run: ./scripts/build-for-test.sh
-    - name: Run xcodebuild test 
-      run: xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=${{ matrix.device }},OS=${{ env.os }}' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp
+    - name: Confirm artifacts
+      run: |
+      ls -la ./build
+      ls -la ./build/Build
     - if: matrix.device == 'iPhone 11'
       name: Upload to codecov
       run: |
