@@ -22,8 +22,6 @@ jobs:
     osx_image: xcode12
     script:
     - scripts/build-for-test
-    after_success:
-    - bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
   - <<: *test
     script:
     - xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name=iPhone 11,OS=14.0' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -skip-testing:SpreadsheetViewTests/ScrollTests
