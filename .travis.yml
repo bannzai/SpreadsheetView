@@ -2,7 +2,6 @@ language: objective-c
 cache:
   directories:
   - build
-  - vendor
 jobs:
   include:
   - stage: build
