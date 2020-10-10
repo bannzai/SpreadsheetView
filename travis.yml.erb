@@ -7,8 +7,6 @@ jobs:
   include:
   - stage: build
     osx_image: xcode12
-    install:
-    - bundle install --path=vendor/bundle --binstubs=vendor/bin
     script:
     - ./scripts/build-for-testing
   - stage: carthage
