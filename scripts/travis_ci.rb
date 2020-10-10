@@ -68,5 +68,5 @@ require 'erb'
 binder = Binder.new
 template = ERB.new(File.read('travis.yml.erb'), nil, '-')
 content = template.result(binder.get_binding)
-File.write('.travis.yml', content)
+File.write('../.travis.yml', content)
 
