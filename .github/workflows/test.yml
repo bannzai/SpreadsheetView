@@ -35,5 +35,5 @@ jobs:
     - if: matrix.device == 'iPhone 11'
       name: Upload to codecov
       run: |
-       ./cordov.rb
+       ./scripts/codecov.rb
        bash <(curl -s https://codecov.io/bash) -f 'coverage.txt'
