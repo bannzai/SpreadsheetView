@@ -13,7 +13,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: build-for-testing
-        path: build
+        path: ./build
   test:
     needs: build
     env:
