@@ -9,6 +9,11 @@ jobs:
     - uses: actions/checkout@v2
     - name: Run xcodebuild
       run: ./scripts/build-for-test.sh
+    - name: Upload artifacts for cache bulid-for-testing
+      uses: actions/upload-artifact@v2
+      with:
+        name: build-for-testing
+        path: build
   test:
     needs: build
     env:
@@ -19,6 +24,10 @@ jobs:
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Download artifacts for cache bulid-for-testing
+      uses: actions/download-artifact@v2
+      with:
+        name: build-for-testing
     - name: Run xcodebuild test 
       run: xcodebuild test-without-building -workspace SpreadsheetView.xcworkspace -scheme SpreadsheetView -sdk iphonesimulator -configuration Release -derivedDataPath build -destination 'name={{ matrix.device }},OS={{ env.os }}' -enableCodeCoverage YES CONFIGURATION_TEMP_DIR=build/temp -
     - if: matrix.device == 'iPhone 11'
