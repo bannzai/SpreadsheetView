@@ -49,7 +49,7 @@ extension SpreadsheetView {
     func touchesCancelled(_ touches: Set<UITouch>, _ event: UIEvent?) {
         unhighlightAllItems()
         restorePreviousSelection()
-        restorePreviousSelection()
+        clearCurrentTouch()
     }
 
     func highlightItems(on touches: Set<UITouch>) {
