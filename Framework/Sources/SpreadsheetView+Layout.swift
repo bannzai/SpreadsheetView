@@ -105,17 +105,28 @@ extension SpreadsheetView {
     }
 
     func layoutAttributeForCornerView() -> LayoutAttributes {
+        return SpreadsheetView.layoutAttributeForCornerView(spreadsheetViewConfiguration, layoutProperties)
+    }
+
+    static func layoutAttributeForCornerView(_ spreadsheetViewConfiguration: SpreadsheetViewConfiguration, _ layoutProperties: LayoutProperties) -> LayoutAttributes {
         return LayoutAttributes(startColumn: 0,
                                 startRow: 0,
-                                numberOfColumns: frozenColumns,
-                                numberOfRows: frozenRows,
-                                columnCount: frozenColumns,
-                                rowCount: frozenRows,
+                                numberOfColumns: layoutProperties.frozenColumns,
+                                numberOfRows: layoutProperties.frozenRows,
+                                columnCount: layoutProperties.frozenColumns,
+                                rowCount: layoutProperties.frozenRows,
                                 insets: .zero)
     }
 
     func layoutAttributeForColumnHeaderView() -> LayoutAttributes {
-        let insets = circularScrollingOptions.headerStyle == .columnHeaderStartsFirstRow ? CGPoint(x: 0, y: layoutProperties.rowHeightCache.prefix(upTo: frozenRows).reduce(0) { $0 + $1 } + intercellSpacing.height * CGFloat(layoutProperties.frozenRows)) : .zero
+        return SpreadsheetView.layoutAttributeForColumnHeaderView(spreadsheetViewConfiguration , layoutProperties)
+    }
+
+    static func layoutAttributeForColumnHeaderView(_ spreadsheetViewConfiguration: SpreadsheetViewConfiguration, _ layoutProperties: LayoutProperties) -> LayoutAttributes {
+        let intercellSpacing = spreadsheetViewConfiguration.intercellSpacing
+        let circularScrollingOptions = spreadsheetViewConfiguration.circularScrollingOptions
+        let circularScrollScalingFactor = spreadsheetViewConfiguration.circularScrollScalingFactor
+        let insets = circularScrollingOptions.headerStyle == .columnHeaderStartsFirstRow ? CGPoint(x: 0, y: layoutProperties.rowHeightCache.prefix(upTo: layoutProperties.frozenRows).reduce(0) { $0 + $1 } + intercellSpacing.height * CGFloat(layoutProperties.frozenRows)) : .zero
         return LayoutAttributes(startColumn: 0,
                                 startRow: layoutProperties.frozenRows,
                                 numberOfColumns: layoutProperties.frozenColumns,
@@ -126,7 +137,14 @@ extension SpreadsheetView {
     }
 
     func layoutAttributeForRowHeaderView() -> LayoutAttributes {
-        let insets = circularScrollingOptions.headerStyle == .rowHeaderStartsFirstColumn ? CGPoint(x: layoutProperties.columnWidthCache.prefix(upTo: frozenColumns).reduce(0) { $0 + $1 } + intercellSpacing.width * CGFloat(layoutProperties.frozenColumns), y: 0) : .zero
+        return SpreadsheetView.layoutAttributeForRowHeaderView(spreadsheetViewConfiguration , layoutProperties)
+    }
+
+    static func layoutAttributeForRowHeaderView(_ spreadsheetViewConfiguration: SpreadsheetViewConfiguration, _ layoutProperties: LayoutProperties) -> LayoutAttributes {
+        let intercellSpacing = spreadsheetViewConfiguration.intercellSpacing
+        let circularScrollingOptions = spreadsheetViewConfiguration.circularScrollingOptions
+        let circularScrollScalingFactor = spreadsheetViewConfiguration.circularScrollScalingFactor
+        let insets = circularScrollingOptions.headerStyle == .rowHeaderStartsFirstColumn ? CGPoint(x: layoutProperties.columnWidthCache.prefix(upTo: layoutProperties.frozenColumns).reduce(0) { $0 + $1 } + intercellSpacing.width * CGFloat(layoutProperties.frozenColumns), y: 0) : .zero
         return LayoutAttributes(startColumn: layoutProperties.frozenColumns,
                                 startRow: 0,
                                 numberOfColumns: layoutProperties.numberOfColumns,
@@ -137,6 +155,11 @@ extension SpreadsheetView {
     }
 
     func layoutAttributeForTableView() -> LayoutAttributes {
+        return SpreadsheetView.layoutAttributeForTableView(spreadsheetViewConfiguration , layoutProperties)
+    }
+
+    static func layoutAttributeForTableView(_ spreadsheetViewConfiguration: SpreadsheetViewConfiguration, _ layoutProperties: LayoutProperties) -> LayoutAttributes {
+        let circularScrollScalingFactor = spreadsheetViewConfiguration.circularScrollScalingFactor
         return LayoutAttributes(startColumn: layoutProperties.frozenColumns,
                                 startRow: layoutProperties.frozenRows,
                                 numberOfColumns: layoutProperties.numberOfColumns,
@@ -150,12 +173,15 @@ extension SpreadsheetView {
         guard let dataSource = dataSource else {
             return LayoutProperties()
         }
+        return SpreadsheetView.resetLayoutProperties(dataSource, self)
+    }
 
-        let numberOfColumns = dataSource.numberOfColumns(in: self)
-        let numberOfRows = dataSource.numberOfRows(in: self)
+    static func resetLayoutProperties(_ dataSource: SpreadsheetViewDataSource, _ spreadsheetView: SpreadsheetView) -> LayoutProperties {
+        let numberOfColumns = dataSource.numberOfColumns(in: spreadsheetView)
+        let numberOfRows = dataSource.numberOfRows(in: spreadsheetView)
 
-        let frozenColumns = dataSource.frozenColumns(in: self)
-        let frozenRows = dataSource.frozenRows(in: self)
+        let frozenColumns = dataSource.frozenColumns(in: spreadsheetView)
+        let frozenRows = dataSource.frozenRows(in: spreadsheetView)
 
         guard numberOfColumns >= 0 else {
             fatalError("`numberOfColumns(in:)` must return a value greater than or equal to 0")
@@ -170,7 +196,7 @@ extension SpreadsheetView {
             fatalError("`frozenRows(in:) must return a value less than or equal to `numberOfRows(in:)`")
         }
 
-        let mergedCells = dataSource.mergedCells(in: self)
+        let mergedCells = dataSource.mergedCells(in: spreadsheetView)
         let mergedCellLayouts: [Location: CellRange] = { () in
             var layouts = [Location: CellRange]()
             for mergedCell in mergedCells {
@@ -205,13 +231,13 @@ extension SpreadsheetView {
         var columnWidthCache = [CGFloat]()
         var frozenColumnWidth: CGFloat = 0
         for column in 0..<frozenColumns {
-            let width = dataSource.spreadsheetView(self, widthForColumn: column)
+            let width = dataSource.spreadsheetView(spreadsheetView, widthForColumn: column)
             columnWidthCache.append(width)
             frozenColumnWidth += width
         }
         var tableWidth: CGFloat = 0
         for column in frozenColumns..<numberOfColumns {
-            let width = dataSource.spreadsheetView(self, widthForColumn: column)
+            let width = dataSource.spreadsheetView(spreadsheetView, widthForColumn: column)
             columnWidthCache.append(width)
             tableWidth += width
         }
@@ -220,13 +246,13 @@ extension SpreadsheetView {
         var rowHeightCache = [CGFloat]()
         var frozenRowHeight: CGFloat = 0
         for row in 0..<frozenRows {
-            let height = dataSource.spreadsheetView(self, heightForRow: row)
+            let height = dataSource.spreadsheetView(spreadsheetView, heightForRow: row)
             rowHeightCache.append(height)
             frozenRowHeight += height
         }
         var tableHeight: CGFloat = 0
         for row in frozenRows..<numberOfRows {
-            let height = dataSource.spreadsheetView(self, heightForRow: row)
+            let height = dataSource.spreadsheetView(spreadsheetView, heightForRow: row)
             rowHeightCache.append(height)
             tableHeight += height
         }
@@ -241,9 +267,18 @@ extension SpreadsheetView {
     }
 
     func resetContentSize(of scrollView: ScrollView) {
+        SpreadsheetView.initializeScrollView(scrollView: scrollView,
+                                             spreadsheetViewConfiguration: spreadsheetViewConfiguration,
+                                             layoutProperties: layoutProperties)
+    }
+
+    static func initializeScrollView(scrollView: ScrollView, spreadsheetViewConfiguration: SpreadsheetViewConfiguration, layoutProperties: LayoutProperties) {
         defer {
             scrollView.contentSize = scrollView.state.contentSize
         }
+
+        let intercellSpacing = spreadsheetViewConfiguration.intercellSpacing
+        let circularScrollingOptions = spreadsheetViewConfiguration.circularScrollingOptions
 
         scrollView.columnRecords.removeAll()
         scrollView.rowRecords.removeAll()
@@ -253,7 +288,7 @@ extension SpreadsheetView {
         var width: CGFloat = 0
         for column in startColumn..<columnCount {
             scrollView.columnRecords.append(width)
-            let index = column % numberOfColumns
+            let index = column % layoutProperties.numberOfColumns
             if !circularScrollingOptions.tableStyle.contains(.columnHeaderNotRepeated) || index >= startColumn {
                 width += layoutProperties.columnWidthCache[index] + intercellSpacing.width
             }
@@ -264,7 +299,7 @@ extension SpreadsheetView {
         var height: CGFloat = 0
         for row in startRow..<rowCount {
             scrollView.rowRecords.append(height)
-            let index = row % numberOfRows
+            let index = row % layoutProperties.numberOfRows
             if !circularScrollingOptions.tableStyle.contains(.rowHeaderNotRepeated) || index >= startRow {
                 height += layoutProperties.rowHeightCache[index] + intercellSpacing.height
             }

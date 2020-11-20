@@ -312,6 +312,12 @@ public class SpreadsheetView: UIView {
         return overlayView
     }
 
+    var spreadsheetViewConfiguration: SpreadsheetViewConfiguration {
+        return SpreadsheetViewConfiguration(intercellSpacing: intercellSpacing, defaultGridStyle: gridStyle,
+                                            circularScrollingOptions: circularScrollingOptions, circularScrollScalingFactor: circularScrollScalingFactor,
+                                            blankCellReuseIdentifier: blankCellReuseIdentifier,
+                                            highlightedIndexPaths: highlightedIndexPaths, selectedIndexPaths: selectedIndexPaths)
+    }
     var layoutProperties = LayoutProperties()
 
     let rootView = UIScrollView()

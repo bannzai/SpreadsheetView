@@ -21,6 +21,7 @@
 		1451A0721ECEC2AF00C048DF /* SpreadsheetView+UIViewHierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1451A0711ECEC2AF00C048DF /* SpreadsheetView+UIViewHierarchy.swift */; };
 		1478491F1EC38F8D0020C938 /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1478491E1EC38F8B0020C938 /* ConfigurationTests.swift */; };
 		147898E31ECB607E004BB0A1 /* CellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147898E21ECB607E004BB0A1 /* CellTests.swift */; };
+		14892A5F1F6BA05C000852E2 /* LayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14892A5E1F6BA05C000852E2 /* LayoutTests.swift */; };
 		149E24001EBD4D620049E172 /* CircularScrolling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149E23FF1EBD4D620049E172 /* CircularScrolling.swift */; };
 		149E24021EBECDFB0049E172 /* DataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149E24011EBECDFB0049E172 /* DataSourceTests.swift */; };
 		149E24071EBF05A10049E172 /* LayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149E24061EBF05A00049E172 /* LayoutEngine.swift */; };
@@ -103,6 +104,7 @@
 		1451A0711ECEC2AF00C048DF /* SpreadsheetView+UIViewHierarchy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpreadsheetView+UIViewHierarchy.swift"; sourceTree = "<group>"; };
 		1478491E1EC38F8B0020C938 /* ConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationTests.swift; sourceTree = "<group>"; };
 		147898E21ECB607E004BB0A1 /* CellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellTests.swift; sourceTree = "<group>"; };
+		14892A5E1F6BA05C000852E2 /* LayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutTests.swift; sourceTree = "<group>"; };
 		149E23FF1EBD4D620049E172 /* CircularScrolling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularScrolling.swift; sourceTree = "<group>"; };
 		149E24011EBECDFB0049E172 /* DataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceTests.swift; sourceTree = "<group>"; };
 		149E24061EBF05A00049E172 /* LayoutEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEngine.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				14CBB7EF1EC8AF22005BEEB3 /* CellRangeTests.swift */,
 				1478491E1EC38F8B0020C938 /* ConfigurationTests.swift */,
 				143664C41EB6201800321E5E /* PerformanceTests.swift */,
+				14892A5E1F6BA05C000852E2 /* LayoutTests.swift */,
 				143664C01EB5A07300321E5E /* HelperObjects.swift */,
 				143664BE1EB5A01500321E5E /* HelperFunctions.swift */,
 				149E6AA41EADE19F000D851D /* HostApp */,
@@ -467,6 +470,7 @@
 				147898E31ECB607E004BB0A1 /* CellTests.swift in Sources */,
 				143664BF1EB5A01600321E5E /* HelperFunctions.swift in Sources */,
 				143664C31EB61FE900321E5E /* SelectionTests.swift in Sources */,
+				14892A5F1F6BA05C000852E2 /* LayoutTests.swift in Sources */,
 				149E24021EBECDFB0049E172 /* DataSourceTests.swift in Sources */,
 				14AE25761EBF1F8C0003D1F8 /* MergedCellTests.swift in Sources */,
 			);
