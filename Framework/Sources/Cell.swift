@@ -55,15 +55,6 @@ open class Cell: UIView {
     }
 
     public var gridlines = Gridlines(top: .default, bottom: .default, left: .default, right: .default)
-    @available(*, deprecated: 0.6.3, renamed: "gridlines")
-    public var grids: Gridlines {
-        get {
-            return gridlines
-        }
-        set {
-            gridlines = grids
-        }
-    }
     public var borders = Borders(top: .none, bottom: .none, left: .none, right: .none) {
         didSet {
             hasBorder = borders.top != .none || borders.bottom != .none || borders.left != .none || borders.right != .none
