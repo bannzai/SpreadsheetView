@@ -136,7 +136,6 @@ public class SpreadsheetView: UIView {
         }
     }
 
-    #if swift(>=3.2)
     @available(iOS 11.0, *)
     public override func safeAreaInsetsDidChange() {
         if let backgroundView = backgroundView {
@@ -144,7 +143,6 @@ public class SpreadsheetView: UIView {
             super.insertSubview(backgroundView, at: 0)
         }
     }
-    #endif
 
     /// Returns an array of visible cells currently displayed by the spreadsheet view.
     ///
@@ -274,7 +272,7 @@ public class SpreadsheetView: UIView {
 
     /// The style of the scroll indicators.
     /// - Note: The default style is `default`. See `UIScrollViewIndicatorStyle` for descriptions of these constants.
-    public var indicatorStyle: UIScrollViewIndicatorStyle {
+    public var indicatorStyle: UIScrollView.IndicatorStyle {
         get {
             return overlayView.indicatorStyle
         }
@@ -287,10 +285,10 @@ public class SpreadsheetView: UIView {
     /// - Note: Your application can use the `UIScrollViewDecelerationRateNormal` and UIScrollViewDecelerationRateFast` constants as reference points for reasonable deceleration rates.
     public var decelerationRate: CGFloat {
         get {
-            return tableView.decelerationRate
+            return tableView.decelerationRate.rawValue
         }
         set {
-            tableView.decelerationRate = newValue
+            tableView.decelerationRate = UIScrollView.DecelerationRate(rawValue: newValue)
         }
     }
 
@@ -400,11 +398,9 @@ public class SpreadsheetView: UIView {
 
         [tableView, columnHeaderView, rowHeaderView, cornerView, overlayView].forEach {
             addGestureRecognizer($0.panGestureRecognizer)
-            #if swift(>=3.2)
             if #available(iOS 11.0, *) {
                 $0.contentInsetAdjustmentBehavior = .never
             }
-            #endif
         }
     }
 

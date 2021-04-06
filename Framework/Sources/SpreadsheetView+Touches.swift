@@ -15,7 +15,6 @@ extension SpreadsheetView {
         }
         currentTouch = touches.first
 
-        NSObject.cancelPreviousPerformRequests(withTarget: self)
         unhighlightAllItems()
         highlightItems(on: touches)
         if !allowsMultipleSelection,
@@ -28,7 +27,7 @@ extension SpreadsheetView {
     }
 
     func touchesEnded(_ touches: Set<UITouch>, _ event: UIEvent?) {
-        guard let touch = touches.first, touch == currentTouch else {
+        guard let touch = touches.first, touch === currentTouch else {
             return
         }
 
@@ -44,13 +43,13 @@ extension SpreadsheetView {
             selectItems(on: touches, highlightedItems: highlightedItems)
         }
 
-        perform(#selector(clearCurrentTouch), with: nil, afterDelay: 0)
+        clearCurrentTouch()
     }
 
     func touchesCancelled(_ touches: Set<UITouch>, _ event: UIEvent?) {
         unhighlightAllItems()
-        perform(#selector(restorePreviousSelection), with: touches, afterDelay: 0)
-        perform(#selector(clearCurrentTouch), with: nil, afterDelay: 0)
+        restorePreviousSelection()
+        clearCurrentTouch()
     }
 
     func highlightItems(on touches: Set<UITouch>) {

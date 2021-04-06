@@ -74,7 +74,7 @@ class TimeCell: Cell {
 
         label.frame = bounds
         label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        label.font = UIFont.monospacedDigitSystemFont(ofSize: 12, weight: UIFontWeightMedium)
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .medium)
         label.textAlignment = .right
 
         contentView.addSubview(label)
