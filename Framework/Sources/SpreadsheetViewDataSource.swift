@@ -9,7 +9,7 @@
 import UIKit
 
 /// Implement this protocol to provide data to an `SpreadsheetView`.
-public protocol SpreadsheetViewDataSource: class {
+public protocol SpreadsheetViewDataSource: AnyObject {
     /// Asks your data source object for the number of columns in the spreadsheet view.
     ///
     /// - Parameter spreadsheetView: The spreadsheet view requesting this information.
