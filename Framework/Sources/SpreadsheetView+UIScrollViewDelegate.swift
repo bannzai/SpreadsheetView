@@ -40,6 +40,7 @@ extension SpreadsheetView: UIScrollViewDelegate {
         columnHeaderView.contentOffset.y = tableView.contentOffset.y
 
         setNeedsLayout()
+        delegate?.spreadsheetViewDidScroll(self)
     }
 
     public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {

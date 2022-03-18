@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class SpreadsheetView: UIView {
+open class SpreadsheetView: UIView {
     /// The object that provides the data for the collection view.
     ///
     /// - Note: The data source must adopt the `SpreadsheetViewDataSource` protocol.
