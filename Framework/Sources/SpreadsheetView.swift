@@ -136,7 +136,6 @@ open class SpreadsheetView: UIView {
         }
     }
 
-    #if swift(>=3.2)
     @available(iOS 11.0, *)
     public override func safeAreaInsetsDidChange() {
         if let backgroundView = backgroundView {
@@ -144,7 +143,6 @@ open class SpreadsheetView: UIView {
             super.insertSubview(backgroundView, at: 0)
         }
     }
-    #endif
 
     /// Returns an array of visible cells currently displayed by the spreadsheet view.
     ///
@@ -400,11 +398,9 @@ open class SpreadsheetView: UIView {
 
         [tableView, columnHeaderView, rowHeaderView, cornerView, overlayView].forEach {
             addGestureRecognizer($0.panGestureRecognizer)
-            #if swift(>=3.2)
             if #available(iOS 11.0, *) {
                 $0.contentInsetAdjustmentBehavior = .never
             }
-            #endif
         }
     }
 

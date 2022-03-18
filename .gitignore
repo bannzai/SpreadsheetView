@@ -42,3 +42,6 @@ Carthage/Build
 ## Bundler
 .bundle
 vendor
+
+coverage.txt
+

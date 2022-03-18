@@ -35,7 +35,7 @@ func defaultViewController(parameters: Parameters) -> SpreadsheetViewController 
 }
 
 func showViewController(viewController: UIViewController) {
-    let window = UIWindow()
+    let window = UIWindow(frame: UIScreen.main.bounds)
     window.backgroundColor = .white
     window.rootViewController = viewController
     window.makeKeyAndVisible()
@@ -44,11 +44,7 @@ func showViewController(viewController: UIViewController) {
 func numberOfVisibleColumns(in view: SpreadsheetView, contentOffset: CGPoint = .zero, parameters: Parameters) -> Int {
     let contentInset: UIEdgeInsets
     if #available(iOS 11.0, *) {
-        #if swift(>=3.2)
         contentInset = view.adjustedContentInset
-        #else
-        fatalError("unreachable code")
-        #endif
     } else {
         contentInset = view.contentInset
     }
@@ -74,11 +70,7 @@ func numberOfVisibleColumns(in view: SpreadsheetView, contentOffset: CGPoint = .
 func numberOfVisibleRows(in view: SpreadsheetView, contentOffset: CGPoint = .zero, parameters: Parameters) -> Int {
     let contentInset: UIEdgeInsets
     if #available(iOS 11.0, *) {
-        #if swift(>=3.2)
         contentInset = view.adjustedContentInset
-        #else
-        fatalError("unreachable code")
-        #endif
     } else {
         contentInset = view.contentInset
     }

@@ -17,12 +17,13 @@ public struct Location: Hashable {
         self.column = column
     }
 
-    init(indexPath: IndexPath) {
-        self.init(row: indexPath.row, column: indexPath.column)
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(row)
+        hasher.combine(column)
     }
 
-    public var hashValue: Int {
-        return 32768 * row + column
+    init(indexPath: IndexPath) {
+        self.init(row: indexPath.row, column: indexPath.column)
     }
 
     public static func ==(lhs: Location, rhs: Location) -> Bool {
